@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: NewsletterPageProps): Promise
     slug,
     entity: {
       url: `/${slug}/about/newsletter`,
-      SEO: page?.SEO,
-      Title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     type: 'article',
     defaultTitle: 'Newsletter',
@@ -39,8 +39,8 @@ export default async function NewsletterPage({ params }: NewsletterPageProps) {
   const { slug } = await params;
   const [page] = (await strapiClient.getPage('newsletter', slug))?.data || [];
   const [store] = (await strapiClient.getStore(slug))?.data || [];
-  const title = page?.Title || `Newsletter`;
-  const subtitle = page?.SEO?.metaDescription || `A calm inbox with updates from ${store?.title || 'this store'}.`;
+  const title = page?.title || `Newsletter`;
+  const subtitle = page?.seo?.metaDescription || `A calm inbox with updates from ${store?.title || 'this store'}.`;
 
   return (
     <Container size="lg" py="xl">
@@ -50,17 +50,17 @@ export default async function NewsletterPage({ params }: NewsletterPageProps) {
           title={title}
           description={subtitle}
           page={page}
-          backgroundImage={page?.SEO?.socialImage?.url || store?.SEO?.socialImage?.url || store?.Cover?.url}
+          backgroundImage={page?.seo?.socialImage?.url || store?.seo?.socialImage?.url || store?.cover?.url}
           iconColor={markketColors.sections.newsletter.main}
         />
 
-        {page?.Content?.length > 0 && (
+        {page?.content?.length > 0 && (
           <Box>
             <PageContent params={{ page }} />
           </Box>
         )}
 
-        {!(page?.Content?.length > 0) && (
+        {!(page?.content?.length > 0) && (
           <Paper
             p="xl"
             radius="xl"

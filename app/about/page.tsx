@@ -43,7 +43,7 @@ const isPublishedEntry = (entry: PublicationEntry): boolean => {
 
 const isInternalPage = (page: Page): boolean => {
   const slug = (page?.slug || '').toLowerCase();
-  const title = (page?.Title || '').toLowerCase();
+  const title = (page?.title || '').toLowerCase();
   const combined = `${slug} ${title}`;
 
   return INTERNAL_PAGE_HINTS.some((hint) => combined.includes(hint));
@@ -57,8 +57,8 @@ export async function generateMetadata(): Promise<Metadata> {
     slug: 'about',
     entity: {
       url: '/about',
-      SEO: page?.SEO,
-      Title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     type: 'website',
     defaultTitle: 'About',
@@ -81,11 +81,11 @@ export default async function PlatformAboutPage() {
     .filter((page) => page?.slug && !SYSTEM_PAGE_SLUGS.has(page.slug))
     .filter((page) => isPublishedEntry(page as PublicationEntry))
     .filter((page) => !isInternalPage(page))
-    .sort((a, b) => (a?.Title || '').localeCompare(b?.Title || ''));
+    .sort((a, b) => (a?.title || '').localeCompare(b?.title || ''));
 
-  const title = aboutPage?.Title || 'About Markketplace';
-  const description = aboutPage?.SEO?.metaDescription
-    || store?.SEO?.metaDescription
+  const title = aboutPage?.title || 'About Markketplace';
+  const description = aboutPage?.seo?.metaDescription
+    || store?.seo?.metaDescription
     || 'Learn about Markketplace and explore helpful pages.';
   const contactEmail = `${PLATFORM_SLUG}@markket.place`;
 
@@ -198,10 +198,10 @@ export default async function PlatformAboutPage() {
                     />
                     <Stack gap={6} style={{ position: 'relative', zIndex: 1 }}>
                       <Text fw={700} style={{ color: markketColors.neutral.charcoal }}>
-                        {page.Title || page.slug}
+                        {page.title || page.slug}
                       </Text>
                       <Text size="sm" c="dimmed" lineClamp={3}>
-                        {page?.SEO?.metaDescription || 'Open this page to learn more.'}
+                        {page?.seo?.metaDescription || 'Open this page to learn more.'}
                       </Text>
                     </Stack>
                   </Paper>

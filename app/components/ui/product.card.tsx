@@ -10,19 +10,19 @@ function createPicsumImageUrl(seed: string, width: number, height: number) {
 }
 
 export default function ProductCard({ product, slug }: { product: Product; slug: string }) {
-  const contentImage = extractRichTextImageUrl(product.Description);
-  const imageUrl = product.Slides?.[0]?.formats?.medium?.url ||
-    product?.SEO?.socialImage?.url;
+  const contentImage = extractRichTextImageUrl(product.description);
+  const imageUrl = product.slides?.[0]?.formats?.medium?.url ||
+    product?.seo?.socialImage?.url;
   const fallbackImageUrl = createPicsumImageUrl(
-    [product.Name, product.slug, slug].filter(Boolean).join('-') || product.id?.toString() || 'product',
+    [product.name, product.slug, slug].filter(Boolean).join('-') || product.id?.toString() || 'product',
     1200,
     675,
   );
 
-  const rawDesc = product.SEO?.metaDescription || product.Description?.split("\n")[0];
+  const rawDesc = product.seo?.metaDescription || product.description?.split("\n")[0];
   const description = stripMarkdown(rawDesc);
 
-  const price = product.usd_price || product.PRICES?.[0]?.Price || 'X';
+  const price = product.usd_price || product.prices?.[0]?.price || 'X';
 
   return (
     <Link href={`/store/${slug}/products/${product.slug}`} style={{ textDecoration: 'none' }}>
@@ -32,7 +32,7 @@ export default function ProductCard({ product, slug }: { product: Product; slug:
             <div className="relative h-full w-full">
               <img
                 src={contentImage || imageUrl}
-                alt={product.Name}
+                alt={product.name}
                 className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
               />
               {product.active === false && (
@@ -68,7 +68,7 @@ export default function ProductCard({ product, slug }: { product: Product; slug:
         <div className="p-5">
           <div className="flex items-start gap-2 mb-3">
             <h3 className="flex-1 text-lg font-semibold line-clamp-2 transition-colors" style={{ color: markketColors.neutral.charcoal }}>
-              {product.Name}
+              {product.name}
             </h3>
             <Badge
               variant="light"

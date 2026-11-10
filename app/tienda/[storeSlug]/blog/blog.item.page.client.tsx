@@ -111,7 +111,7 @@ export default function TiendaBlogItemPageClient({ storeSlug, itemId }: TiendaBl
         { label: 'Blog', href: `/tienda/${storeSlug}/blog` },
         { label: post.documentId || post.slug || itemId },
       ]}
-      title={post.Title || 'Untitled article'}
+      title={post.title || 'Untitled article'}
       routePath={`/tienda/${storeSlug}/blog/${post.documentId || post.slug || itemId}`}
       actions={
         <>
@@ -127,7 +127,7 @@ export default function TiendaBlogItemPageClient({ storeSlug, itemId }: TiendaBl
       }
     >
       <Stack gap="md">
-        <Text c="dimmed">{post.SEO?.metaDescription || 'No summary yet.'}</Text>
+        <Text c="dimmed">{post.seo?.metaDescription || 'No summary yet.'}</Text>
 
         <ContentMediaPreview
           storeRef={storeRef}
@@ -141,13 +141,13 @@ export default function TiendaBlogItemPageClient({ storeSlug, itemId }: TiendaBl
               label: 'Cover',
               field: 'cover',
               src: post.cover?.url || post.cover?.formats?.medium?.url,
-              alt: post.Title,
+              alt: post.title,
             },
             {
               label: 'Social',
               field: 'SEO.socialImage',
-              src: post.SEO?.socialImage?.url,
-              alt: post.SEO?.socialImage?.alternativeText || post.Title,
+              src: post.seo?.socialImage?.url,
+              alt: post.seo?.socialImage?.alternativeText || post.title,
             },
           ]}
         />
@@ -163,7 +163,7 @@ export default function TiendaBlogItemPageClient({ storeSlug, itemId }: TiendaBl
           radius="md"
           style={{ background: 'var(--mantine-color-gray-0, #fafafa)' }}
         >
-          {post.Content?.length ? (
+          {post.content?.length ? (
             <PageContent params={{ post }} />
           ) : (
             <Text c="dimmed" size="sm" ta="center" py="xl">

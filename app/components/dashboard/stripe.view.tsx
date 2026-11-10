@@ -322,7 +322,7 @@ function StripeFull({
   }
 
   // active
-  const accountId = connectData?.account_id || store.STRIPE_CUSTOMER_ID || '';
+  const accountId = connectData?.account_id || store.stripe_customer_id || '';
 
   return (
     <Stack gap="md">
@@ -428,7 +428,7 @@ export default function StripeConnectBlock({
   const derivedStatus: StripeConnectStatus =
     mockStatus
     ?? connectStatus
-    ?? (store.STRIPE_CUSTOMER_ID ? 'active' : 'not_connected');
+    ?? (store.stripe_customer_id ? 'active' : 'not_connected');
 
   const connectData = state.phase === 'loaded' ? state.connectData : undefined;
 

@@ -45,7 +45,7 @@ export async function generateSEOMetadata({
   const storeResponse = await strapiClient.getStore(slug);
   const store = storeResponse?.data?.[0];
 
-  const storeName = store?.title || store?.SEO?.metaTitle || 'Store';
+  const storeName = store?.title || store?.seo?.metaTitle || 'Store';
 
   // Build descriptive title with context - filter out empty strings
   const baseTitle = (entity?.seo?.metaTitle?.trim()) ||

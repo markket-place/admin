@@ -114,11 +114,11 @@ export default async function StoreDesignSystemPage({ params }: PageProps) {
 
   const storeTitle = store?.title || demoSlug;
   const storeDescription =
-    store?.SEO?.metaDescription ||
-    store?.Description ||
+    store?.seo?.metaDescription ||
+    store?.description ||
     `Design specimen for ${storeTitle}. Optimized for mobile webview and editor clarity.`;
-  const logoUrl = store?.Logo?.url || store?.Favicon?.url;
-  const storeLinks = store?.URLS || [];
+  const logoUrl = store?.logo?.url || store?.favicon?.url;
+  const storeLinks = store?.urls || [];
 
   return (
     <main className={rootClassName} style={shellStyle}>

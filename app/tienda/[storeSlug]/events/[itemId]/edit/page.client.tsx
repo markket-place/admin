@@ -8,7 +8,7 @@ import EventEditorForm from '../../event.editor.form';
 import { findEvent } from '../../events.find';
 import { readTiendaAuthToken } from '../../../content.find';
 import type { Event } from '@/markket/event';
-import type { Price } from '@/markket/product';
+// import type { Price } from '@/markket/product';
 
 type TiendaEventEditPageClientProps = {
   storeSlug: string;
@@ -87,7 +87,7 @@ export default function TiendaEventEditPageClient({ storeSlug, itemId }: TiendaE
         { label: event.slug || itemId, href: `/tienda/${storeSlug}/events/${event.slug || itemId}` },
         { label: 'Edit' },
       ]}
-      title={`Edit: ${event.Name || 'Event'}`}
+      title={`Edit: ${event.name || 'Event'}`}
       routePath={`/tienda/${storeSlug}/events/${event.slug || itemId}/edit`}
     >
       <EventEditorForm
@@ -95,18 +95,18 @@ export default function TiendaEventEditPageClient({ storeSlug, itemId }: TiendaE
         mode="edit"
         itemDocumentId={event.documentId || itemId}
         initial={{
-          name: event.Name,
+          name: event.name,
           slug: event.slug,
-          description: event.Description,
-          seoTitle: event.SEO?.metaTitle,
-          seoDescription: event.SEO?.metaDescription,
-          sourceUrl: event.SEO?.metaUrl,
-          seoSocialImageId: event.SEO?.socialImage?.id,
-          seoSocialImageDocumentId: event.SEO?.socialImage?.documentId,
-          thumbnailDocumentId: event.Thumbnail?.documentId,
-          tagIds: event.Tag?.map((t) => t.id).filter(Boolean) ?? [],
-          slideDocumentIds: event.Slides?.map((s) => s.id).filter(Boolean) ?? [],
-          initialSEO: event.SEO as Record<string, unknown> | undefined,
+          description: event.description,
+          seoTitle: event.seo?.metaTitle,
+          seoDescription: event.seo?.metaDescription,
+          sourceUrl: event.seo?.metaUrl,
+          seoSocialImageId: event.seo?.socialImage?.id,
+          seoSocialImageDocumentId: event.seo?.socialImage?.documentId,
+          thumbnailDocumentId: event.thumbnail?.documentId,
+          tagIds: event.tag?.map((t) => t.id).filter(Boolean) ?? [],
+          slideDocumentIds: event.slides?.map((s) => s.id).filter(Boolean) ?? [],
+          initialSEO: event.seo as Record<string, unknown> | undefined,
           startDate: event.startDate,
           endDate: event.endDate,
           timezone: event.timezone,

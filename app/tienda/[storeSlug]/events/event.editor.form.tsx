@@ -53,7 +53,7 @@ type EventEditorFormProps = {
     locations?: Event['locations'];
     thumbnailUrl?: string;
     socialImageUrl?: string;
-    slides?: Event['Slides'];
+    slides?: Event['slides'];
     seoSocialImageId?: number;
     seoSocialImageDocumentId?: string;
     thumbnailDocumentId?: string;

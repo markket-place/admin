@@ -164,10 +164,10 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
     if (!store) return;
     setDraftTitle(store.title || '');
     setDraftSlug(store.slug || '');
-    setDraftDescription(richTextToHtml(store.Description));
-    setDraftUrls(store.URLS || []);
-    setDraftSeoTitle(store.SEO?.metaTitle || store.title || '');
-    setDraftSeoDescription(store.SEO?.metaDescription || '');
+    setDraftDescription(richTextToHtml(store.description));
+    setDraftUrls(store.urls || []);
+    setDraftSeoTitle(store.seo?.metaTitle || store.title || '');
+    setDraftSeoDescription(store.seo?.metaDescription || '');
     hasLoadedLocalDraftRef.current = false;
   }, [store]);
 
@@ -210,10 +210,10 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
 
       setDraftTitle(recoveredTitle || store.title || '');
       setDraftSlug(recoveredSlug || store.slug || '');
-      setDraftDescription(recoveredDescription || richTextToHtml(store.Description));
-      setDraftUrls(recoveredUrls.length ? recoveredUrls : (store.URLS || []));
-      setDraftSeoTitle(recoveredSeoTitle || store.SEO?.metaTitle || store.title || '');
-      setDraftSeoDescription(recoveredSeoDescription || store.SEO?.metaDescription || '');
+      setDraftDescription(recoveredDescription || richTextToHtml(store.description));
+      setDraftUrls(recoveredUrls.length ? recoveredUrls : (store.urls || []));
+      setDraftSeoTitle(recoveredSeoTitle || store.seo?.metaTitle || store.title || '');
+      setDraftSeoDescription(recoveredSeoDescription || store.seo?.metaDescription || '');
       setIsEditing(true);
       setEditorNotice('Recovered an unsaved draft from this device. Save to keep it or Discard to revert.');
     } catch (error) {
@@ -225,10 +225,10 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
     if (!store) return;
     setDraftTitle(store.title || '');
     setDraftSlug(store.slug || '');
-    setDraftDescription(richTextToHtml(store.Description));
-    setDraftUrls(store.URLS || []);
-    setDraftSeoTitle(store.SEO?.metaTitle || store.title || '');
-    setDraftSeoDescription(store.SEO?.metaDescription || '');
+    setDraftDescription(richTextToHtml(store.description));
+    setDraftUrls(store.urls || []);
+    setDraftSeoTitle(store.seo?.metaTitle || store.title || '');
+    setDraftSeoDescription(store.seo?.metaDescription || '');
     setSaveError(null);
     setEditorNotice(null);
     setIsEditing(false);
@@ -246,10 +246,10 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
     const normalize = (value: string) => value.trim();
     const baselineTitle = normalize(store.title || '');
     const baselineSlug = normalize(store.slug || '');
-    const baselineDescription = normalize(richTextToHtml(store.Description));
-    const baselineUrls = JSON.stringify(store.URLS || []);
-    const baselineSeoTitle = normalize(store.SEO?.metaTitle || store.title || '');
-    const baselineSeoDescription = normalize(store.SEO?.metaDescription || '');
+    const baselineDescription = normalize(richTextToHtml(store.description));
+    const baselineUrls = JSON.stringify(store.urls || []);
+    const baselineSeoTitle = normalize(store.seo?.metaTitle || store.title || '');
+    const baselineSeoDescription = normalize(store.seo?.metaDescription || '');
 
     const nextTitle = normalize(draftTitle);
     const nextSlug = normalize(draftSlug);
@@ -322,9 +322,9 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
     setSaveError(null);
 
     try {
-      const normalizedUrls: Store['URLS'] = (draftUrls || []).map((item, index) => ({
+      const normalizedUrls: Store['urls'] = (draftUrls || []).map((item, index) => ({
         ...item,
-        id: item.id ?? store.URLS?.[index]?.id ?? index + 1,
+        id: item.id ?? store.urls?.[index]?.id ?? index + 1,
       }));
 
       const payload = {
@@ -335,14 +335,14 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
           slug: nextSlug,
           URLS: normalizedUrls,
           SEO: {
-            ...store.SEO,
+            ...store.seo,
             metaTitle: (draftSeoTitle.trim() || title).slice(0, 60),
             metaDescription: draftSeoDescription.trim().slice(0, 160),
           },
-          Favicon: store.Favicon,
-          Cover: store.Cover,
-          Slides: store.Slides,
-          Logo: store.Logo,
+          Favicon: store.favicon,
+          Cover: store.cover,
+          Slides: store.slides,
+          Logo: store.logo,
         },
       };
 
@@ -364,9 +364,9 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
           ...next,
           ...payload.store,
           SEO: {
-            ...current.SEO,
-            ...payload.store.SEO,
-            ...(next.SEO || {}),
+            ...current.seo,
+            ...payload.store.seo,
+            ...(next.seo || {}),
           },
         };
       });

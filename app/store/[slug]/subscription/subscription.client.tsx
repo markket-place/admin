@@ -85,8 +85,8 @@ export default function SubscriptionClient({ store }: { store: Store }) {
     }
   };
 
-  const logoUrl = store.Logo?.url || store.SEO?.socialImage?.url;
-  const coverUrl = store.Cover?.url;
+  const logoUrl = store.logo?.url || store.seo?.socialImage?.url;
+  const coverUrl = store.cover?.url;
   const unsubscribedOn = info?.unsubscribedAt
     ? new Date(info.unsubscribedAt).toLocaleString()
     : null;
@@ -116,7 +116,7 @@ export default function SubscriptionClient({ store }: { store: Store }) {
           )}
           <div>
             <Title order={3} fw={700}>{store.title || store.slug}</Title>
-            <Text size="sm" c="dimmed">{store.SEO?.metaDescription || 'You are in control of your inbox preferences.'}</Text>
+            <Text size="sm" c="dimmed">{store.seo?.metaDescription || 'You are in control of your inbox preferences.'}</Text>
           </div>
         </Group>
 

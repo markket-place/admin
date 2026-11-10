@@ -21,8 +21,8 @@ export async function generateMetadata(): Promise<Metadata> {
     slug: 'stores',
     entity: {
       url: '/stores',
-      SEO: page?.SEO,
-      Title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     defaultTitle: 'Stores',
     type: 'website',
@@ -78,8 +78,8 @@ export default async function StoresPage() {
           <Container size="xl" style={{ position: 'relative', zIndex: 1 }}>
             <Stack align="center" gap="md">
               <img
-                src={store?.Logo?.url || markketplace.blank_logo_url}
-                alt={store?.SEO?.metaTitle || 'Markket Logo'}
+                src={store?.logo?.url || markketplace.blank_logo_url}
+                alt={store?.seo?.metaTitle || 'Markket Logo'}
                 style={{ width: 82, height: 82, borderRadius: 16, objectFit: 'contain', background: 'rgba(255,255,255,0.15)', padding: 8 }}
               />
               <Title
@@ -87,10 +87,10 @@ export default async function StoresPage() {
                 c="white"
                 style={{ fontSize: 'clamp(1.8rem, 5vw, 3rem)', fontWeight: 850, lineHeight: 1.16 }}
               >
-                {page?.Title || 'Discover Stores'}
+                {page?.title || 'Discover Stores'}
               </Title>
               <Text size="lg" ta="center" c="rgba(255,255,255,0.96)" maw={760} style={{ lineHeight: 1.55 }}>
-                {page?.SEO?.metaDescription || store?.SEO?.metaDescription || 'Explore highlights from independent creators and browse the latest stores joining the marketplace.'}
+                {page?.seo?.metaDescription || store?.seo?.metaDescription || 'Explore highlights from independent creators and browse the latest stores joining the marketplace.'}
               </Text>
               <Group gap="xs" justify="center">
                 <Badge

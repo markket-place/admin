@@ -13,6 +13,7 @@ import type { RichTextValue, StoredRichText } from '@/markket/richtext';
 import { cache } from 'react';
 import { subDays, format, } from 'date-fns';
 import './events.css';
+import { Metadata } from "next";
 
 function createPicsumImageUrl(seed: string, width: number, height: number) {
   const safeSeed = encodeURIComponent(seed || 'markket');
@@ -67,7 +68,7 @@ function getEventListLocationLabel(event: Event) {
   return (first.city || first.name || '').trim();
 }
 
-export async function generateMetadata({ params }: EventsPageProps) {
+export async function generateMetadata({ params }: EventsPageProps): Promise<Metadata> {
   const { slug } = await params;
   const response = await getStoreCached(slug);
   const store = response?.data?.[0] as Store;
@@ -86,13 +87,13 @@ export async function generateMetadata({ params }: EventsPageProps) {
   });
 
   const upcomingCount = upcomingEvents?.meta?.pagination?.total || 0;
-  const eventNames = upcomingEvents?.data?.slice(0, 5).map((e) => (e as Event).Name).filter(Boolean);
+  const eventNames = upcomingEvents?.data?.slice(0, 5).map((e) => (e as Event).name).filter(Boolean);
 
   return generateSEOMetadata({
     slug,
     entity: {
-      SEO: page?.SEO || store?.SEO,
-      Title: page?.Title,
+      seo: page?.seo || store?.seo,
+      title: page?.title,
       id: store?.id?.toString(),
       url: `/${slug}/events`,
     },
@@ -147,10 +148,10 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
       <Stack gap="xl">
         <StorePageHeader
           icon={<IconCalendar size={48} />}
-          title={eventPage?.Title || `${store?.title} Events`}
-          description={eventPage?.SEO?.metaDescription || `Upcoming gatherings, launches, and calendar moments from ${store?.title || 'this store'}.`}
+          title={eventPage?.title || `${store?.title} Events`}
+          description={eventPage?.seo?.metaDescription || `Upcoming gatherings, launches, and calendar moments from ${store?.title || 'this store'}.`}
           page={eventPage}
-          backgroundImage={eventPage?.SEO?.socialImage?.url || store?.SEO?.socialImage?.url || store?.Cover?.url}
+          backgroundImage={eventPage?.seo?.socialImage?.url || store?.seo?.socialImage?.url || store?.cover?.url}
           iconColor={markketColors.sections.events.main}
         />
 
@@ -174,14 +175,14 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
 
                 <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
                   {(upcomingEvents?.data as Event[])?.map((event) => {
-                    const contentImage = extractRichTextImageUrl(event.Description);
-                    const image = contentImage || event.Thumbnail?.url || event.SEO?.socialImage?.url || event.Slides?.[0]?.url;
+                    const contentImage = extractRichTextImageUrl(event.description);
+                    const image = contentImage || event.thumbnail?.url || event.seo?.socialImage?.url || event.slides?.[0]?.url;
                     const fallbackImage = createPicsumImageUrl(
-                      [event.Name, event.slug, slug].filter(Boolean).join('-') || event.id?.toString() || 'event',
+                      [event.name, event.slug, slug].filter(Boolean).join('-') || event.id?.toString() || 'event',
                       1200,
                       675,
                     );
-                    const excerpt = getEventExcerpt(event.Description);
+                    const excerpt = getEventExcerpt(event.description);
                     const locationLabel = getEventListLocationLabel(event);
 
                     return (
@@ -237,7 +238,7 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
 
                           <Stack gap="sm" p="lg" style={{ flex: 1 }}>
                             <Text size="lg" fw={600} c={markketColors.neutral.charcoal} lineClamp={2}>
-                              {event.Name}
+                              {event.name}
                             </Text>
 
                             <Group gap="xs">
@@ -258,7 +259,7 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
                               </Text>
                             )}
 
-                            {event.SEO?.metaUrl && (
+                            {event.seo?.metaUrl && (
                               <Group gap="xs" mt="auto">
                                 <IconMapPin size={14} color={markketColors.sections.events.main} />
                                 <Text size="xs" c={markketColors.sections.events.main} fw={500}>
@@ -267,7 +268,7 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
                               </Group>
                             )}
 
-                            {!event.SEO?.metaUrl && locationLabel && (
+                            {!event.seo?.metaUrl && locationLabel && (
                               <Group gap="xs" mt="auto">
                                 <IconMapPin size={14} color={markketColors.sections.events.main} />
                                 <Text size="xs" c={markketColors.sections.events.main} fw={500} lineClamp={1}>
@@ -311,14 +312,14 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
 
                 <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
                   {(pastEvents?.data as Event[]).map((event) => {
-                    const contentImage = extractRichTextImageUrl(event.Description);
-                    const image = contentImage || event.Thumbnail?.url || event.SEO?.socialImage?.url || event.Slides?.[0]?.url;
+                    const contentImage = extractRichTextImageUrl(event.description);
+                    const image = contentImage || event.thumbnail?.url || event.seo?.socialImage?.url || event.slides?.[0]?.url;
                     const fallbackImage = createPicsumImageUrl(
-                      [event.Name, event.slug, slug, 'past'].filter(Boolean).join('-') || event.id?.toString() || 'event',
+                      [event.name, event.slug, slug, 'past'].filter(Boolean).join('-') || event.id?.toString() || 'event',
                       1200,
                       675,
                     );
-                    const excerpt = getEventExcerpt(event.Description);
+                    const excerpt = getEventExcerpt(event.description);
                     const locationLabel = getEventListLocationLabel(event);
 
                     return (
@@ -387,7 +388,7 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
 
                           <Stack gap="sm" p="lg" style={{ flex: 1 }}>
                             <Text size="lg" fw={600} c={markketColors.neutral.charcoal} lineClamp={2}>
-                              {event.Name}
+                              {event.name}
                             </Text>
 
                             <Group gap="xs">
@@ -408,7 +409,7 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
                               </Text>
                             )}
 
-                            {event.SEO?.metaUrl && (
+                            {event.seo?.metaUrl && (
                               <Group gap="xs" mt="auto">
                                 <IconMapPin size={14} color={markketColors.neutral.mediumGray} />
                                 <Text size="xs" c={markketColors.neutral.mediumGray} fw={500}>
@@ -417,7 +418,7 @@ export default async function StoreEventsPage({ params }: EventsPageProps) {
                               </Group>
                             )}
 
-                            {!event.SEO?.metaUrl && locationLabel && (
+                            {!event.seo?.metaUrl && locationLabel && (
                               <Group gap="xs" mt="auto">
                                 <IconMapPin size={14} color={markketColors.neutral.mediumGray} />
                                 <Text size="xs" c={markketColors.neutral.mediumGray} fw={500} lineClamp={1}>

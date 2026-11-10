@@ -86,13 +86,12 @@ export default function ProductDisplay({ params }: ReceiptPageProps) {
 
   return (
     <div className="relative mx-auto max-w-4xl">
-      {page?.SEO?.socialImage && (
-        <MainImage title={page?.Title} image={page?.SEO?.socialImage} />
+      {page?.seo?.socialImage && (
+        <MainImage title={page?.title} image={page?.seo?.socialImage} />
       )}
-
       <section id="about" className="mb-10 max-w-3xl prose-img:border-0">
         <h1 className="mb-6 text-3xl font-bold tracking-wider sm:text-4xl">
-          {page?.Title}
+          {page?.title}
         </h1>
         <PageContent params={{ page: page }} />
       </section>
@@ -182,7 +181,7 @@ export default function ProductDisplay({ params }: ReceiptPageProps) {
           >
             <div className="space-y-4">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Subscribe to {store.title || store.SEO?.metaTitle}`s newsletter
+                Subscribe to {store.title || store.seo?.metaTitle}`s newsletter
               </label>
               <div className="flex gap-2">
                 <input

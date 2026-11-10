@@ -36,8 +36,8 @@ export const viewport: Viewport = {
 export async function generateMetadata(): Promise<Metadata> {
   const storeData = await strapiClient.getStore();
   const store = storeData?.data?.[0] as Store;
-  const seo = store?.SEO;
-  const favicon = store?.Favicon?.formats?.thumbnail?.url || markketplace.blank_favicon_url;
+  const seo = store?.seo;
+  const favicon = store?.favicon?.formats?.thumbnail?.url || markketplace.blank_favicon_url;
   const currentDate = new Date().toISOString();
   const baseUrl = markketplace.markket_url;
   const shouldIndex = !seo?.excludeFromSearch;

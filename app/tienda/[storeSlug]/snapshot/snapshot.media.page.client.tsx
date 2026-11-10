@@ -43,21 +43,21 @@ export default function StoreSnapshotMediaClientPage({ storeSlug }: StoreSnapsho
     if (`${store.id}` !== `${id}`) return;
 
     if (field === 'Slides') {
-      const currentSlides = Array.isArray(store.Slides) ? store.Slides : [];
+      const currentSlides = Array.isArray(store.slides) ? store.slides : [];
       const exists = currentSlides.some((slide) => `${slide.id}` === `${media.id}` || `${slide.documentId}` === `${media.documentId}`);
       setStore({
         ...store,
-        Slides: exists ? currentSlides : [...currentSlides, media],
+        slides: exists ? currentSlides : [...currentSlides, media],
       });
       return;
     }
 
     if (field.startsWith('SEO.')) {
-      const key = field.split('.')[1] as keyof Store['SEO'];
+      const key = field.split('.')[1] as keyof Store['seo'];
       setStore({
         ...store,
-        SEO: {
-          ...store.SEO,
+        seo: {
+          ...store.seo,
           [key]: media,
         },
       });
@@ -85,7 +85,7 @@ export default function StoreSnapshotMediaClientPage({ storeSlug }: StoreSnapsho
     }
   };
 
-  const saveSlides = async (slides: Store['Slides']) => {
+  const saveSlides = async (slides: Store['slides']) => {
     const targetId = store.documentId || store.id;
     if (!targetId) throw new Error('Missing store identifier');
 
@@ -93,17 +93,17 @@ export default function StoreSnapshotMediaClientPage({ storeSlug }: StoreSnapsho
       store: {
         ...store,
         title: store.title || '',
-        Description: store.Description || '',
+        Description: store.description || '',
         slug: store.slug || storeSlug,
-        URLS: store.URLS || [],
+        URLS: store.urls || [],
         SEO: {
-          ...(store.SEO || {}),
-          socialImage: store.SEO?.socialImage,
+          ...(store.seo || {}),
+          socialImage: store.seo?.socialImage,
         },
-        Favicon: store.Favicon,
-        Cover: store.Cover,
+        Favicon: store.favicon,
+        Cover: store.cover,
         Slides: slides,
-        Logo: store.Logo,
+        Logo: store.logo,
       },
     };
 

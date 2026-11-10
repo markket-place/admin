@@ -52,7 +52,7 @@ export default async function TiendaTeamPage({ params }: TiendaTeamPageProps) {
         storeRef={storeRef}
         storeSlug={store.slug || storeSlug}
         storeTitle={store.title || store.slug || storeSlug}
-        storeLogoUrl={store.Logo?.url || store.Cover?.url}
+        storeLogoUrl={store.logo?.url || store.cover?.url}
       />
     </Stack>
   );

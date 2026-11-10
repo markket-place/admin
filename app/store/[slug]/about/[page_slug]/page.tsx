@@ -25,8 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     slug,
     entity: {
       url: `/${slug}/about/${page_slug}`,
-      SEO: page?.SEO,
-      Title: page?.Title,  // Use page title from database
+      seo: page?.seo,
+      title: page?.title,  // Use page title from database
     },
     type: 'article',
     defaultTitle: 'About',
@@ -54,10 +54,10 @@ export default async function AboutPage({ params }: PageProps) {
       <Stack gap="xl">
         <StorePageHeader
           icon={<IconNotebook size={48} />}
-          title={page.Title || 'Page'}
-          description={page?.SEO?.metaDescription || store?.SEO?.metaDescription}
+          title={page.title || 'Page'}
+          description={page?.seo?.metaDescription || store?.seo?.metaDescription}
           page={page}
-          backgroundImage={page?.SEO?.socialImage?.url || store?.SEO?.socialImage?.url || store?.Cover?.url}
+          backgroundImage={page?.seo?.socialImage?.url || store?.seo?.socialImage?.url || store?.cover?.url}
           iconColor={markketColors.sections.about.main}
         />
 
@@ -80,7 +80,7 @@ export default async function AboutPage({ params }: PageProps) {
           currentSection="about"
           items={otherPages.map((p) => ({
             href: `/${slug}/about/${p.slug}`,
-            label: p.Title || p.slug,
+            label: p.title || p.slug,
           }))}
         />
       </Stack>

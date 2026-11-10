@@ -25,7 +25,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const response = await strapiClient.getStore(slug);
   const store = response?.data?.[0] as Store | undefined;
-  const favicon = store?.Favicon?.formats?.thumbnail?.url || store?.Favicon?.url || markketplace.blank_favicon_url;
+  const favicon = store?.favicon?.formats?.thumbnail?.url || store?.favicon?.url || markketplace.blank_favicon_url;
 
   return {
     icons: {

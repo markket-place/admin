@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     slug: 'auth',
     entity: {
       url: `/auth`,
-      SEO: page?.SEO,
+      seo: page?.seo,
       id: page?.id?.toString(),
     },
   });

@@ -63,11 +63,11 @@ export function DashboardProvider({ children, store }: { children: React.ReactNo
       setIsLoading(false);
     };
 
-    if (store?.STRIPE_CUSTOMER_ID && store?.documentId) {
+    if (store?.stripe_customer_id && store?.documentId) {
       getAccountData(store.documentId);
     }
 
-    if (!store?.STRIPE_CUSTOMER_ID) {
+    if (!store?.stripe_customer_id) {
       setAccount({} as StripeAccount);
     }
   }, [store, lastId]);

@@ -32,8 +32,8 @@ export interface Media {
 
 export type URL = {
   id: number;
-  Label: string;
-  URL: string;
+  label: string;
+  url: string;
 };
 
 export interface Store {

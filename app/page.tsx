@@ -51,11 +51,11 @@ const prioritizeWithImage = <T,>(items: T[], hasImage: (item: T) => boolean): T[
     .sort((a, b) => a.imagePriority - b.imagePriority || a.index - b.index)
     .map(({ item }) => item);
 };
-const articleHasImage = (article: Article) => Boolean(article?.cover?.formats?.medium?.url || article?.cover?.formats?.small?.url || article?.cover?.url || article?.SEO?.socialImage?.url || article?.store?.Logo?.url);
-const storeHasImage = (store: Store) => Boolean(store?.Logo?.url || store?.Cover?.url || store?.SEO?.socialImage?.url);
-const pageHasImage = (page: Page) => Boolean(page?.store?.Logo?.url || page?.SEO?.socialImage?.url);
-const eventHasImage = (event: Event) => Boolean(event?.Thumbnail?.formats?.medium?.url || event?.Thumbnail?.formats?.small?.url || event?.Thumbnail?.url || event?.Slides?.[0]?.formats?.medium?.url || event?.Slides?.[0]?.formats?.small?.url || event?.Slides?.[0]?.url || event?.SEO?.socialImage?.url);
-const productHasImage = (product: Product) => Boolean(product?.Thumbnail?.url || product?.Slides?.[0]?.formats?.medium?.url || product?.Slides?.[0]?.formats?.small?.url || product?.Slides?.[0]?.url || product?.SEO?.socialImage?.url);
+const articleHasImage = (article: Article) => Boolean(article?.cover?.formats?.medium?.url || article?.cover?.formats?.small?.url || article?.cover?.url || article?.seo?.socialImage?.url || article?.store?.logo?.url);
+const storeHasImage = (store: Store) => Boolean(store?.logo?.url || store?.cover?.url || store?.seo?.socialImage?.url);
+const pageHasImage = (page: Page) => Boolean(page?.store?.logo?.url || page?.seo?.socialImage?.url);
+const eventHasImage = (event: Event) => Boolean(event?.thumbnail?.formats?.medium?.url || event?.thumbnail?.formats?.small?.url || event?.thumbnail?.url || event?.slides?.[0]?.formats?.medium?.url || event?.slides?.[0]?.formats?.small?.url || event?.slides?.[0]?.url || event?.seo?.socialImage?.url);
+const productHasImage = (product: Product) => Boolean(product?.thumbnail?.url || product?.slides?.[0]?.formats?.medium?.url || product?.slides?.[0]?.formats?.small?.url || product?.slides?.[0]?.url || product?.seo?.socialImage?.url);
 const getStorefrontKey = <T extends { store?: { slug?: string } }>(item: T, fallback: string) => item?.store?.slug || fallback;
 const limitOnePerStorefront = <T extends { store?: { slug?: string }; documentId?: string | number; id?: string | number }>(items: T[]): T[] => {
   const seen = new Set<string>();
@@ -78,8 +78,8 @@ const toAbsoluteUrl = (path?: string) => {
 export async function generateMetadata(): Promise<Metadata> {
   const { page, store, communityProductsResponse, communityEventsResponse } = await getHomepageData();
   const storeSlug = process.env.NEXT_PUBLIC_MARKKET_STORE_SLUG || markketplace.slug;
-  const homepageTitle = page?.Title || 'Home';
-  const homepageDescription = page?.SEO?.metaDescription || 'Discover independent stores, products, events, and stories on Markketplace.';
+  const homepageTitle = page?.title || 'Home';
+  const homepageDescription = page?.seo?.metaDescription || 'Discover independent stores, products, events, and stories on Markketplace.';
 
   const communityEvents = prioritizeWithImage((communityEventsResponse?.data || []) as Event[], eventHasImage);
   const communityProducts = prioritizeWithImage((communityProductsResponse?.data || []) as Product[], productHasImage);
@@ -88,9 +88,9 @@ export async function generateMetadata(): Promise<Metadata> {
   const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: store?.title || page?.Title || 'Markketplace',
+    name: store?.title || page?.title || 'Markketplace',
     url: markketplace.markket_url,
-    description: page?.SEO?.metaDescription || store?.SEO?.metaDescription,
+    description: page?.seo?.metaDescription || store?.seo?.metaDescription,
   };
 
   const jsonLdSchemas: any[] = [websiteJsonLd];
@@ -102,14 +102,14 @@ export async function generateMetadata(): Promise<Metadata> {
       name: 'Featured Products',
       itemListElement: communityProducts.slice(0, 8).map((product, index) => {
         const storeSlug = (product as any)?.stores?.[0]?.slug;
-        const image = product?.Thumbnail?.url || product?.Slides?.[0]?.formats?.medium?.url || product?.Slides?.[0]?.formats?.small?.url || product?.Slides?.[0]?.url || product?.SEO?.socialImage?.url;
+        const image = product?.thumbnail?.url || product?.slides?.[0]?.formats?.medium?.url || product?.slides?.[0]?.formats?.small?.url || product?.slides?.[0]?.url || product?.seo?.socialImage?.url;
         return {
           "@type": "ListItem",
           position: index + 1,
           item: {
             "@type": "Product",
-            name: product.Name,
-            description: product?.SEO?.metaDescription || product?.Description || undefined,
+            name: product.name,
+            description: product?.seo?.metaDescription || product?.description || undefined,
             image: image ? toAbsoluteUrl(image) : undefined,
             url: storeSlug ? `${markketplace.markket_url}/${storeSlug}/products/${product.slug}` : undefined,
             offers: typeof product.usd_price === 'number' && product.usd_price > 0
@@ -133,19 +133,19 @@ export async function generateMetadata(): Promise<Metadata> {
       name: 'Upcoming Events',
       itemListElement: communityEvents.slice(0, 15).map((event, index) => {
         const storeSlug = (event as any)?.stores?.[0]?.slug;
-        const image = event?.Thumbnail?.formats?.medium?.url || event?.Thumbnail?.formats?.small?.url || event?.Thumbnail?.url || event?.Slides?.[0]?.formats?.medium?.url || event?.Slides?.[0]?.formats?.small?.url || event?.Slides?.[0]?.url || event?.SEO?.socialImage?.url;
+        const image = event?.thumbnail?.formats?.medium?.url || event?.thumbnail?.formats?.small?.url || event?.thumbnail?.url || event?.slides?.[0]?.formats?.medium?.url || event?.slides?.[0]?.formats?.small?.url || event?.slides?.[0]?.url || event?.seo?.socialImage?.url;
         return {
           "@type": "ListItem",
           position: index + 1,
           item: {
             "@type": "Event",
-            name: event.Name,
+            name: event.name,
             startDate: event.startDate,
             endDate: event.endDate || undefined,
             eventAttendanceMode: 'https://schema.org/MixedEventAttendanceMode',
             eventStatus: 'https://schema.org/EventScheduled',
             image: image ? toAbsoluteUrl(image) : undefined,
-            description: event?.SEO?.metaDescription || event?.Description || undefined,
+            description: event?.seo?.metaDescription || event?.description || undefined,
             url: storeSlug ? `${markketplace.markket_url}/${storeSlug}/events/${event.slug}` : undefined,
             offers: typeof event.usd_price === 'number' && event.usd_price > 0
               ? {
@@ -164,7 +164,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const seoMetadata = await generateSEOMetadata({
     slug: storeSlug,
     entity: {
-      SEO: page?.SEO,
+      seo: page?.seo,
       title: homepageTitle,
       url: `/`,
     },

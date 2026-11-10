@@ -125,7 +125,7 @@ export default function TiendaAlbumItemPageClient({ storeSlug, itemId }: TiendaA
       }
     >
       <Stack gap="md">
-        <Text c="dimmed">{album.SEO?.metaDescription || album.description || 'No description yet.'}</Text>
+        <Text c="dimmed">{album.seo?.metaDescription || album.description || 'No description yet.'}</Text>
 
         <ContentMediaPreview
           storeRef={storeSlug}
@@ -144,8 +144,8 @@ export default function TiendaAlbumItemPageClient({ storeSlug, itemId }: TiendaA
             {
               label: 'Social Image',
               field: 'SEO.socialImage',
-              src: album.SEO?.socialImage?.url,
-              alt: album.SEO?.socialImage?.alternativeText || album.title,
+              src: album.seo?.socialImage?.url,
+              alt: album.seo?.socialImage?.alternativeText || album.title,
             },
           ]}
         />

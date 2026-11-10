@@ -5,7 +5,7 @@ export async function findBlogArticle(itemId: string, storeSlug: string, token: 
   return findTiendaContent<Article>(storeSlug, 'article', itemId, token);
 }
 
-export function contentBlocksToText(content: Article['Content']) {
+export function contentBlocksToText(content: Article['content']) {
   if (!Array.isArray(content)) return '';
 
   return content

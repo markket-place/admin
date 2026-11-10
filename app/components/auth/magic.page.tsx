@@ -164,10 +164,10 @@ export default function MagicLinkPage({ page, store }: MagicLinkPageProps) {
               Passwordless Access
             </Badge>
             <Title order={1} ta="center" fw={900} fz={{ base: 28, sm: 34 }} style={{ color: markketColors.neutral.charcoal }}>
-              {page?.SEO?.metaTitle || 'Sign in with Magic Link'}
+              {page?.seo?.metaTitle || 'Sign in with Magic Link'}
             </Title>
             <Text ta="center" maw={460} style={{ color: markketColors.neutral.darkGray, lineHeight: 1.6 }}>
-              {page?.SEO?.metaDescription || 'Enter your email and we\'ll send a one-click login link straight to your inbox — no password needed.'}
+              {page?.seo?.metaDescription || 'Enter your email and we\'ll send a one-click login link straight to your inbox — no password needed.'}
             </Text>
           </Stack>)}
 
@@ -271,7 +271,7 @@ export default function MagicLinkPage({ page, store }: MagicLinkPageProps) {
           </Paper>
 
           {/* Bottom content / trust strip */}
-          {page?.Content?.length ? (
+          {page?.content?.length ? (
             <PageContent params={{ page }} />
           ) : (
             <Group justify="center" gap="xs">
@@ -281,7 +281,6 @@ export default function MagicLinkPage({ page, store }: MagicLinkPageProps) {
               </Text>
             </Group>
           )}
-
         </Stack>
       </Container>
     </Box>

@@ -43,7 +43,7 @@ const TrackPage = ({ store, album, track }: AlbumPageProps) => {
       >
         <Box pos="relative" h={300} mb="xl">
           <Image
-            src={album.cover?.url || album.SEO?.socialImage?.url}
+            src={album.cover?.url || album.seo?.socialImage?.url}
             alt={album.title}
             height={300}
             style={{
@@ -67,7 +67,7 @@ const TrackPage = ({ store, album, track }: AlbumPageProps) => {
               {store && (
                 <Group gap="xs">
                   <Image
-                    src={store.Favicon?.url || store.Logo?.url}
+                    src={store.favicon?.url || store.logo?.url}
                     width={24}
                     height={24}
                     radius="sm"
@@ -148,7 +148,7 @@ const TrackPage = ({ store, album, track }: AlbumPageProps) => {
                 <div className="mb-md">
                   <AspectRatio ratio={16 / 9}>
                     <Image
-                      src={track.SEO?.socialImage?.url}
+                      src={track.seo?.socialImage?.url}
                       alt={track.title}
                       fallbackSrc="https://placehold.co/600x400?text=Track"
                     />

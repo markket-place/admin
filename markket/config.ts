@@ -73,7 +73,7 @@ export const markketplace = {
   /** MARKKET_APP_URL : internal app origin for server-side same-app API fetches */
   app_url: process.env.MARKKET_APP_URL || process.env.NEXT_PUBLIC_MARKKET_URL || 'http://localhost:3000',
   /** NEXT_PUBLIC_MARKKET_STORE_SLUG */
-  slug: process.env.NEXT_PUBLIC_MARKKET_STORE_SLUG || 'next',
+  slug: process.env.NEXT_PUBLIC_MARKKET_STORE_SLUG || 'admin',
   /** NEXT_PUBLIC_MARKKET_DESIGN_SYSTEM_STORE_SLUG */
   design_system_demo_slug: process.env.NEXT_PUBLIC_MARKKET_DESIGN_SYSTEM_STORE_SLUG || 'dev',
   extensions: {

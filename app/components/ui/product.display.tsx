@@ -45,21 +45,21 @@ function buildProductGallery(product: Product): GalleryImage[] {
     });
   };
 
-  push(product?.Thumbnail ? {
+  push(product?.thumbnail ? {
     id: 'thumbnail',
-    url: product.Thumbnail.url,
-    alternativeText: product.Thumbnail.alternativeText,
+    url: product.thumbnail.url,
+    alternativeText: product.thumbnail.alternativeText,
     formats: undefined,
   } : null, 'thumbnail');
 
-  push(product?.SEO?.socialImage ? {
+  push(product?.seo?.socialImage ? {
     id: 'social',
-    url: product.SEO.socialImage.url,
-    alternativeText: product.SEO.socialImage.alternativeText,
-    formats: product.SEO.socialImage.formats as Slide['formats'],
+    url: product.seo.socialImage.url,
+    alternativeText: product.seo.socialImage.alternativeText,
+    formats: product.seo.socialImage.formats as Slide['formats'],
   } : null, 'social');
 
-  (product?.Slides || []).forEach((slide, index) => {
+  (product?.slides || []).forEach((slide, index) => {
     push(slide, `slide-${index}`);
   });
 
@@ -104,21 +104,21 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
   const [selectedPriceId, setSelectedPriceId] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(1);
   const [tip, setTip] = useState<number>(0);
-  const prices: Price[] = product.PRICES?.map((price) => ({
+  const prices: Price[] = product.prices?.map((price) => ({
     ...price,
-    currency: price.Currency || "USD",
+    currency: price.currency || "USD",
   })) || [];
-  const hasExternalPurchaseUrl = Boolean(product?.SEO?.metaUrl);
-  const externalHost = externalHostLabel(product?.SEO?.metaUrl);
+  const hasExternalPurchaseUrl = Boolean(product?.seo?.metaUrl);
+  const externalHost = externalHostLabel(product?.seo?.metaUrl);
   const tippingEnabled = Boolean((product.extras || []).find((e: any) => e.key == 'markket:product:tipping')?.content?.enabled);
-  const visiblePrices = prices.filter((price) => !price.hidden && !!price.STRIPE_ID);
-  const selectedPrice = visiblePrices.find((price) => price.STRIPE_ID === selectedPriceId) || visiblePrices[0];
+  const visiblePrices = prices.filter((price) => !price.hidden && !!price.stripe_id);
+  const selectedPrice = visiblePrices.find((price) => price.stripe_id === selectedPriceId) || visiblePrices[0];
   const selectedInventory = typeof (selectedPrice as any)?.inventory !== 'undefined' && (selectedPrice as any)?.inventory !== null
     ? Number((selectedPrice as any).inventory)
     : undefined;
   const maxQuantity = typeof selectedInventory === 'number' && selectedInventory > -1 ? selectedInventory : 99;
   const checkoutHref = `/store/${store?.slug}/checkout`;
-  const checkoutTestQuery = product?.Name?.toLowerCase()?.includes('test') ? '&test=1' : '';
+  const checkoutTestQuery = product?.name?.toLowerCase()?.includes('test') ? '&test=1' : '';
 
   const handleContinueToCheckout = () => {
     if (!selectedPrice || !store?.slug) return;
@@ -128,14 +128,14 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
       productDocumentId: product.documentId,
       quantity,
       tip,
-      selectedPriceId: selectedPrice.STRIPE_ID || '',
+      selectedPriceId: selectedPrice.stripe_id || '',
       PRICES: prices,
     });
   };
 
   useEffect(() => {
     if (!selectedPriceId && visiblePrices.length > 0) {
-      setSelectedPriceId(visiblePrices[0].STRIPE_ID || '');
+      setSelectedPriceId(visiblePrices[0].stripe_id || '');
     }
   }, [selectedPriceId, visiblePrices]);
 
@@ -152,7 +152,7 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
         animate={{ y: 0, opacity: 1 }}
       >
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-          {product.Name}
+          {product.name}
         </h1>
       </motion.div>
 
@@ -168,7 +168,7 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
               aria-label="Open product image"
               style={{ display: 'block', width: '100%', height: '100%', cursor: 'zoom-in' }}
             >
-              <MainImage title={product.Name} image={selectedImage} />
+              <MainImage title={product.name} image={selectedImage} />
             </UnstyledButton>
           </motion.div>
 
@@ -200,7 +200,7 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
           >
             <div className="hidden lg:block mb-6">
               <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                {product.Name}
+                {product.name}
               </h1>
             </div>
 
@@ -209,7 +209,7 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
               <Title order={2} size="h3" mb={40}>
                 Product Description
               </Title>
-              <RichTextContent content={product?.Description as string} />
+              <RichTextContent content={product?.description as string} />
             </div>
 
             <motion.div
@@ -221,7 +221,7 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
               <div className="space-y-3">
                 {hasExternalPurchaseUrl && (
                   <a
-                    href={product.SEO?.metaUrl}
+                    href={product.seo?.metaUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-sm font-medium text-sky-600 underline-offset-2 transition hover:text-sky-700 hover:underline"
@@ -245,11 +245,11 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
                       <Select
                         label="Choose an option"
                         placeholder="Pick a variant..."
-                        value={selectedPrice?.STRIPE_ID || ''}
+                        value={selectedPrice?.stripe_id || ''}
                         onChange={(value) => setSelectedPriceId(value || '')}
                         data={visiblePrices.map((price) => ({
-                          value: price.STRIPE_ID || '',
-                          label: `${(price.Name || '').replace(/_/gi, ' ')} - $${price.Price} ${price.Currency}`,
+                          value: price.stripe_id || '',
+                          label: `${(price.name || '').replace(/_/gi, ' ')} - $${price.price} ${price.currency}`,
                         }))}
                         required
                         clearable={false}
@@ -282,12 +282,12 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
 
                       <Group justify="space-between" align="center">
                         <Text size="sm" c="dimmed">
-                          {selectedPrice ? `${selectedPrice.Currency || 'USD'} ${Number(selectedPrice.Price || 0).toFixed(2)}` : 'Select a price to continue'}
+                          {selectedPrice ? `${selectedPrice.currency || 'USD'} ${Number(selectedPrice.price || 0).toFixed(2)}` : 'Select a price to continue'}
                         </Text>
                         <Button
                           component="a"
                           href={checkoutHref
-                            ? `${checkoutHref.toString()}?product=${encodeURIComponent(product.slug)}&priceId=${encodeURIComponent(selectedPrice?.STRIPE_ID || '')}&quantity=${encodeURIComponent(String(quantity))}${tippingEnabled ? `&tip=${encodeURIComponent(String(tip))}` : ''}${checkoutTestQuery}`
+                            ? `${checkoutHref.toString()}?product=${encodeURIComponent(product.slug)}&priceId=${encodeURIComponent(selectedPrice?.stripe_id || '')}&quantity=${encodeURIComponent(String(quantity))}${tippingEnabled ? `&tip=${encodeURIComponent(String(tip))}` : ''}${checkoutTestQuery}`
                             : '#'}
                           onClick={handleContinueToCheckout}
                           disabled={!selectedPrice || selectedInventory === 0}
@@ -328,7 +328,7 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
         onClose={() => setLightboxOpen(false)}
         centered
         size="90vw"
-        title={selectedImage?.alternativeText || product.Name}
+        title={selectedImage?.alternativeText || product.name}
         styles={{
           content: { background: '#05080f' },
           header: { background: '#05080f' },
@@ -356,8 +356,8 @@ export default function ProductDisplay({ product, page, store }: { product: Prod
 function ProductPrice({ prices }: { prices: Price[] }) {
   if (!prices.length) return null;
   const first = prices[0];
-  const currency = first.Currency || 'USD';
-  const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(Number(first.Price));
+  const currency = first.currency || 'USD';
+  const formatted = new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(Number(first.price));
 
   return (
     <div className="flex items-center gap-2">

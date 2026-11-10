@@ -124,7 +124,7 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
   const endsAt = formatDateTime(event.endDate);
   const eventIsPublished = isPublished(event);
   const primaryLocationLines = formatPrimaryLocation(event);
-  const externalHost = externalHostLabel(event.SEO?.metaUrl);
+  const externalHost = externalHostLabel(event.seo?.metaUrl);
   const refreshEventAfterUpload = async () => {
     const token = readTiendaAuthToken();
     if (!token) return;
@@ -138,11 +138,11 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
       console.error('Tienda event media refresh error', err);
     }
   };
-  const slideSlots = (event.Slides || []).map((slide, index) => ({
+  const slideSlots = (event.slides || []).map((slide, index) => ({
     label: `Slide ${index + 1}`,
     field: 'Slides',
     src: slide?.formats?.small?.url || slide?.url,
-    alt: slide?.alternativeText || `${event.Name || 'Event'} slide ${index + 1}`,
+    alt: slide?.alternativeText || `${event.name || 'Event'} slide ${index + 1}`,
   }));
 
   return (
@@ -153,7 +153,7 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
         { label: 'Events', href: `/tienda/${storeSlug}/events` },
         { label: event.slug || itemId },
       ]}
-      title={event.Name || 'Untitled event'}
+      title={event.name || 'Untitled event'}
       routePath={`/tienda/${storeSlug}/events/${event.slug || itemId}`}
       actions={
         <>
@@ -170,7 +170,7 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
     >
       <EventDetailTabs storeRef={storeRef} eventDocumentId={itemDocumentId} eventNumericId={event.id}>
         <Stack gap="md">
-          <Text c="dimmed">{event.SEO?.metaDescription || 'No summary yet.'}</Text>
+          <Text c="dimmed">{event.seo?.metaDescription || 'No summary yet.'}</Text>
 
           <Paper withBorder p="lg" radius="md" bg="var(--mantine-color-gray-0)">
             <Stack gap={4}>
@@ -202,20 +202,20 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
               {
                 label: 'Thumbnail',
                 field: 'Thumbnail',
-                src: event.Thumbnail?.url,
-                alt: event.Thumbnail?.alternativeText || event.Name,
+                src: event.thumbnail?.url,
+                alt: event.thumbnail?.alternativeText || event.name,
               },
               {
                 label: 'Cover / Social',
                 field: 'SEO.socialImage',
-                src: event.SEO?.socialImage?.url,
-                alt: event.SEO?.socialImage?.alternativeText || event.Name,
+                src: event.seo?.socialImage?.url,
+                alt: event.seo?.socialImage?.alternativeText || event.name,
               },
               ...slideSlots,
               {
                 label: 'Add Slide',
                 field: 'Slides',
-                alt: `${event.Name || 'Event'} slide`,
+                alt: `${event.name || 'Event'} slide`,
               },
             ]}
           />
@@ -224,7 +224,7 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
             storeRef={storeRef}
             contentType="event"
             itemDocumentId={itemDocumentId}
-            value={event.PRICES || []}
+            value={event.prices || []}
             onSaved={() => {
               void refreshEventAfterUpload();
             }}
@@ -232,17 +232,17 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
 
           <Divider label={<Badge variant="dot" color="gray" size="sm">Description</Badge>} labelPosition="left" />
 
-          {event.Description && (
+          {event.description && (
             <Paper withBorder p="lg" radius="md" className="prose dark:prose-dark max-w-none">
-              <RichTextContent content={event.Description} />
+              <RichTextContent content={event.description} />
             </Paper>
           )}
-          {!event.Description && event.SEO?.metaDescription && (
+          {!event.description && event.seo?.metaDescription && (
             <Paper withBorder p="lg" radius="md">
-              {event.SEO.metaDescription}
+              {event.seo.metaDescription}
             </Paper>
           )}
-          {!event.Description && !event.SEO?.metaDescription && (
+          {!event.description && !event.seo?.metaDescription && (
             <Paper withBorder p="lg" radius="md" bg="var(--mantine-color-gray-0)">
               <Text c="dimmed" ta="center" size="sm">Details coming soon.</Text>
             </Paper>
@@ -254,12 +254,12 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
             isPublicEnabled={eventIsPublished}
           />
 
-          {event.SEO?.metaUrl && (
+          {event.seo?.metaUrl && (
             <>
               <Divider />
               <Button
                 component="a"
-                href={event.SEO.metaUrl}
+                href={event.seo.metaUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 size="lg"
@@ -271,7 +271,7 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
             </>
           )}
 
-          {event.usd_price != null && event.usd_price > 0 && !event.SEO?.metaUrl && (
+          {event.usd_price != null && event.usd_price > 0 && !event.seo?.metaUrl && (
             <>
               <Divider />
               <Paper withBorder p="lg" radius="md" bg="var(--mantine-color-blue-0)">

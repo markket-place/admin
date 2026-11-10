@@ -46,9 +46,9 @@ const transformBody = (values: Values, contentType: contentTypes) => {
 
   if (['article'].includes(contentType)) {
     body = body as Article;
-    body.Tags = body?.Tags?.map((t: Tag) => ({
-      Label: t.Label,
-      Color: getTagColorName(t.Color as string)
+    body.tags = body?.tags?.map((t: Tag) => ({
+      label: t.label,
+      color: getTagColorName(t.color as string)
     })) || [];
   }
 

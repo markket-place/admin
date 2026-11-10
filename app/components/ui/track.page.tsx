@@ -80,7 +80,7 @@ const TrackPage = ({ store, track }: { store: Store; track: AlbumTrack }) => {
                   >
                     <AspectRatio ratio={1} className="track-cover rounded-xl" bg={'white'} >
                       <Image
-                        src={track.media?.[0]?.url || track.SEO?.socialImage?.url}
+                        src={track.media?.[0]?.url || track.seo?.socialImage?.url}
                         alt={track.title}
                         style={{
                           borderRadius: '12px',
@@ -137,7 +137,7 @@ const TrackPage = ({ store, track }: { store: Store; track: AlbumTrack }) => {
                           <Link href={`/store/${store.slug}`} style={{ textDecoration: 'none' }}>
                             <Group gap="md">
                               <Image
-                                src={store.Favicon?.url || store.Logo?.url}
+                                src={store.favicon?.url || store.logo?.url}
                                 width={40}
                                 height={40}
                                 radius="sm"

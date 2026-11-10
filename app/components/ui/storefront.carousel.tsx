@@ -17,8 +17,8 @@ interface StorefrontCarouselProps {
 const fmt = (n: number) => n.toString().padStart(2, '0');
 
 const getDesc = (store?: Store) =>
-  store?.SEO?.metaDescription ||
-  store?.SEO?.metaTitle ||
+  store?.seo?.metaDescription ||
+  store?.seo?.metaTitle ||
   'Independent storefront on the Markketplace network.';
 
 export function StorefrontCarousel({ stores }: StorefrontCarouselProps) {
@@ -30,17 +30,17 @@ export function StorefrontCarousel({ stores }: StorefrontCarouselProps) {
   const featured = stores[selectedIdx];
   const progress = ((selectedIdx + 1) / stores.length) * 100;
   const coverUrl = pickImg(
-    featured?.Cover?.formats?.large?.url,
-    featured?.Cover?.formats?.medium?.url,
-    featured?.Cover?.formats?.small?.url,
-    featured?.Cover?.url,
-    featured?.SEO?.socialImage?.formats?.medium?.url,
-    featured?.SEO?.socialImage?.url,
+    featured?.cover?.formats?.large?.url,
+    featured?.cover?.formats?.medium?.url,
+    featured?.cover?.formats?.small?.url,
+    featured?.cover?.url,
+    featured?.seo?.socialImage?.formats?.medium?.url,
+    featured?.seo?.socialImage?.url,
   );
   const logoUrl = pickImg(
-    featured?.Logo?.formats?.small?.url,
-    featured?.Logo?.formats?.thumbnail?.url,
-    featured?.Logo?.url,
+    featured?.logo?.formats?.small?.url,
+    featured?.logo?.formats?.thumbnail?.url,
+    featured?.logo?.url,
   );
   const href = featured?.slug ? `/${featured.slug}` : '/stores';
 
@@ -245,11 +245,11 @@ export function StorefrontCarousel({ stores }: StorefrontCarouselProps) {
               {stores.map((store, idx) => {
                 const isActive = idx === selectedIdx;
                 const thumbUrl = pickImg(
-                  store?.Cover?.formats?.thumbnail?.url,
-                  store?.Cover?.formats?.small?.url,
-                  store?.Cover?.url,
-                  store?.Logo?.formats?.thumbnail?.url,
-                  store?.Logo?.url,
+                  store?.cover?.formats?.thumbnail?.url,
+                  store?.cover?.formats?.small?.url,
+                  store?.cover?.url,
+                  store?.logo?.formats?.thumbnail?.url,
+                  store?.logo?.url,
                 );
 
                 return (

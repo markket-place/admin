@@ -51,20 +51,20 @@ function createEmptyPrice(index = 0, contentType: 'product' | 'event' = 'product
 
   return {
     id: tempId,
-    Price: 0,
-    Currency: 'USD',
-    STRIPE_ID: '',
-    Description: '',
+    price: 0,
+    currency: 'USD',
+    stripe_id: '',
+    description: '',
     inventory: undefined,
     count: 1,
-    Name: defaultName,
+    name: defaultName,
     hidden: false,
     ships_to: [],
   };
 }
 
 function getSortedPrices(prices: PriceItemDraft[]) {
-  return [...prices].sort((left, right) => Number(left.Price || 0) - Number(right.Price || 0));
+  return [...prices].sort((left, right) => Number(left.price || 0) - Number(right.price || 0));
 }
 
 export function normalizePrices(prices?: Array<Partial<PriceItemDraft> | null | undefined>): PriceItemDraft[] {
@@ -74,13 +74,13 @@ export function normalizePrices(prices?: Array<Partial<PriceItemDraft> | null | 
       ...createEmptyPrice(index),
       ...price,
       id: Number(price?.id || 0) || -Date.now() - index,
-      Price: Number(price?.Price || 0) || 0,
-      Currency: (price?.Currency || 'USD').toUpperCase(),
-      STRIPE_ID: price?.STRIPE_ID || '',
-      Description: price?.Description || '',
+      Price: Number(price?.price || 0) || 0,
+      Currency: (price?.currency || 'USD').toUpperCase(),
+      STRIPE_ID: price?.stripe_id || '',
+      Description: price?.description || '',
       inventory: typeof price?.inventory === 'number' ? price.inventory : undefined,
       count: typeof price?.count === 'number' ? price.count : 1,
-      Name: price?.Name || '',
+      Name: price?.name || '',
       hidden: Boolean(price?.hidden),
       ships_to: Array.isArray(price?.ships_to) ? price.ships_to.filter((item): item is string => typeof item === 'string' && item.trim().length > 0) : [],
     }));
@@ -91,12 +91,12 @@ export function normalizePrices(prices?: Array<Partial<PriceItemDraft> | null | 
 export function serializePricesForPayload(prices: PriceItemDraft[]) {
   return prices.map((price) => ({
     ...(price.id > 0 ? { id: price.id } : {}),
-    Price: Number(price.Price || 0),
-    Currency: (price.Currency || 'USD').toUpperCase(),
-    ...(price.STRIPE_ID?.trim() ? { STRIPE_ID: price.STRIPE_ID.trim() } : {}),
-    Description: price.Description || '',
+    price: Number(price.price || 0),
+    currency: (price.currency || 'USD').toUpperCase(),
+    ...(price.stripe_id?.trim() ? { stripe_id: price.stripe_id.trim() } : {}),
+    description: price.description || '',
     inventory: typeof price.inventory === 'number' ? price.inventory : undefined,
-    Name: price.Name || '',
+    name: price.name || '',
     hidden: Boolean(price.hidden),
     ships_to: Array.isArray(price.ships_to) ? price.ships_to.filter((item): item is string => typeof item === 'string' && item.trim().length > 0) : [],
   }));
@@ -116,7 +116,7 @@ function summarizePrices(prices: PriceItemDraft[]) {
   if (!prices.length) return 'Add prices to start selling';
 
   const visibleCount = prices.filter((price) => !price.hidden).length;
-  const syncedCount = prices.filter((price) => Boolean(price.STRIPE_ID?.trim())).length;
+  const syncedCount = prices.filter((price) => Boolean(price.stripe_id?.trim())).length;
 
   return [
     `${visibleCount} price${prices.length === 1 ? '' : 's'}`,
@@ -125,13 +125,13 @@ function summarizePrices(prices: PriceItemDraft[]) {
 }
 
 function isStripeSynced(price: PriceItemDraft) {
-  return Boolean(price.STRIPE_ID?.trim());
+  return Boolean(price.stripe_id?.trim());
 }
 
 function formatPriceLine(price: PriceItemDraft, includeShipping = true) {
-  const amount = Number(price.Price || 0);
-  const currency = (price.Currency || 'USD').toUpperCase();
-  const label = price.Name?.trim() || 'Untitled price';
+  const amount = Number(price.price || 0);
+  const currency = (price.currency || 'USD').toUpperCase();
+  const label = price.name?.trim() || 'Untitled price';
   const hiddenLabel = price.hidden ? 'Hidden' : 'Visible';
   const inventoryLabel = typeof price.inventory === 'number' ? `Inventory ${price.inventory}` : 'Inventory not set';
   const shipsToLabel = includeShipping
@@ -429,7 +429,7 @@ export default function PricesEditor({
                     border: `1px solid ${markketColors.neutral.gray}`,
                   }}
                 >
-                  {`${price.Currency || 'USD'} ${Number(price.Price || 0).toFixed(2)}`}
+                  {`${price.currency || 'USD'} ${Number(price.price || 0).toFixed(2)}`}
                 </Badge>
               ))}
             </Group>
@@ -488,7 +488,7 @@ export default function PricesEditor({
                   <Stack gap="sm">
                     <Group justify="space-between" align="center">
                       <div>
-                        <Text fw={600}>{price.Name?.trim() || `Price ${index + 1}`}</Text>
+                        <Text fw={600}>{price.name?.trim() || `Price ${index + 1}`}</Text>
                         <Text size="xs" c="dimmed">{formatPriceLine(price, contentType !== 'event')}</Text>
                       </div>
                       <Group gap={4}>
@@ -520,14 +520,14 @@ export default function PricesEditor({
                         <div className="form-cols">
                           <TextInput
                             label="Name"
-                            value={price.Name}
-                            onChange={(event) => setPriceValue(index, 'Name', event.currentTarget.value)}
+                            value={price.name}
+                            onChange={(event) => setPriceValue(index, 'name', event.currentTarget.value)}
                             placeholder="Standard / VIP / Early bird"
                           />
                           <Select
                             label="Currency"
-                            value={price.Currency || 'USD'}
-                            onChange={(nextValue) => setPriceValue(index, 'Currency', (nextValue || 'USD') as PriceItemDraft['Currency'])}
+                            value={price.currency || 'USD'}
+                            onChange={(nextValue) => setPriceValue(index, 'currency', (nextValue || 'USD') as PriceItemDraft['currency'])}
                             data={PRICE_CURRENCIES}
                           />
                         </div>
@@ -535,8 +535,8 @@ export default function PricesEditor({
                         <div className="form-cols">
                           <NumberInput
                             label="Price"
-                            value={price.Price}
-                            onChange={(nextValue) => setPriceValue(index, 'Price', parseNumberInput(nextValue) ?? 0)}
+                            value={price.price}
+                            onChange={(nextValue) => setPriceValue(index, 'price', parseNumberInput(nextValue) ?? 0)}
                             min={0}
                             thousandSeparator=","
                             decimalScale={2}
@@ -554,8 +554,8 @@ export default function PricesEditor({
 
                         <Textarea
                           label="Description"
-                          value={price.Description || ''}
-                          onChange={(event) => setPriceValue(index, 'Description', event.currentTarget.value)}
+                          value={price.description || ''}
+                          onChange={(event) => setPriceValue(index, 'description', event.currentTarget.value)}
                           minRows={3}
                           autosize
                           placeholder="Add details like print quality, materials, sizing notes, or what you will email after purchase."

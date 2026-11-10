@@ -99,7 +99,7 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
   const editorId = product.documentId || product.slug || itemId;
   const itemDocumentId = product.documentId || itemId;
   const productIsPublished = isPublished(product);
-  const externalHost = externalHostLabel(product.SEO?.metaUrl);
+  const externalHost = externalHostLabel(product.seo?.metaUrl);
   const refreshProductAfterUpload = async () => {
     const token = readTiendaAuthToken();
     if (!token) return;
@@ -113,11 +113,11 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
       console.error('Tienda product media refresh error', err);
     }
   };
-  const slideSlots = (product.Slides || []).map((slide, index) => ({
+  const slideSlots = (product.slides || []).map((slide, index) => ({
     label: `Slide ${index + 1}`,
     field: 'Slides',
     src: slide?.formats?.small?.url || slide?.url,
-    alt: slide?.alternativeText || `${product.Name || 'Product'} slide ${index + 1}`,
+    alt: slide?.alternativeText || `${product.name || 'Product'} slide ${index + 1}`,
   }));
 
   return (
@@ -128,7 +128,7 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
         { label: 'Products', href: `/tienda/${storeSlug}/products` },
         { label: product.slug || itemId },
       ]}
-      title={product.Name || 'Untitled product'}
+      title={product.name || 'Untitled product'}
       routePath={`/tienda/${storeSlug}/products/${product.slug || itemId}`}
       actions={
         <>
@@ -144,7 +144,7 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
       }
     >
       <Stack gap="md">
-        <Text c="dimmed">{product.SEO?.metaDescription || 'No summary yet.'}</Text>
+        <Text c="dimmed">{product.seo?.metaDescription || 'No summary yet.'}</Text>
 
         <ContentMediaPreview
           storeRef={storeSlug}
@@ -157,20 +157,20 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
             {
               label: 'Thumbnail',
               field: 'Thumbnail',
-              src: product.Thumbnail?.url,
-              alt: product.Thumbnail?.alternativeText || product.Name,
+              src: product.thumbnail?.url,
+              alt: product.thumbnail?.alternativeText || product.name,
             },
             {
               label: 'Cover / Social',
               field: 'SEO.socialImage',
-              src: product.SEO?.socialImage?.url,
-              alt: product.SEO?.socialImage?.alternativeText || product.Name,
+              src: product.seo?.socialImage?.url,
+              alt: product.seo?.socialImage?.alternativeText || product.name,
             },
             ...slideSlots,
             {
               label: 'Add Slide',
               field: 'Slides',
-              alt: `${product.Name || 'Product'} slide`,
+              alt: `${product.name || 'Product'} slide`,
             },
           ]}
         />
@@ -179,7 +179,7 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
           storeRef={storeSlug}
           contentType="product"
           itemDocumentId={itemDocumentId}
-          value={product.PRICES || []}
+          value={product.prices || []}
           onSaved={() => {
             void refreshProductAfterUpload();
           }}
@@ -187,17 +187,17 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
 
         <Divider label={<Badge variant="dot" color="gray" size="sm">Description</Badge>} labelPosition="left" />
 
-        {product.Description && (
+        {product.description && (
           <Paper withBorder p="lg" radius="md" className="prose dark:prose-dark max-w-none">
-            <RichTextContent content={product.Description} />
+            <RichTextContent content={product.description} />
           </Paper>
         )}
-        {!product.Description && product.SEO?.metaDescription && (
+        {!product.description && product.seo?.metaDescription && (
           <Paper withBorder p="lg" radius="md">
-            {product.SEO.metaDescription}
+            {product.seo.metaDescription}
           </Paper>
         )}
-        {!product.Description && !product.SEO?.metaDescription && (
+        {!product.description && !product.seo?.metaDescription && (
           <Paper withBorder p="lg" radius="md" bg="var(--mantine-color-gray-0)">
             Description coming soon.
           </Paper>
@@ -209,12 +209,12 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
           isPublicEnabled={productIsPublished}
         />
 
-        {product.SEO?.metaUrl && (
+        {product.seo?.metaUrl && (
           <>
             <Divider />
             <Anchor
               component="a"
-              href={product.SEO.metaUrl}
+              href={product.seo.metaUrl}
               target="_blank"
               rel="noopener noreferrer"
               style={{ alignSelf: 'flex-start', fontWeight: 600 }}

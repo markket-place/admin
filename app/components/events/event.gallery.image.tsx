@@ -39,22 +39,22 @@ function buildGallery(event: Event): GalleryImage[] {
     });
   };
 
-  push(event?.Thumbnail ? {
+  push(event?.thumbnail ? {
     id: 'thumbnail',
-    url: event.Thumbnail.url,
-    alternativeText: event.Thumbnail.alternativeText,
-    formats: event.Thumbnail.formats,
+    url: event.thumbnail.url,
+    alternativeText: event.thumbnail.alternativeText,
+    formats: event.thumbnail.formats,
   } : null, 'thumbnail');
 
-  push(event?.SEO?.socialImage ? {
+  push(event?.seo?.socialImage ? {
     id: 'social',
-    url: event.SEO.socialImage.url,
-    alternativeText: event.SEO.socialImage.alternativeText,
-    caption: event.SEO.socialImage.caption,
-    formats: event.SEO.socialImage.formats,
+    url: event.seo.socialImage.url,
+    alternativeText: event.seo.socialImage.alternativeText,
+    caption: event.seo.socialImage.caption,
+    formats: event.seo.socialImage.formats,
   } : null, 'social');
 
-  (event?.Slides || []).forEach((slide, index) => {
+  (event?.slides || []).forEach((slide, index) => {
     push(slide, `slide-${index}`);
   });
 
@@ -76,9 +76,9 @@ export function EventImageGallery({ event }: EventImageGalleryProps) {
           style={{ display: 'block', width: '100%' }}
         >
           <div className="aspect-w-3 aspect-h-4 w-full overflow-hidden rounded-l" style={{ cursor: 'zoom-in' }}>
-        {selectedImage && (
-          <EventMainImage title={event.Name} image={selectedImage} />
-        )}
+            {selectedImage && (
+              <EventMainImage title={event.name} image={selectedImage} />
+            )}
       </div>
         </UnstyledButton>
       <div className="flex flex-col">
@@ -110,7 +110,7 @@ export function EventImageGallery({ event }: EventImageGalleryProps) {
         onClose={() => setLightboxOpen(false)}
         centered
         size="90vw"
-        title={selectedImage?.alternativeText || event.Name}
+        title={selectedImage?.alternativeText || event.name}
         styles={{
           content: { background: '#05080f' },
           header: { background: '#05080f' },

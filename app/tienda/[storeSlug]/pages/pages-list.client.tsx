@@ -67,11 +67,11 @@ export default function PagesListClient({ storeSlug, initialPages }: PagesListCl
 
   const sortedPages = useMemo(() => {
     if (sortMode === 'alpha') {
-      return [...pages].sort((a, b) => (a.Title || '').localeCompare(b.Title || ''));
+      return [...pages].sort((a, b) => (a.title || '').localeCompare(b.title || ''));
     }
 
     if (sortMode === 'alpha-desc') {
-      return [...pages].sort((a, b) => (b.Title || '').localeCompare(a.Title || ''));
+      return [...pages].sort((a, b) => (b.title || '').localeCompare(a.title || ''));
     }
 
     return sortByRecent(pages);
@@ -85,7 +85,7 @@ export default function PagesListClient({ storeSlug, initialPages }: PagesListCl
 
         return {
           key,
-          title: page.Title || 'Untitled page',
+          title: page.title || 'Untitled page',
           subtitle: `${statusText} · ${formatDate(page.updatedAt || page.createdAt)} · ${page.documentId || page.slug || 'no-id'}`,
           href: `/tienda/${storeSlug}/pages/${page.documentId || page.slug}`,
           previewHref: isPublished(page) && page.slug ? resolvePagePreviewHref(storeSlug, page.slug || '') : undefined,

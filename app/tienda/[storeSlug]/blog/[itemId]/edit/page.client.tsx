@@ -86,7 +86,7 @@ export default function TiendaBlogEditPageClient({ storeSlug, itemId }: TiendaBl
         { label: post.documentId || post.slug || itemId, href: `/tienda/${storeSlug}/blog/${post.documentId || post.slug || itemId}` },
         { label: 'Edit' },
       ]}
-      title={`Edit: ${post.Title || 'Article'}`}
+      title={`Edit: ${post.title || 'Article'}`}
       routePath={`/tienda/${storeSlug}/blog/${post.documentId || post.slug || itemId}/edit`}
     >
       <BlogEditorForm
@@ -94,16 +94,16 @@ export default function TiendaBlogEditPageClient({ storeSlug, itemId }: TiendaBl
         mode="edit"
         itemDocumentId={post.documentId || itemId}
         initial={{
-          title: post.Title,
+          title: post.title,
           slug: post.slug,
-          content: post.Content,
-          seoTitle: post.SEO?.metaTitle,
-          seoDescription: post.SEO?.metaDescription,
-          seoSocialImageId: post.SEO?.socialImage?.id,
-          seoSocialImageDocumentId: post.SEO?.socialImage?.documentId,
+          content: post.content,
+          seoTitle: post.seo?.metaTitle,
+          seoDescription: post.seo?.metaDescription,
+          seoSocialImageId: post.seo?.socialImage?.id,
+          seoSocialImageDocumentId: post.seo?.socialImage?.documentId,
           coverDocumentId: post.cover?.documentId,
-          tagIds: post.Tags?.map((t) => t.id).filter(Boolean) ?? [],
-          initialSEO: post.SEO as Record<string, unknown> | undefined,
+          tagIds: post.tags?.map((t) => t.id).filter(Boolean) ?? [],
+          initialSEO: post.seo as Record<string, unknown> | undefined,
         }}
       />
     </TiendaDetailShell>

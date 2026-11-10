@@ -86,7 +86,7 @@ export default function TiendaProductEditPageClient({ storeSlug, itemId }: Tiend
         { label: product.slug || itemId, href: `/tienda/${storeSlug}/products/${product.slug || itemId}` },
         { label: 'Edit' },
       ]}
-      title={`Edit: ${product.Name || 'Product'}`}
+      title={`Edit: ${product.name || 'Product'}`}
       routePath={`/tienda/${storeSlug}/products/${product.slug || itemId}/edit`}
     >
       <ProductEditorForm
@@ -94,18 +94,18 @@ export default function TiendaProductEditPageClient({ storeSlug, itemId }: Tiend
         mode="edit"
         itemDocumentId={product.documentId || itemId}
         initial={{
-          name: product.Name,
+          name: product.name,
           slug: product.slug,
-          description: product.Description || undefined,
-          seoTitle: product.SEO?.metaTitle || undefined,
-          seoDescription: product.SEO?.metaDescription || undefined,
-          sourceUrl: product.SEO?.metaUrl || undefined,
-          seoSocialImageId: product.SEO?.socialImage?.id,
-          seoSocialImageDocumentId: product.SEO?.socialImage?.documentId,
-          thumbnailDocumentId: product.Thumbnail?.documentId,
-          tagIds: product.Tag?.map((t) => t.id).filter(Boolean) ?? [],
-          slideDocumentIds: product.Slides?.map((s) => s.id).filter(Boolean) ?? [],
-          initialSEO: product.SEO as Record<string, unknown> | undefined,
+          description: product.description || undefined,
+          seoTitle: product.seo?.metaTitle || undefined,
+          seoDescription: product.seo?.metaDescription || undefined,
+          sourceUrl: product.seo?.metaUrl || undefined,
+          seoSocialImageId: product.seo?.socialImage?.id,
+          seoSocialImageDocumentId: product.seo?.socialImage?.documentId,
+          thumbnailDocumentId: product.thumbnail?.documentId,
+          tagIds: product.tag?.map((t) => t.id).filter(Boolean) ?? [],
+          slideDocumentIds: product.slides?.map((s) => s.id).filter(Boolean) ?? [],
+          initialSEO: product.seo as Record<string, unknown> | undefined,
         }}
       />
     </TiendaDetailShell>

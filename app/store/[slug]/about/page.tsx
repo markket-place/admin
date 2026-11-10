@@ -31,8 +31,8 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
     slug,
     entity: {
       url: `/${slug}`,
-      SEO: page?.SEO,
-      title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     type: 'article',
     defaultTitle: 'About',
@@ -57,9 +57,9 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
   const customPages = pagesResponse?.data
     ?.filter(p => !systemPages.includes(p.slug))
-    .sort((a, b) => a.Title.localeCompare(b.Title)) || [];
+    .sort((a, b) => a.title.localeCompare(b.title)) || [];
 
-  const image = aboutPage?.SEO?.socialImage || store?.SEO?.socialImage;
+  const image = aboutPage?.seo?.socialImage || store?.seo?.socialImage;
   const storeSlug = store?.slug || slug;
   const contactEmail = `${storeSlug}@markket.place`;
 
@@ -67,16 +67,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
     <Container size="lg" py="xl">
       <StorePageHeader
         icon={<IconInfoCircle size={48} />}
-        title={aboutPage?.Title || `About ${store.SEO?.metaTitle || store?.title}`}
-        description={aboutPage?.SEO?.metaDescription || store.SEO?.metaDescription}
+        title={aboutPage?.title || `About ${store.seo?.metaTitle || store?.title}`}
+        description={aboutPage?.seo?.metaDescription || store.seo?.metaDescription}
         page={aboutPage}
-        backgroundImage={image?.url || store?.Cover?.url}
+        backgroundImage={image?.url || store?.cover?.url}
         iconColor={markketColors.sections.about.main}
       />
 
       <Stack gap="xl">
-        {store?.URLS?.length > 0 && (
-          <StoreTabs urls={store.URLS} basePath={`/${slug}`} />
+        {store?.urls?.length > 0 && (
+          <StoreTabs urls={store.urls} basePath={`/${slug}`} />
         )}
 
         <PageContent params={{ page: aboutPage }} />
@@ -117,7 +117,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
           currentSection="about"
           items={customPages.slice(0, 4).map((page) => ({
             href: `/${slug}/about/${page.slug}`,
-            label: page.Title || page.slug,
+            label: page.title || page.slug,
           }))}
         />
       </Stack>

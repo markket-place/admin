@@ -62,8 +62,8 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
 
   useEffect(() => {
     const priceId = selectedPriceId;
-    const price = prices.find((p: Price) => p.STRIPE_ID == priceId);
-    const basePrice = Number(price?.Price) || 0;
+    const price = prices.find((p: Price) => p.stripe_id == priceId);
+    const basePrice = Number(price?.price) || 0;
     const subtotal = basePrice * quantity;
     const newTotal = subtotal + tip;
 
@@ -72,8 +72,8 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
         quantity,
         price: String(selectedPriceId),
         currency: "usd",
-        unit_amount: price?.Price,
-        Name: price?.Name,
+        unit_amount: price?.price,
+        Name: price?.name,
       } as unknown as Price,
     ];
 
@@ -81,7 +81,7 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
       option_prices.push({
         unit_amount: String(tip),
         Currency: "usd",
-        product: product.SKU,
+        product: product.sku,
         quantity: 1,
         Name: 'Tip',
       } as unknown as Price);
@@ -97,7 +97,7 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
     );
     setTotal(newTotal);
     setSelectedPrice(price || ({} as Price));
-  }, [selectedPriceId, quantity, tip, prices, product.SKU]);
+  }, [selectedPriceId, quantity, tip, prices, product.sku]);
 
   // If a selected price has limited inventory, ensure quantity stays within bounds
   useEffect(() => {
@@ -144,7 +144,7 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
       // @TODO: improve shipping options extra data
       await createPaymentLink({
         ...options,
-        stripe_test: !!product?.Name?.toLowerCase()?.includes('test'),
+        stripe_test: !!product?.name?.toLowerCase()?.includes('test'),
         includes_shipping: countries.length > 0,
         store_id: store?.documentId,
         redirect_to_url: new URL(`/${store?.slug}/receipt`, markketplace.markket_url).toString(),
@@ -165,25 +165,25 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
         let matchedPrice: Price | undefined = undefined;
 
         if (priceName) {
-          matchedPrice = prices.find(p => (p.Name || '').trim() === priceName || (p.Name || '').includes(priceName));
+          matchedPrice = prices.find(p => (p.name || '').trim() === priceName || (p.name || '').includes(priceName));
         }
 
-        if (!matchedPrice && selectedPrice?.Name) {
+        if (!matchedPrice && selectedPrice?.name) {
           matchedPrice = selectedPrice as Price;
         }
 
         if (matchedPrice && typeof available === 'number') {
           try {
-            const productSlug = product?.slug || product?.SKU || product?.documentId || '';
+            const productSlug = product?.slug || product?.sku || product?.documentId || '';
             const storeSlug = store?.slug || '';
             const { data: freshData } = (await strapiClient.getProduct(productSlug, storeSlug)) as { data: Product[] };
             const freshProduct = Array.isArray(freshData) ? freshData[0] : freshData;
-            const freshPrices = (freshProduct?.PRICES || []) as any[];
+            const freshPrices = (freshProduct?.prices || []) as any[];
 
             const freshMatched = freshPrices.find((p) => {
-              return String(p?.STRIPE_ID) === String(matchedPrice.STRIPE_ID)
+              return String(p?.STRIPE_ID) === String(matchedPrice.stripe_id)
                 || String(p?.id) === String((matchedPrice as any).id)
-                || (p?.Name || '').trim() === (matchedPrice?.Name || '').trim();
+                || (p?.Name || '').trim() === (matchedPrice?.name || '').trim();
             });
 
             const canonicalAvailable = typeof freshMatched?.inventory === 'number' ? freshMatched.inventory : available;
@@ -253,9 +253,9 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
     }
     // Prevent selecting options that are explicitly disabled (inventory 0 or flagged)
     const selId = value || '';
-    const matched = prices.find(p => String(p.STRIPE_ID) === String(selId) || String((p as any).id) === String(selId));
+    const matched = prices.find(p => String(p.stripe_id) === String(selId) || String((p as any).id) === String(selId));
     const inv = matched ? Number((matched as any).inventory) : undefined;
-    if (matched && (inv === 0 || disabledStripeIds.includes(matched.STRIPE_ID || ''))) {
+    if (matched && (inv === 0 || disabledStripeIds.includes(matched.stripe_id || ''))) {
       notifications.show({
         title: 'Unavailable option',
         message: 'This option is out of stock and cannot be selected.',
@@ -275,15 +275,15 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
       const inv = (p as any).inventory;
       const invNum = typeof inv !== 'undefined' && inv !== null ? Number(inv) : undefined;
       return (
-        (!(p.hidden === true) && !disabledStripeIds.includes(p.STRIPE_ID || '')
+        (!(p.hidden === true) && !disabledStripeIds.includes(p.stripe_id || '')
           && !(typeof invNum === 'number' && invNum === 0))
       )
     });
 
-    const visibleOptions = prices.filter(p => !(p.hidden === true) && !disabledStripeIds.includes(p.STRIPE_ID || ''));
+    const visibleOptions = prices.filter(p => !(p.hidden === true) && !disabledStripeIds.includes(p.stripe_id || ''));
 
     if (availableOptions.length === 1) {
-      setSelectedPriceId(availableOptions[0].STRIPE_ID || '');
+      setSelectedPriceId(availableOptions[0].stripe_id || '');
     } else if (availableOptions.length === 0 && visibleOptions.length > 0) {
       // All visible options appear to be out-of-stock. If there's exactly one visible option,
       // select it and set quantity to 0 so the UI clearly shows it's out-of-stock and checkout is disabled.
@@ -305,11 +305,11 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
   }, [isModalOpen, prices, selectedPriceId, disabledStripeIds]);
 
   // Visible / available option helpers for rendering
-  const visibleOptions = prices.filter(p => !(p.hidden === true) && !disabledStripeIds.includes(p.STRIPE_ID || ''));
+  const visibleOptions = prices.filter(p => !(p.hidden === true) && !disabledStripeIds.includes(p.stripe_id || ''));
   const availableSelectOptions = prices.filter(p => {
     const inv = (p as any).inventory;
     const invNum = typeof inv !== 'undefined' && inv !== null ? Number(inv) : undefined;
-    return (!(p.hidden === true) && !disabledStripeIds.includes(p.STRIPE_ID || '') && !(typeof invNum === 'number' && invNum === 0));
+    return (!(p.hidden === true) && !disabledStripeIds.includes(p.stripe_id || '') && !(typeof invNum === 'number' && invNum === 0));
   });
 
   const selectedInv = (selectedPrice as any)?.inventory;
@@ -378,9 +378,9 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
                     value={selectedPriceId || ''}
                     onChange={handlePriceSelect}
                     data={prices.filter(p => !(p.hidden == true)).map((price) => ({
-                      value: price.STRIPE_ID || '',
-                      disabled: (typeof (price as any).inventory !== 'undefined' && (Number((price as any).inventory) === 0)) || disabledStripeIds.includes(price.STRIPE_ID || ''),
-                      label: `${(price.Name || '').replace(/_/gi, " ")} - $${price.Price} ${price.Currency}`,
+                      value: price.stripe_id || '',
+                      disabled: (typeof (price as any).inventory !== 'undefined' && (Number((price as any).inventory) === 0)) || disabledStripeIds.includes(price.stripe_id || ''),
+                      label: `${(price.name || '').replace(/_/gi, " ")} - $${price.price} ${price.currency}`,
                     }))}
                     required
                     clearable={false}
@@ -440,18 +440,18 @@ const CheckoutModal: FC<Props> = ({ prices, product, store }: Props) => {
                   opacity: total > 0 ? 1 : 0.7,
                 }}
               >
-                <Stack gap="xs" c={!selectedPrice?.Name ? 'dimmed' : ''}>
+                <Stack gap="xs" c={!selectedPrice?.name ? 'dimmed' : ''}>
                   <Title order={4}>Order Summary</Title>
                   <Divider />
                   <Group justify="space-between">
-                    <Text>{selectedPrice.Name}</Text>
+                    <Text>{selectedPrice.name}</Text>
                     <Text fw={500}>
-                      ${selectedPrice?.Price || 0}
+                      ${selectedPrice?.price || 0}
                     </Text>
                   </Group>
-                  {selectedPrice?.Description && (
+                  {selectedPrice?.description && (
                     <Text size="sm" c="dimmed">
-                      {selectedPrice.Description}
+                      {selectedPrice.description}
                     </Text>
                   )}
                   {typeof selectedInvNum === 'number' && selectedInvNum === -1 && (

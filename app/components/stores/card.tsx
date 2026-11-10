@@ -23,9 +23,9 @@ const hashString = (value: string) => {
 };
 
 export function StoreCard({ store, idx, featured }: StoreCardProps) {
-  const coverUrl = store.Cover?.formats?.small?.url || store.Cover?.formats?.thumbnail?.url || store.Cover?.url || store.SEO?.socialImage?.formats?.small?.url || store.SEO?.socialImage?.url;
-  const logoUrl = store.Logo?.formats?.small?.url || store.Logo?.formats?.thumbnail?.url || store.Logo?.url;
-  const description = store.SEO?.metaDescription || '';
+  const coverUrl = store.cover?.formats?.small?.url || store.cover?.formats?.thumbnail?.url || store.cover?.url || store.seo?.socialImage?.formats?.small?.url || store.seo?.socialImage?.url;
+  const logoUrl = store.logo?.formats?.small?.url || store.logo?.formats?.thumbnail?.url || store.logo?.url;
+  const description = store.seo?.metaDescription || '';
   const gradientIndex = hashString(store.slug || store.documentId || store.title || String(idx)) % markketplace.empty_gradients.length;
 
   return (
