@@ -11,13 +11,13 @@ export interface Extras {
 
 export interface Price {
   id: number;
-  Price: number;
-  Currency: string;
-  STRIPE_ID: string;
-  Description: string;
+  price: number;
+  currency: string;
+  stripe_id: string;
+  description: string;
   inventory?: number;
   count: number;
-  Name: string;
+  name: string;
   hidden: boolean;
   ships_to?: string[];
   extensions?: unknown[];
@@ -71,13 +71,13 @@ export interface Slide {
 
 export interface Product {
   id: number;
-  Name: string;
+  name: string;
   usd_price: number | null;
-  Description: string | null;
+  description: string | null;
   quantity: number | null;
   active: boolean | null;
   attributes: any | null;
-  SKU: string;
+  sku: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string | null;
@@ -86,12 +86,12 @@ export interface Product {
   slug: string;
   documentId: string;
   amountSold: number | null;
-  Slides: Slide[];
-  SEO?: SEO;
-  PRICES?: Price[];
-  Thumbnail?: ImageData;
+  slides: Slide[];
+  seo?: SEO;
+  prices?: Price[];
+  thumbnail?: ImageData;
   stores?: Store[];
-  Tag: Tag[];
+  tag: Tag[];
   extras: Extras[];
 }
 

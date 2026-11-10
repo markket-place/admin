@@ -390,7 +390,7 @@ export class StrapiClient {
     return await this.fetch<Store>({
       contentType: type,
       filters: { slug: store_slug },
-      populate: 'Logo,SEO,SEO.socialImage,Favicon,URLS,Cover',
+      populate: 'logo,seo,seo.socialImage,favicon,urls,cover',
     });
   }
 
@@ -408,7 +408,7 @@ export class StrapiClient {
           $eq: product_slug
         }
       },
-      populate: 'SEO.socialImage,Thumbnail,Slides,PRICES,stores,extras'
+      populate: 'seo.socialImage,thumbnail,slides,prices,stores,extras'
     });
   }
 
@@ -427,7 +427,7 @@ export class StrapiClient {
       },
       sort,
       paginate,
-      populate: 'SEO.socialImage,Thumbnail,Slides,PRICES,stores'
+      populate: 'seo.socialImage,thumbnail,slides,prices,stores'
     });
   }
 
@@ -447,7 +447,7 @@ export class StrapiClient {
       status: (options?.status || 'published') as "published" | "draft" | "all",
       sort: options?.sort,
       paginate: options?.paginate,
-      populate: 'SEO,SEO.socialImage,Tag,Thumbnail,Slides,PRICES,stores',
+      populate: 'seo,seo.socialImage,tag,thumbnail,slides,prices,stores',
     });
   }
 
@@ -464,7 +464,7 @@ export class StrapiClient {
           $eq: event_slug
         }
       },
-      populate: 'SEO,SEO.socialImage,Tag,Thumbnail,Slides,PRICES,stores'
+      populate: 'seo,seo.socialImage,tag,thumbnail,slides,prices,stores'
     });
   }
 
@@ -472,7 +472,7 @@ export class StrapiClient {
     return await this.fetch<Store>({
       contentType: `stores`,
       filters: { slug },
-      populate: 'Logo,SEO,SEO.socialImage,Favicon,URLS,Cover,Slides',
+      populate: 'logo,seo,seo.socialImage,favicon,urls,cover,slides',
     });
   }
 
@@ -602,7 +602,7 @@ export class StrapiClient {
           }
         }
       },
-      populate: 'SEO.socialImage'
+      populate: 'seo.socialImage'
     });
   };
 
@@ -628,7 +628,7 @@ export class StrapiClient {
         },
       },
       paginate: { page: 1, pageSize: 10 },
-      populate: 'SEO.socialImage,store,albums,albums.cover,albums.SEO,albums.tracks,albums.tracks.media'
+      populate: 'seo.socialImage,store,albums,albums.cover,albums.seo,albums.tracks,albums.tracks.media'
     });
   };
 
@@ -641,7 +641,7 @@ export class StrapiClient {
 
     return await this.fetch<Store>({
       contentType: 'stores',
-      populate: 'Logo,SEO,SEO.socialImage,Favicon,URLS',
+      populate: 'logo,se,seo.socialImage,favicon,urls',
       filters: options.filter,
       paginate,
       sort,
@@ -663,7 +663,7 @@ export class StrapiClient {
         }
       },
       paginate,
-      populate: 'SEO.socialImage,Tags,cover,store',
+      populate: 'seo.socialImage,tags,cover,store',
     });
   }
 
@@ -675,7 +675,7 @@ export class StrapiClient {
       sort,
       status: 'published',
       paginate,
-      populate: 'SEO.socialImage,Tags,cover,store,store.Logo',
+      populate: 'seo.socialImage,tags,cover,store,store.logo',
     });
   }
 
@@ -687,7 +687,7 @@ export class StrapiClient {
       sort,
       status: 'published',
       paginate,
-      populate: 'SEO.socialImage,store,store.Logo',
+      populate: 'seo.socialImage,store,store.logo',
       filters: {
         store: {
           $or: [
@@ -726,8 +726,8 @@ export class StrapiClient {
           ]
         }
       },
-      fields: ['Name', 'startDate', 'endDate', 'usd_price', 'slug', 'Description'],
-      populate: 'Thumbnail,SEO,SEO.socialImage,stores,PRICES',
+      fields: ['name', 'startDate', 'endDate', 'usd_price', 'slug', 'description'],
+      populate: 'thumbnail,seo,seo.socialImage,stores,prices',
       status: 'published',
       paginate,
     });
@@ -743,7 +743,7 @@ export class StrapiClient {
       sort,
       status: 'published',
       paginate,
-      populate: 'SEO,SEO.socialImage,Thumbnail,Slides,PRICES,stores,stores.Logo',
+      populate: 'seo,seo.socialImage,thumbnail,slides,prices,stores,stores.logo',
     });
   }
 
@@ -762,7 +762,7 @@ export class StrapiClient {
         }
       },
       status: 'published',
-      populate: 'SEO.socialImage,Tags,cover,store',
+      populate: 'seo.socialImage,tags,cover,store',
       sort: 'createdAt:desc',
       paginate: { page: 1, pageSize: 1 },
     });
@@ -783,7 +783,7 @@ export class StrapiClient {
           },
         }
       },
-      populate: 'SEO.socialImage,tracks,tracks.SEO,tracks.SEO.socialImage,tracks.media,tracks.urls,cover',
+      populate: 'seo.socialImage,tracks,tracks.seo,tracks.seo.socialImage,tracks.media,tracks.urls,cover',
       sort: 'createdAt:desc',
     });
   };
@@ -802,7 +802,7 @@ export class StrapiClient {
           },
         }
       },
-      populate: 'SEO.socialImage,urls,media',
+      populate: 'seo.socialImage,urls,media',
       sort: 'createdAt:desc',
     });
   };

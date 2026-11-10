@@ -4,11 +4,11 @@ import { User } from './user.d';
 export interface InboxMessage {
   id: number;
   documentId: string;
-  Name: string;
-  Message?: string;
+  name: string;
+  message?: string;
   email: string;
   store?: Store;
-  Archived?: boolean;
+  archived?: boolean;
   parentMessageId?: InboxMessage;
   user?: User;
   createdAt: string;

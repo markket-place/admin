@@ -39,6 +39,7 @@ const normalizePostHogHost = (value?: string) => {
 
 /**
  * Runtime configuration for the Markket app
+ * // @TODO : better defaults
  */
 export const markketplace = {
   /**MAX_STORES_PER_USER | artificial limit in the instance for store owners */

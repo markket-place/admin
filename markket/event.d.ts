@@ -42,27 +42,27 @@ export interface RSVP {
 export interface Event {
   id: number;
   documentId: string;
-  Name: string;
+  name: string;
   usd_price: number;
-  PRICES?: Price[];
+  prices?: Price[];
   startDate: string;
-  Slides: Slide[];
+  slides: Slide[];
   endDate: string;
   timezone?: string;
   locations?: Address[];
-  Description: string;
+  description: string;
   maxCapacity: number | null;
   amountSold: number | null;
   active: boolean;
-  STRIPE_PRODUCT_ID: string | null;
+  stripe_product_id: string | null;
   slug: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string | null;
   tiendaPublication?: { visibleStatus?: 'published' | 'draft' | 'unpublished'; publishedAt?: string | null };
   locale: string;
-  SEO?: SEO;
-  Tag?: Tag[];
+  seo?: SEO;
+  tag?: Tag[];
   stores?: Store[];
-  Thumbnail?: ImageData;
+  thumbnail?: ImageData;
 }

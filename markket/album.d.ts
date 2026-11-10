@@ -20,7 +20,7 @@ export interface AlbumTrack {
     Label: string;
     URL: string;
   }[];
-  SEO?: SEO;
+  seo?: SEO;
 };
 
 export interface Album {
@@ -38,7 +38,7 @@ export interface Album {
   tracks: AlbumTrack[];
   store?: Store;
   displayType: 'grid' | 'list' | 'carousel';
-  SEO?: SEO;
+  seo?: SEO;
 };
 
 export interface AlbumResponse {

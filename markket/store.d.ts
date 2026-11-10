@@ -41,17 +41,17 @@ export interface Store {
   title: string;
   slug: string;
   documentId: string;
-  Description?: StoredRichText;
+  description?: StoredRichText;
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
-  STRIPE_CUSTOMER_ID: string;
-  Cover: Media;
-  Logo: ImageData;
-  Favicon: ImageData;
-  URLS: URL[],
-  SEO: SEO;
-  Slides: ImageData[];
+  stripe_customer_id: string;
+  cover: Media;
+  logo: ImageData;
+  favicon: ImageData;
+  urls: URL[],
+  seo: SEO;
+  slides: ImageData[];
   meta?: {};
   is_headless?: boolean;
 };

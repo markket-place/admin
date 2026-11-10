@@ -1,6 +1,6 @@
 
 export type Tag = {
   id: number;
-  Label: string;
-  Color?: string;
+  label: string;
+  color?: string;
 };
