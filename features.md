@@ -12,7 +12,7 @@
 - [ ] edit order status [crm dashboard]
 - [ ] notify buyer of order change
 
-## July 2026
+## Nov 2026
 
 - [ ] tienda dashboard: validate forms for price/date fields and show clear error states
 - [ ] tienda: item form, display error when save create (store.slug)
@@ -26,6 +26,9 @@
 - [ ] buyer can easy reply to order email to send via inbox
 - [ ] me: debug inbox preview, thread creations
 - [ ] tienda: unauthorized store flashes when redirecting after create store
+
+### 0.7.8
+- [x] Correct capitalization of new types
 
 ### 0.6.9
 - [x] hiding is_headless stores in /stores
