@@ -6,15 +6,15 @@ import type { Store } from './store';
 export interface Article {
   id: number;
   slug: string;
-  Title: string;
+  title: string;
   documentId: string;
   createdAt: string;
   updatedAt: string;
   publishedAt: string | null;
   tiendaPublication?: { visibleStatus?: 'published' | 'draft' | 'unpublished'; publishedAt?: string | null };
-  Tags?: Tag[];
-  Content: ContentBlock[];
+  tags?: Tag[];
+  content: ContentBlock[];
   store?: Store;
-  SEO: SEO,
+  seo: SEO,
   cover?: ImageData;
 };

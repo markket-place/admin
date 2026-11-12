@@ -4,22 +4,22 @@ import { markketClient, _validImageRef } from "@/markket/api.markket";
 type supported_kind = 'store' | 'page' | 'article' | 'product' | 'event' | 'album' | 'track';
 
 const seo = {
-  'SEO.socialImage': {
+  'seo.socialImage': {
     max_width: 1200
   }
 }
 
 const ImageConfig: Record<supported_kind, Record<string, { multi?: boolean, max_width?: number, can_change?: boolean }>> = {
   store: {
-    Logo: {
+    logo: {
       max_width: 1200,
     },
-    Slides: { multi: true, max_width: 1600, },
-    Favicon: { max_width: 120 },
-    'SEO.socialImage': {
+    slides: { multi: true, max_width: 1600, },
+    favicon: { max_width: 120 },
+    'sep.socialImage': {
       max_width: 1200,
     },
-    Cover: {
+    cover: {
       max_width: 1280,
     },
   },
@@ -32,13 +32,13 @@ const ImageConfig: Record<supported_kind, Record<string, { multi?: boolean, max_
   },
   product: {
     ...seo,
-    Slides: { multi: true, max_width: 1600, },
-    Thumbnail: { max_width: 840 }
+    slides: { multi: true, max_width: 1600, },
+    thumbnail: { max_width: 840 }
   },
   event: {
     ...seo,
-    Slides: { multi: true, max_width: 1600, },
-    Thumbnail: { max_width: 840 }
+    slides: { multi: true, max_width: 1600, },
+    thumbnail: { max_width: 840 }
   },
   album: {
     ...seo,
@@ -76,7 +76,7 @@ const upload = (item: ContentTypes, kind: supported_kind) => {
     console.log(`uploading:${kind}:${path}:index-${multiIndex}`);
     const storeId = resolveStoreId();
 
-    if (path == 'SEO.socialImage' && item?.SEO?.id) {
+    if (path == 'seo.socialImage' && item?.SEO?.id) {
       await markket.uploadImage(img, 'socialImage', item.SEO?.id, alt, `common.seo` as _validImageRef, storeId);
       return;
     }

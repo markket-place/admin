@@ -96,11 +96,11 @@ export default function ProductListClient({ storeSlug, initialProducts }: Produc
 
   const sortedProducts = useMemo(() => {
     if (sortMode === 'alpha') {
-      return [...products].sort((a, b) => (a.Name || '').localeCompare(b.Name || ''));
+      return [...products].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
     }
 
     if (sortMode === 'alpha-desc') {
-      return [...products].sort((a, b) => (b.Name || '').localeCompare(a.Name || ''));
+      return [...products].sort((a, b) => (b.name || '').localeCompare(a.name || ''));
     }
 
     return sortByRecent(products);
@@ -114,12 +114,12 @@ export default function ProductListClient({ storeSlug, initialProducts }: Produc
 
         return {
           key,
-          title: product.Name || 'Untitled product',
+          title: product.name || 'Untitled product',
           subtitle: `${statusText} · ${formatDate(product.updatedAt || product.createdAt)} · ${product.slug}`,
           href: `/tienda/${storeSlug}/products/${product.documentId || product.slug}`,
           previewHref: isPublished(product) && product.slug ? `/${storeSlug}/products/${product.slug}` : undefined,
           icon: 'product' as const,
-          thumbnailUrl: product.Thumbnail?.url || product?.SEO?.socialImage?.url || product?.Slides?.[0]?.url,
+          thumbnailUrl: product.thumbnail?.url || product?.seo?.socialImage?.url || product?.slides?.[0]?.url,
           status: isPublished(product) ? 'published' as const : 'draft' as const,
         };
       }),

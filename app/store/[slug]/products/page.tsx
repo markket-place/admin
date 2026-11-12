@@ -42,13 +42,13 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   }
 
   const productCount = products?.length || 0;
-  const productNames = (products as Product[])?.slice(0, 5).map(p => p.Name).filter(Boolean) || [];
+  const productNames = (products as Product[])?.slice(0, 5).map(p => p.name).filter(Boolean) || [];
 
   return generateSEOMetadata({
     slug,
     entity: {
       url: `/${slug}/products`,
-      SEO: page?.SEO,
+      seo: page?.seo,
       id: page?.id?.toString(),
     },
     defaultTitle: `Shop`,
@@ -81,10 +81,10 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   );
   const products = productsResponse?.data || [];
 
-  const title = StoreProductPage?.Title || `${store?.title} Products`;
+  const title = StoreProductPage?.title || `${store?.title} Products`;
   const description =
-    page?.SEO?.metaDescription ||
-    store?.SEO?.metaDescription ||
+    page?.seo?.metaDescription ||
+    store?.seo?.metaDescription ||
     `Discover the latest collection from ${store?.title || 'this storefront'}, from signature pieces to fresh arrivals.`;
 
   return (
@@ -94,7 +94,7 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
         title={title}
         description={description}
         page={page}
-        backgroundImage={page?.SEO?.socialImage?.url || store?.SEO?.socialImage?.url || store?.Cover?.url}
+        backgroundImage={page?.seo?.socialImage?.url || store?.seo?.socialImage?.url || store?.cover?.url}
         iconColor={markketColors.sections.shop.main}
       />
 

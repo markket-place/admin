@@ -96,11 +96,11 @@ export default function BlogListClient({ storeSlug, initialPosts }: BlogListClie
 
   const sortedPosts = useMemo(() => {
     if (sortMode === 'alpha') {
-      return [...posts].sort((a, b) => (a.Title || '').localeCompare(b.Title || ''));
+      return [...posts].sort((a, b) => (a.title || '').localeCompare(b.title || ''));
     }
 
     if (sortMode === 'alpha-desc') {
-      return [...posts].sort((a, b) => (b.Title || '').localeCompare(a.Title || ''));
+      return [...posts].sort((a, b) => (b.title || '').localeCompare(a.title || ''));
     }
 
     return sortByRecent(posts);
@@ -114,7 +114,7 @@ export default function BlogListClient({ storeSlug, initialPosts }: BlogListClie
 
         return {
           key,
-          title: post.Title || 'Untitled article',
+          title: post.title || 'Untitled article',
           publishedAt: post.publishedAt,
           subtitle: `${statusText} · ${formatDate(post.updatedAt || post.createdAt)} · ${post.documentId || post.slug || 'no-id'}`,
           href: `/tienda/${storeSlug}/blog/${post.documentId || post.slug}`,

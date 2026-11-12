@@ -92,8 +92,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
         setProduct(productItem || null);
         setStore(storeItem || null);
 
-        const prices = (storedCartItem?.PRICES?.length ? storedCartItem.PRICES : (productItem?.PRICES || [])) as Price[];
-        const matched = prices.find((price) => String(price.STRIPE_ID || '') === String(priceId));
+        const prices = (storedCartItem?.PRICES?.length ? storedCartItem.PRICES : (productItem?.prices || [])) as Price[];
+        const matched = prices.find((price) => String(price.stripe_id || '') === String(priceId));
         setSelectedPrice(matched || null);
       } catch (error) {
         console.error('Failed to load checkout data:', error);
@@ -114,10 +114,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     if (!product || !store || !selection || !selectedPrice) return null;
 
     const explicitTestMode = searchParams.get('test') === '1';
-    const legacyTestMode = Boolean(product?.Name?.toLowerCase()?.includes('test'));
+    const legacyTestMode = Boolean(product?.name?.toLowerCase()?.includes('test'));
     const isTestTransaction = explicitTestMode || legacyTestMode;
 
-    const subtotal = Number(selectedPrice.Price || 0) * selection.quantity;
+    const subtotal = Number(selectedPrice.price || 0) * selection.quantity;
     const totalPrice = subtotal + selection.tip;
     const shipsTo = Array.isArray(selectedPrice.ships_to)
       ? selectedPrice.ships_to.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
@@ -127,10 +127,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       {
         ...selectedPrice,
         quantity: selection.quantity,
-        price: String(selectedPrice.STRIPE_ID || ''),
+        price: String(selectedPrice.stripe_id || ''),
         currency: 'usd',
-        unit_amount: selectedPrice.Price,
-        Name: selectedPrice.Name,
+        unit_amount: selectedPrice.price,
+        Name: selectedPrice.name,
       } as unknown as Price,
     ];
 
@@ -138,7 +138,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
       prices.push({
         unit_amount: String(selection.tip),
         Currency: 'usd',
-        product: product.SKU,
+        product: product.sku,
         quantity: 1,
         Name: 'Tip',
       } as unknown as Price);
@@ -185,10 +185,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     ? selectedPrice.ships_to.filter((item): item is string => typeof item === 'string' && item.trim().length > 0)
     : [];
   const selectedPriceLabel = selectedPrice
-    ? `${selectedPrice.Name || 'Selected option'} · ${selectedPrice.Currency || 'USD'} ${Number(selectedPrice.Price || 0).toFixed(2)}`
+    ? `${selectedPrice.name || 'Selected option'} · ${selectedPrice.currency || 'USD'} ${Number(selectedPrice.price || 0).toFixed(2)}`
     : 'No option selected';
-  const isTestTransaction = searchParams.get('test') === '1' || Boolean(product?.Name?.toLowerCase()?.includes('test'));
-  const productThumb = product?.Thumbnail?.formats?.small?.url || product?.Thumbnail?.url || product?.SEO?.socialImage?.formats?.small?.url || product?.SEO?.socialImage?.url || '';
+  const isTestTransaction = searchParams.get('test') === '1' || Boolean(product?.name?.toLowerCase()?.includes('test'));
+  const productThumb = product?.thumbnail?.formats?.small?.url || product?.thumbnail?.url || product?.seo?.socialImage?.formats?.small?.url || product?.seo?.socialImage?.url || '';
 
   if (loading) {
     return (
@@ -214,7 +214,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
     );
   }
 
-  const subtotal = Number(selectedPrice.Price || 0) * selection.quantity;
+  const subtotal = Number(selectedPrice.price || 0) * selection.quantity;
   const total = subtotal + selection.tip;
 
   return (
@@ -243,8 +243,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ slug: strin
                   }}
                 />
                 <div>
-                  <Title order={3}>{product.Name}</Title>
-                  <Text size="sm" c="dimmed">{store.title || store.SEO?.metaTitle || store.slug}</Text>
+                  <Title order={3}>{product.name}</Title>
+                  <Text size="sm" c="dimmed">{store.title || store.seo?.metaTitle || store.slug}</Text>
                 </div>
               </Group>
               <Group gap={6}>

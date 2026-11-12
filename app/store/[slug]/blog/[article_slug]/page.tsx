@@ -27,15 +27,15 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
   const post = response?.data?.[0] as Article;
 
-  const articleTitle = post?.Title || 'Blog Post';
-  const description = post?.SEO?.metaDescription;
+  const articleTitle = post?.title || 'Blog Post';
+  const description = post?.seo?.metaDescription;
 
   return generateSEOMetadata({
     slug,
     entity: {
-      SEO: post?.SEO,
-      Title: post?.Title,  // Pass real value, not fallback
-      Description: description,
+      seo: post?.seo,
+      title: post?.title,  // Pass real value, not fallback
+      description,
       id: post?.id?.toString(),
       url: `/${slug}/blog/${article_slug}`,
     },
@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
       'blog',
       'article',
       articleTitle,
-      ...(post?.Tags?.map(t => t.Label) || []),
+      ...(post?.tags?.map(t => t.label) || []),
     ],
   });
 };
@@ -79,7 +79,7 @@ export default async function BlogPostPageContainer({
     .slice(0, 4)
     .map((item) => ({
       href: `/${slug}/blog/${item.slug}`,
-      label: item.Title || item.slug,
+      label: item.title || item.slug,
     }));
 
   return (
@@ -88,19 +88,19 @@ export default async function BlogPostPageContainer({
         {post.cover?.url && (
           <LightboxImage
             src={post.cover.url}
-            alt={post.Title}
+            alt={post.title}
             radius="md"
             className="w-full"
           />
         )}
 
         <div>
-          <Title order={1}>{post.Title}</Title>
-          {post.Tags && (
+          <Title order={1}>{post.title}</Title>
+          {post.tags && (
             <div className="mt-2 flex gap-2">
-              {post.Tags.map((tag) => (
-                <Text key={tag.id} size="sm" c={tag.Color?.toLowerCase() || 'blue'}>
-                  #{tag.Label}
+              {post.tags.map((tag) => (
+                <Text key={tag.id} size="sm" c={tag.color?.toLowerCase() || 'blue'}>
+                  #{tag.label}
                 </Text>
               ))}
             </div>

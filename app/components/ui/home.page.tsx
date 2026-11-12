@@ -146,14 +146,14 @@ const HomePage = ({
             <div className="lg:col-span-7">
               <SectionLabel num="01" label="/tienda" />
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-gray-950 mt-2 leading-[1.08]">
-                {store?.SEO?.metaTitle || 'Markkët Next'}
+                {store?.seo?.metaTitle || 'Markkët Next'}
                 <br />
                 <span style={{ color: markketColors.rosa.main }}>Content Manager System</span>
               </h1>
             </div>
             <div className="lg:col-span-5 flex flex-col gap-6">
               <p className="text-gray-600 text-lg leading-relaxed font-normal">
-                {store?.SEO?.metaDescription ||
+                {store?.seo?.metaDescription ||
                   'Create beautiful standalone digital storefronts and blog networks for independent creators, artists, and modern agile brands.'}
               </p>
               <div>
@@ -190,25 +190,25 @@ const HomePage = ({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {communityPosts.slice(0, 6).map((post) => {
-                const contentImage = extractRichTextImageUrl(post?.Content);
+                const contentImage = extractRichTextImageUrl(post?.content);
                 const coverUrl = pickBestImage(
                   contentImage,
                   post?.cover?.formats?.medium?.url,
                   post?.cover?.formats?.small?.url,
                   post?.cover?.formats?.thumbnail?.url,
                   post?.cover?.url,
-                  post?.SEO?.socialImage?.formats?.medium?.url,
-                  post?.SEO?.socialImage?.formats?.small?.url,
-                  post?.SEO?.socialImage?.formats?.thumbnail?.url,
-                  post?.SEO?.socialImage?.url,
-                  post?.store?.Logo?.formats?.small?.url,
-                  post?.store?.Logo?.formats?.thumbnail?.url,
-                  post?.store?.Logo?.url,
+                  post?.seo?.socialImage?.formats?.medium?.url,
+                  post?.seo?.socialImage?.formats?.small?.url,
+                  post?.seo?.socialImage?.formats?.thumbnail?.url,
+                  post?.seo?.socialImage?.url,
+                  post?.store?.logo?.formats?.small?.url,
+                  post?.store?.logo?.formats?.thumbnail?.url,
+                  post?.store?.logo?.url,
                 );
                 const storeSlug = post?.store?.slug;
                 const href = storeSlug ? `/${storeSlug}/blog/${post.slug}` : '/docs';
                 const fallbackCoverUrl = createFallbackCoverUrl(
-                  [post.Title, post.slug, post.documentId, storeSlug].filter(Boolean).join('-') || post.id?.toString() || 'blog-post',
+                  [post.title, post.slug, post.documentId, storeSlug].filter(Boolean).join('-') || post.id?.toString() || 'blog-post',
                   900,
                   520,
                 );
@@ -218,13 +218,13 @@ const HomePage = ({
                     key={post.documentId || post.id}
                     href={href}
                     className="group flex flex-col h-full overflow-hidden bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                    aria-label={`Read fully-optimized article: ${post.Title}`}
+                    aria-label={`Read fully-optimized article: ${post.title}`}
                   >
                     <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
                       {coverUrl ? (
                         <img
                           src={coverUrl}
-                          alt={post.Title}
+                          alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                           loading="lazy"
                         />
@@ -247,10 +247,10 @@ const HomePage = ({
                       </div>
 
                       <h3 className="text-lg font-bold text-gray-950 group-hover:text-rose-600 transition-colors line-clamp-2 leading-snug mb-2">
-                        {post.Title}
+                        {post.title}
                       </h3>
                       <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed mb-4">
-                        {post?.SEO?.metaDescription || 'Click to dive deep into this featured community insight piece...'}
+                        {post?.seo?.metaDescription || 'Click to dive deep into this featured community insight piece...'}
                       </p>
 
                       <span
@@ -292,18 +292,18 @@ const HomePage = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {eventsToDisplay.slice(0, 9).map((event: Event) => {
                 const thumbnailUrl = pickBestImage(
-                  event?.Thumbnail?.formats?.medium?.url,
-                  event?.Thumbnail?.formats?.small?.url,
-                  event?.Thumbnail?.formats?.thumbnail?.url,
-                  event?.Thumbnail?.url,
-                  event?.Slides?.[0]?.formats?.medium?.url,
-                  event?.Slides?.[0]?.formats?.small?.url,
-                  event?.Slides?.[0]?.formats?.thumbnail?.url,
-                  event?.Slides?.[0]?.url,
-                  event?.SEO?.socialImage?.formats?.medium?.url,
-                  event?.SEO?.socialImage?.formats?.small?.url,
-                  event?.SEO?.socialImage?.formats?.thumbnail?.url,
-                  event?.SEO?.socialImage?.url,
+                  event?.thumbnail?.formats?.medium?.url,
+                  event?.thumbnail?.formats?.small?.url,
+                  event?.thumbnail?.formats?.thumbnail?.url,
+                  event?.thumbnail?.url,
+                  event?.slides?.[0]?.formats?.medium?.url,
+                  event?.slides?.[0]?.formats?.small?.url,
+                  event?.slides?.[0]?.formats?.thumbnail?.url,
+                  event?.slides?.[0]?.url,
+                  event?.seo?.socialImage?.formats?.medium?.url,
+                  event?.seo?.socialImage?.formats?.small?.url,
+                  event?.seo?.socialImage?.formats?.thumbnail?.url,
+                  event?.seo?.socialImage?.url,
                   (event as any)?.stores?.[0]?.Logo?.formats?.small?.url,
                   (event as any)?.stores?.[0]?.Logo?.formats?.thumbnail?.url,
                   (event as any)?.stores?.[0]?.Logo?.url,
@@ -317,13 +317,13 @@ const HomePage = ({
                     key={event.documentId || event.id}
                     href={href}
                     className="group flex flex-col h-full overflow-hidden bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                    aria-label={`Register for community event: ${event.Name}`}
+                    aria-label={`Register for community event: ${event.name}`}
                   >
                     <div className="relative aspect-video w-full overflow-hidden bg-gray-50">
                       {thumbnailUrl ? (
                         <img
                           src={thumbnailUrl}
-                          alt={event.Name}
+                          alt={event.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                           loading="lazy"
                         />
@@ -349,10 +349,10 @@ const HomePage = ({
                       </div>
 
                       <h3 className="text-lg font-bold text-gray-950 group-hover:text-emerald-600 transition-colors line-clamp-2 leading-snug mb-2">
-                        {event.Name}
+                        {event.name}
                       </h3>
                       <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4">
-                        {event?.SEO?.metaDescription || 'Discover dates, speaker bios, topics, and access details for this collective community run workshop.'}
+                        {event?.seo?.metaDescription || 'Discover dates, speaker bios, topics, and access details for this collective community run workshop.'}
                       </p>
 
                       <span
@@ -420,17 +420,17 @@ const HomePage = ({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
               {communityProducts.slice(0, 6).map((product) => {
                 const storeSlug = (product as any)?.stores?.[0]?.slug;
-                const contentImage = extractRichTextImageUrl(product?.Description as string);
+                const contentImage = extractRichTextImageUrl(product?.description as string);
                 const productImage = pickBestImage(
                   contentImage,
-                  product?.Thumbnail?.url,
-                  product?.Slides?.[0]?.formats?.medium?.url,
-                  product?.Slides?.[0]?.formats?.small?.url,
-                  product?.Slides?.[0]?.formats?.thumbnail?.url,
-                  product?.Slides?.[0]?.url,
+                  product?.thumbnail?.url,
+                  product?.slides?.[0]?.formats?.medium?.url,
+                  product?.slides?.[0]?.formats?.small?.url,
+                  product?.slides?.[0]?.formats?.thumbnail?.url,
+                  product?.slides?.[0]?.url,
                 );
                 const href = storeSlug ? `/${storeSlug}/products/${product.slug}` : '/stores';
-                const _price = product.usd_price || product.PRICES?.[0]?.Price;
+                const _price = product.usd_price || product.prices?.[0]?.price;
                 const price = _price && _price > 0 ? `$${((_price)).toFixed(2)}` : ' / ';
 
                 return (
@@ -438,20 +438,20 @@ const HomePage = ({
                     key={product.documentId || product.id}
                     href={href}
                     className="group flex flex-col h-full overflow-hidden bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                    aria-label={`Purchase or read specs for: ${product.Name}`}
+                    aria-label={`Purchase or read specs for: ${product.name}`}
                   >
                     <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
                       {productImage ? (
                         <img
                           src={productImage}
-                          alt={product.Name}
+                          alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                           loading="lazy"
                         />
                       ) : (
                           <div
                             className="w-full h-full bg-cover bg-center relative"
-                            style={{ backgroundImage: `url(${createFallbackCoverUrl([product.Name, product.slug, storeSlug].filter(Boolean).join('-') || product.id?.toString() || 'product', 900, 520)})` }}
+                            style={{ backgroundImage: `url(${createFallbackCoverUrl([product.name, product.slug, storeSlug].filter(Boolean).join('-') || product.id?.toString() || 'product', 900, 520)})` }}
                           >
                           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 via-transparent to-transparent" />
                         </div>
@@ -467,10 +467,10 @@ const HomePage = ({
                       </div>
 
                       <h3 className="text-lg font-bold text-gray-950 group-hover:text-cyan-600 transition-colors line-clamp-2 leading-snug mb-1">
-                        {product.Name}
+                        {product.name}
                       </h3>
                       <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4">
-                        {product?.SEO?.metaDescription || stripMarkdown(product?.Description as string) || 'Review sizing, feature sets, technical specifications, and distribution delivery parameters.'}
+                        {product?.seo?.metaDescription || stripMarkdown(product?.description as string) || 'Review sizing, feature sets, technical specifications, and distribution delivery parameters.'}
                       </p>
 
                       <div className="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
@@ -492,7 +492,7 @@ const HomePage = ({
       )}
 
       {/* ── CUSTOM PAGE CONTENT ───────────────────────────── */}
-      {page?.Content && (
+      {page?.content && (
         <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <PageContent params={{ page }} />
         </section>
@@ -526,7 +526,7 @@ const HomePage = ({
                     key={p.documentId || p.id}
                     href={href}
                     className="group flex flex-col p-6 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 h-full"
-                    aria-label={`Explore information index: ${p.Title}`}
+                    aria-label={`Explore information index: ${p.title}`}
                   >
                     {logoUrl && (
                       <div className="relative h-24 w-full rounded-xl overflow-hidden bg-gray-100 mb-4 border border-gray-50">
@@ -545,10 +545,10 @@ const HomePage = ({
                         </span>
                       )}
                       <h3 className="text-lg font-bold text-gray-950 group-hover:text-indigo-600 transition-colors leading-snug">
-                        {p.Title}
+                        {p.title}
                       </h3>
                       <p className="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4">
-                        {p.SEO?.metaDescription || 'Read through official manifestos, custom landing profiles, and local vendor dynamic documentations.'}
+                        {p.seo?.metaDescription || 'Read through official manifestos, custom landing profiles, and local vendor dynamic documentations.'}
                       </p>
 
                       <span

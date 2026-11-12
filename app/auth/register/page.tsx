@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
     defaultTitle: 'Register',
     entity: {
       url: 'auth/register',
-      SEO: page?.SEO,
+      seo: page?.seo,
       id: page?.id?.toString(),
     }
   });

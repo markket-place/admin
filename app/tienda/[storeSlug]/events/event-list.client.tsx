@@ -119,7 +119,7 @@ export default function EventListClient({ storeSlug, initialEvents }: EventListC
     }
 
     if (sortMode === 'alpha') {
-      return [...events].sort((a, b) => (a.Name || '').localeCompare(b.Name || ''));
+      return [...events].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
     }
 
     return sortByDate(events);
@@ -135,7 +135,7 @@ export default function EventListClient({ storeSlug, initialEvents }: EventListC
 
         return {
           key,
-          title: event.Name || 'Untitled event',
+          title: event.name || 'Untitled event',
           subtitle: locationLabel ? `${subtitleBase} · ${locationLabel}` : subtitleBase,
           href: `/tienda/${storeSlug}/events/${event.documentId || event.slug}`,
           previewHref: isPublished(event) && event.slug ? `/${storeSlug}/events/${event.slug}` : undefined,

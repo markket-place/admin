@@ -160,10 +160,10 @@ export default function ListComponent({ items, actions, plural, singular }: Arti
                       size={44}
                       radius="xl"
                       src={
-                        item.SEO?.socialImage?.formats?.thumbnail?.url || item.SEO?.socialImage?.formats?.thumbnail?.url
-                        || item.SEO?.socialImage?.url || item?.cover?.thumbnail?.url || item?.Favicon?.url
+                        item.seo?.socialImage?.formats?.thumbnail?.url || item.seo?.socialImage?.formats?.thumbnail?.url
+                        || item.seo?.socialImage?.url || item?.cover?.thumbnail?.url || item?.favicon?.url
                       }
-                      alt={(item as Article).Title || (item as Album).title || (item as Product).Name}
+                      alt={(item as Article).title || (item as Album).title || (item as Product).name}
                       className="border-2 border-fuchsia-200 bg-white"
                     >
                       <IconPhoto size={22} />
@@ -171,7 +171,7 @@ export default function ListComponent({ items, actions, plural, singular }: Arti
                     <div>
                       <Text size="md" fw={700} lineClamp={1} className="text-sky-900">
                         <a href="#" onClick={() => handleAction('view', item)} className="hover:underline">
-                          {(item as Article).Title || (item as Album).title || (item as Product).Name}
+                          {(item as Article | Album).title || (item as Product).name}
                         </a>
                       </Text>
                       <Text size="xs" c="dimmed" className="italic">
@@ -182,11 +182,11 @@ export default function ListComponent({ items, actions, plural, singular }: Arti
                 </Table.Td>
                 <Table.Td>
                   <Badge
-                    color={(item?.SEO?.excludeFromSearch || !item.publishedAt) ? 'yellow' : 'green'}
+                    color={(item?.seo?.excludeFromSearch || !item.publishedAt) ? 'yellow' : 'green'}
                     variant="filled"
                     className="border-2 border-black font-bold"
                   >
-                    {(!!item?.SEO?.excludeFromSearch || !item.publishedAt) ? 'Draft' : 'Published'}
+                    {(!!item?.seo?.excludeFromSearch || !item.publishedAt) ? 'Draft' : 'Published'}
                   </Badge>
                 </Table.Td>
                 <Table.Td>

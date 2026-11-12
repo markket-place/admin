@@ -30,7 +30,7 @@ export default function StripePage({ store, stripe }: { store: Store, stripe: St
 
     try {
       const linkResponse = await markket.stripeConnect('account_link', {
-        account: store?.STRIPE_CUSTOMER_ID,
+        account: store?.stripe_customer_id,
         store: store?.documentId,
         test_mode: !!stripe?.info?.test_mode,
       });
@@ -116,14 +116,14 @@ export default function StripePage({ store, stripe }: { store: Store, stripe: St
             Markket integrates with Stripe to securely send payouts. You&apos;ll be able to track sales, handle refunds, and receive payouts directly to your bank account.
           </Text>
 
-          {!store?.STRIPE_CUSTOMER_ID && (
+          {!store?.stripe_customer_id && (
             <Text className="text-fuchsia-700 font-semibold">
               You can use all other features (albums, blog posts, products), but payouts are disabled until you connect your Stripe account. This is required for compliance and security.
             </Text>
           )}
 
           <Group justify="space-between" mt="md">
-            {!store?.STRIPE_CUSTOMER_ID && (
+            {!store?.stripe_customer_id && (
               <div className="w-full flex flex-col gap-2">
                 <label htmlFor="stripe-country" className="font-semibold text-sky-900">Country for Stripe Account</label>
                 <select
@@ -160,7 +160,7 @@ export default function StripePage({ store, stripe }: { store: Store, stripe: St
               </div>
             )}
 
-            {store?.STRIPE_CUSTOMER_ID && (
+            {store?.stripe_customer_id && (
               <Button
                 leftSection={<IconCreditCard size={20} />}
                 onClick={openDashboard}
@@ -174,7 +174,7 @@ export default function StripePage({ store, stripe }: { store: Store, stripe: St
               </Button>
             )}
 
-            {store?.STRIPE_CUSTOMER_ID && (
+            {store?.stripe_customer_id && (
               <a
                 onClick={openDashboard}
                 className="flex items-center space-x-2 text-blue-600 hover:text-fuchsia-700 font-bold border-b-2 border-dotted border-blue-400"
@@ -218,7 +218,7 @@ export default function StripePage({ store, stripe }: { store: Store, stripe: St
       </Paper>
 
       <Paper withBorder radius="xl" p="xl" mt="xl" className="border-4 border-black bg-white/80">
-        {!store?.STRIPE_CUSTOMER_ID ? (
+        {!store?.stripe_customer_id ? (
           <Stack gap="md">
             <Title order={3} className="text-fuchsia-700 font-bold">What happens next?</Title>
             <Text className="text-sky-800">

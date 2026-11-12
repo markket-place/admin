@@ -44,7 +44,7 @@ const isPublishedEntry = (entry: PublicationEntry): boolean => {
 
 const isInternalPage = (page: Page): boolean => {
   const slug = (page?.slug || '').toLowerCase();
-  const title = (page?.Title || '').toLowerCase();
+  const title = (page?.title || '').toLowerCase();
   const combined = `${slug} ${title}`;
 
   return INTERNAL_PAGE_HINTS.some((hint) => combined.includes(hint));
@@ -63,8 +63,8 @@ export async function generateMetadata({ params }: AboutDetailPageProps): Promis
     slug: 'about',
     entity: {
       url: `/about/${page_slug}`,
-      SEO: page?.SEO,
-      Title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     type: 'article',
     defaultTitle: 'About',
@@ -89,7 +89,7 @@ export default async function AboutDetailPage({ params }: AboutDetailPageProps) 
     .filter((p) => p?.slug && p.slug !== page_slug && !SYSTEM_PAGE_SLUGS.has(p.slug))
     .filter((p) => isPublishedEntry(p as PublicationEntry))
     .filter((p) => !isInternalPage(p))
-    .sort((a, b) => (a?.Title || '').localeCompare(b?.Title || ''));
+    .sort((a, b) => (a?.title || '').localeCompare(b?.title || ''));
 
   return (
     <Container size="lg" py="xl">
@@ -122,8 +122,8 @@ export default async function AboutDetailPage({ params }: AboutDetailPageProps) 
             <Badge variant="light" radius="xl" style={{ width: 'fit-content', color: markketColors.sections.about.main }}>
               About
             </Badge>
-            <Title order={1}>{page.Title || page.slug}</Title>
-            {page?.SEO?.metaDescription ? <Text c="dimmed">{page.SEO.metaDescription}</Text> : null}
+            <Title order={1}>{page.title || page.slug}</Title>
+            {page?.seo?.metaDescription ? <Text c="dimmed">{page.seo.metaDescription}</Text> : null}
           </Stack>
         </Box>
 
@@ -177,10 +177,10 @@ export default async function AboutDetailPage({ params }: AboutDetailPageProps) 
                   >
                     <Stack gap={6}>
                       <Text fw={700} style={{ color: markketColors.neutral.charcoal }}>
-                        {p.Title || p.slug}
+                        {p.title || p.slug}
                       </Text>
                       <Text size="sm" c="dimmed" lineClamp={3}>
-                        {p?.SEO?.metaDescription || 'Open this page to learn more.'}
+                        {p?.seo?.metaDescription || 'Open this page to learn more.'}
                       </Text>
                     </Stack>
                   </Paper>

@@ -1,5 +1,6 @@
 "use client";
 
+import { URL } from "@/markket";
 import { Tooltip, ActionIcon, Group, Text, Anchor } from "@mantine/core";
 import {
   IconBrandInstagram,
@@ -24,7 +25,7 @@ import {
 } from "@tabler/icons-react";
 
 interface StoreTabProps {
-  urls?: { id: number; Label: string; URL: string }[];
+  urls?: { id: number; label: string; url: string }[];
   basePath?: string;
 }
 
@@ -84,11 +85,11 @@ export function StoreTabs({ urls = [], basePath = '' }: StoreTabProps) {
   return (
     <Group gap="sm" wrap="wrap" justify="center">
       {urls.map((link) => {
-        const { Icon, color } = detectLinkProfile(link.URL);
-        const resolvedHref = resolveStoreHref(link.URL, basePath);
+        const { Icon, color } = detectLinkProfile(link.url);
+        const resolvedHref = resolveStoreHref(link.url, basePath);
         const isExternal = resolvedHref?.startsWith('https') || resolvedHref?.startsWith('http');
         return (
-          <Tooltip key={link.id} label={link.Label || link.URL} position="top" withArrow>
+          <Tooltip key={link.id} label={link.label || link.url} position="top" withArrow>
             <Anchor
               href={resolvedHref}
               target={isExternal ? '_blank' : '_self'}

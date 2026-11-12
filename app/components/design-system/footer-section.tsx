@@ -1,8 +1,8 @@
 import SpecimenTag from '@/app/components/design-system/specimen-tag';
 
 type StoreLink = {
-  Label?: string;
-  URL: string;
+  label?: string;
+  url: string;
 };
 
 type FooterSectionProps = {
@@ -11,7 +11,7 @@ type FooterSectionProps = {
 
 export default function FooterSection({ links = [] }: FooterSectionProps) {
   const safeLinks = links
-    .filter((link) => !!link?.URL)
+    .filter((link) => !!link?.url)
     .slice(0, 4);
 
   return (
@@ -36,13 +36,13 @@ export default function FooterSection({ links = [] }: FooterSectionProps) {
         {safeLinks.length > 0 ? (
           safeLinks.map((link) => (
             <a
-              key={`${link.Label || 'link'}-${link.URL}`}
-              href={link.URL}
+              key={`${link.label || 'link'}-${link.url}`}
+              href={link.url}
               target="_blank"
               rel="noreferrer"
               style={{ textDecoration: 'none' }}
             >
-              <SpecimenTag>{link.Label || link.URL}</SpecimenTag>
+              <SpecimenTag>{link.label || link.url}</SpecimenTag>
             </a>
           ))
         ) : (

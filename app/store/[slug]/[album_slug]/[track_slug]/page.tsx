@@ -4,12 +4,13 @@ import { generateSEOMetadata } from '@/markket/metadata';
 import TracksPage from '@/app/components/ui/album.track.page';
 import { Store } from '@/markket/store.d';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 interface PageProps {
   params: Promise<{ slug: string, album_slug: string , track_slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug, album_slug, track_slug } = await params;
 
   const response = await strapiClient.getAlbum(album_slug, slug);
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: PageProps) {
     slug,
     entity: {
       url: `/${slug}/${album_slug}/${track_slug}`,
-      SEO: track?.SEO|| collection?.SEO,
+      seo: track?.seo || collection?.seo,
     },
     type: 'article',
   });

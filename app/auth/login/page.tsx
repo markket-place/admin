@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
     defaultTitle: 'Login',
     entity: {
       url: 'auth/login',
-      SEO: page?.SEO,
+      seo: page?.seo,
       id: page?.id?.toString(),
     }
   });

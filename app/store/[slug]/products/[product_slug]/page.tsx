@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: ProductSlugPageProps): Promis
   const { slug, product_slug } = await params;
   const { data } = await strapiClient.getProduct(product_slug, slug);
   const product = data?.[0] as Product;
-  const productName = product?.Name || 'Product';
+  const productName = product?.name || 'Product';
   const price = typeof product?.usd_price === 'number' && product.usd_price > 0
     ? `$${(product.usd_price / 100).toFixed(2)}`
     : '';
-  const plainDescription = stripMarkdown(richTextToPlainText(product?.Description as string));
-  const description = product?.SEO?.metaDescription
+  const plainDescription = stripMarkdown(richTextToPlainText(product?.description as string));
+  const description = product?.seo?.metaDescription
     || (plainDescription ? (plainDescription.length > 150 ? `${plainDescription.slice(0, 149)}...` : plainDescription) : '')
     || `${productName}${price ? ' - ' + price : ''}. Available now.`;
 
@@ -29,10 +29,10 @@ export async function generateMetadata({ params }: ProductSlugPageProps): Promis
     slug,
     entity: {
       url: `/${slug}/products/${product_slug}`,
-      SEO: product?.SEO,
+      seo: product?.seo,
       id: product?.id?.toString(),
-      Name: product?.Name,  // Pass real value, not fallback
-      Description: description,
+      name: product?.name,  // Pass real value, not fallback
+      description,
     },
     type: 'article',
     defaultTitle: 'Product',
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: ProductSlugPageProps): Promis
       'buy',
       'shop',
       productName,
-      ...(product?.Tag?.map(t => t.Label) || []),
+      ...(product?.tag?.map(t => t.label) || []),
     ],
   });
 };
@@ -71,7 +71,7 @@ export default async function ProductSlugPage({ params }: ProductSlugPageProps) 
     .slice(0, 4)
     .map((item) => ({
       href: `/${slug}/products/${item.slug}`,
-      label: item.Name || item.slug,
+      label: item.name || item.slug,
     }));
 
   return (

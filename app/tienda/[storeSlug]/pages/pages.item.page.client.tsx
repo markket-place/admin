@@ -115,7 +115,7 @@ export default function TiendaPageItemPageClient({ storeSlug, itemId }: TiendaPa
         { label: 'Pages', href: `/tienda/${storeSlug}/pages` },
         { label: page.documentId || page.slug || itemId },
       ]}
-      title={page.Title || 'Untitled page'}
+      title={page.title || 'Untitled page'}
       routePath={`/tienda/${storeSlug}/pages/${page.documentId || page.slug || itemId}`}
       actions={
         <>
@@ -131,7 +131,7 @@ export default function TiendaPageItemPageClient({ storeSlug, itemId }: TiendaPa
       }
     >
       <Stack gap="md">
-        <Text c="dimmed">{page.SEO?.metaDescription || 'No summary yet.'}</Text>
+        <Text c="dimmed">{page.seo?.metaDescription || 'No summary yet.'}</Text>
 
         <ContentMediaPreview
           storeRef={storeSlug}
@@ -145,15 +145,15 @@ export default function TiendaPageItemPageClient({ storeSlug, itemId }: TiendaPa
             {
               label: 'Cover / Social',
               field: 'SEO.socialImage',
-              src: page.SEO?.socialImage?.url,
-              alt: page.SEO?.socialImage?.alternativeText || page.Title,
+              src: page.seo?.socialImage?.url,
+              alt: page.seo?.socialImage?.alternativeText || page.title,
             },
           ]}
         />
 
         <Divider label={<Badge variant="dot" color="gray" size="sm">Page preview</Badge>} labelPosition="left" />
 
-        {page.Content?.length ? (
+        {page.content?.length ? (
           <Paper withBorder p="lg" radius="md" style={{ background: 'var(--mantine-color-gray-0, #fafafa)' }}>
             <PageContent params={{ page }} />
           </Paper>

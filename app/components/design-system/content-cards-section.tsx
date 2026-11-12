@@ -103,7 +103,7 @@ export default function ContentCardsSection({ storeSlug, posts, pages }: Content
             return (
               <article key={`post-${post.id}`} style={cardStyle}>
                 {image ? (
-                  <img src={image} alt={post.Title} loading="lazy" style={coverStyle} />
+                  <img src={image} alt={post.title} loading="lazy" style={coverStyle} />
                 ) : (
                   <div style={{ ...coverStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontWeight: 700 }}>
                     No image
@@ -111,8 +111,8 @@ export default function ContentCardsSection({ storeSlug, posts, pages }: Content
                 )}
                 <div style={bodyStyle}>
                   <SpecimenTag color="#db2777">Blog Post</SpecimenTag>
-                  <h3 style={titleStyle}>{post.Title || 'Untitled Post'}</h3>
-                  <p style={excerptStyle}>{description(post?.SEO?.metaDescription)}</p>
+                  <h3 style={titleStyle}>{post.title || 'Untitled Post'}</h3>
+                  <p style={excerptStyle}>{description(post?.seo?.metaDescription)}</p>
                   <Link href={href} style={ctaStyle}>
                     View post
                   </Link>
@@ -123,12 +123,12 @@ export default function ContentCardsSection({ storeSlug, posts, pages }: Content
 
           {safePages.map((page) => {
             const href = `/${storeSlug}/about/${page.slug}`;
-            const image = page?.SEO?.socialImage?.formats?.small?.url || page?.SEO?.socialImage?.url;
+            const image = page?.seo?.socialImage?.formats?.small?.url || page?.seo?.socialImage?.url;
 
             return (
               <article key={`page-${page.id}`} style={cardStyle}>
                 {image ? (
-                  <img src={image} alt={page.Title} loading="lazy" style={coverStyle} />
+                  <img src={image} alt={page.title} loading="lazy" style={coverStyle} />
                 ) : (
                   <div style={{ ...coverStyle, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#64748b', fontWeight: 700 }}>
                     No image
@@ -136,8 +136,8 @@ export default function ContentCardsSection({ storeSlug, posts, pages }: Content
                 )}
                 <div style={bodyStyle}>
                   <SpecimenTag color="#0f766e">Page</SpecimenTag>
-                  <h3 style={titleStyle}>{page.Title || 'Untitled Page'}</h3>
-                  <p style={excerptStyle}>{description(page?.SEO?.metaDescription)}</p>
+                  <h3 style={titleStyle}>{page.title || 'Untitled Page'}</h3>
+                  <p style={excerptStyle}>{description(page?.seo?.metaDescription)}</p>
                   <Link href={href} style={ctaStyle}>
                     View page
                   </Link>

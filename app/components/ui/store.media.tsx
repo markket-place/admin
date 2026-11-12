@@ -25,12 +25,12 @@ interface StoreMediaProps {
   store: Store;
   onUpdate: (file: Media, field: string, id: number | string) => void;
   onRefresh?: () => Promise<void> | void;
-  onSaveSlides?: (slides: Store['Slides']) => Promise<void> | void;
+  onSaveSlides?: (slides: Store['slides']) => Promise<void> | void;
 }
 
 type UploadField = 'Logo' | 'Favicon' | 'SEO.socialImage' | 'Cover' | 'Slides';
 type LoadingField = 'logo' | 'favicon' | 'social' | 'slides' | null;
-type SlideMedia = Store['Slides'][number];
+type SlideMedia = Store['slides'][number];
 
 type UploadRule = {
   maxWidth: number;
@@ -130,7 +130,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [selectedSlotId, setSelectedSlotId] = useState('Logo');
   const [altText, setAltText] = useState('');
-  const [draftSlides, setDraftSlides] = useState<SlideMedia[]>(Array.isArray(store.Slides) ? store.Slides : []);
+  const [draftSlides, setDraftSlides] = useState<SlideMedia[]>(Array.isArray(store.slides) ? store.slides : []);
   const [isDropActive, setIsDropActive] = useState(false);
 
   const readAuthToken = () => {
@@ -146,8 +146,8 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
   };
 
   useEffect(() => {
-    setDraftSlides(Array.isArray(store.Slides) ? store.Slides : []);
-  }, [store.documentId, store.Slides]);
+    setDraftSlides(Array.isArray(store.slides) ? store.slides : []);
+  }, [store.documentId, store.slides]);
 
   const getSlideSlotId = (slide: SlideMedia, index: number) => `slide-${slide.documentId || slide.id || index}`;
   const storeName = (store.title || store.slug || 'store').trim();
@@ -165,33 +165,33 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
       id: 'Logo',
       label: 'Logo',
       field: 'Logo',
-      src: store.Logo?.url,
-      alt: store.Logo?.alternativeText || `${storeName} logo`,
-      mediaId: store.Logo?.id,
+      src: store.logo?.url,
+      alt: store.logo?.alternativeText || `${storeName} logo`,
+      mediaId: store.logo?.id,
     },
     {
       id: 'Favicon',
       label: 'Favicon',
       field: 'Favicon',
-      src: store.Favicon?.url,
-      alt: store.Favicon?.alternativeText || `${storeName} favicon`,
-      mediaId: store.Favicon?.id,
+      src: store.favicon?.url,
+      alt: store.favicon?.alternativeText || `${storeName} favicon`,
+      mediaId: store.favicon?.id,
     },
     {
       id: 'Cover',
       label: 'Cover',
       field: 'Cover',
-      src: store.Cover?.url,
-      alt: store.Cover?.alternativeText || `${storeName} cover image`,
-      mediaId: store.Cover?.id,
+      src: store.cover?.url,
+      alt: store.cover?.alternativeText || `${storeName} cover image`,
+      mediaId: store.cover?.id,
     },
     {
       id: 'SEO.socialImage',
       label: 'Social',
       field: 'SEO.socialImage',
-      src: store.SEO?.socialImage?.url,
-      alt: store.SEO?.socialImage?.alternativeText || `${storeName} social image`,
-      mediaId: store.SEO?.socialImage?.id,
+      src: store.seo?.socialImage?.url,
+      alt: store.seo?.socialImage?.alternativeText || `${storeName} social image`,
+      mediaId: store.seo?.socialImage?.id,
     },
     ...draftSlides.slice(0, 8).map((slide, index) => ({
       id: getSlideSlotId(slide, index),
@@ -216,7 +216,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
   const selectedSlideIndex = selectedSlot?.isSlide && selectedSlot.id !== 'slide-add'
     ? draftSlides.findIndex((slide, index) => getSlideSlotId(slide, index) === selectedSlot.id)
     : -1;
-  const hasSlideDraftChanges = JSON.stringify((store.Slides || []).map((slide) => slide.documentId || slide.id))
+  const hasSlideDraftChanges = JSON.stringify((store.slides || []).map((slide) => slide.documentId || slide.id))
     !== JSON.stringify((draftSlides || []).map((slide) => slide.documentId || slide.id));
   const hasAltDraftChanges = (altText || '').trim() !== (selectedSlot?.alt || '').trim();
 

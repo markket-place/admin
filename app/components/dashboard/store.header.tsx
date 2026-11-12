@@ -46,7 +46,7 @@ export default function StoreHeader({ store }: StoreHeaderProps) {
       <Group justify="space-between" wrap="nowrap">
         <Group wrap="nowrap" gap="xl">
           <Avatar
-            src={store?.Logo?.url || store?.Favicon?.url}
+            src={store?.logo?.url || store?.favicon?.url}
             size={64}
             radius="md"
             className="ring-2 ring-blue-100 shadow-lg"
@@ -88,13 +88,13 @@ export default function StoreHeader({ store }: StoreHeaderProps) {
                 <IconCalendarTime size={16} />
                 Created {new Date(store?.createdAt).toLocaleDateString()}
               </Text>
-              {store?.URLS?.length > 0 && (
+              {store?.urls?.length > 0 && (
                 <Badge
                   color="blue"
                   radius="sm"
                   variant="dot"
                 >
-                  {store.URLS.length} URLs
+                  {store.urls.length} URLs
                 </Badge>
               )}
             </Group>

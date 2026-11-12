@@ -32,7 +32,7 @@ export default function AuthPage() {
   }, [maybe]);
 
   const storeName = store?.title || 'Markketplace'
-  const title = page?.Title || page?.SEO?.metaTitle || storeName;
+  const title = page?.title || page?.seo?.metaTitle || storeName;
 
   return (
     <Stack gap="md" w="100%" maw={420}>

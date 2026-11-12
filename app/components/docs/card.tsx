@@ -23,15 +23,15 @@ export function BlogPostCard({ post, prefix, showStore, imageLoading = 'lazy' }:
   const slug = post.slug;
   const linkHref = `/${prefix || 'docs'}/${slug}`;
   const storeTitle = (post as Article & { store?: { title?: string } })?.store?.title;
-  const contentImage = extractRichTextImageUrl(post?.Content);
-  const coverUrl = post?.cover?.formats?.medium?.url || post?.cover?.formats?.small?.url || post?.cover?.url || post.SEO?.socialImage?.formats?.small?.url;
+  const contentImage = extractRichTextImageUrl(post?.content);
+  const coverUrl = post?.cover?.formats?.medium?.url || post?.cover?.formats?.small?.url || post?.cover?.url || post.seo?.socialImage?.formats?.small?.url;
   const fallbackCoverUrl = createPicsumImageUrl(
-    [post.Title, post.slug, post.documentId, storeTitle].filter(Boolean).join('-') || post.id?.toString() || 'docs-post',
+    [post.title, post.slug, post.documentId, storeTitle].filter(Boolean).join('-') || post.id?.toString() || 'docs-post',
     800,
     520,
   );
-  const excerpt = post?.SEO?.metaDescription
-    || stripMarkdown(richTextToPlainText(post?.Content))
+  const excerpt = post?.seo?.metaDescription
+    || stripMarkdown(richTextToPlainText(post?.content))
     || '';
   const publishedDate = post.publishedAt ? new Date(post.publishedAt) : null;
   const publishedDateLabel = publishedDate && !Number.isNaN(publishedDate.getTime())
@@ -66,78 +66,78 @@ export function BlogPostCard({ post, prefix, showStore, imageLoading = 'lazy' }:
           el.style.borderColor = markketColors.neutral.gray;
         }}
       >
-      <CardSection style={{ height: 180, overflow: 'hidden', flexShrink: 0 }}>
+        <CardSection style={{ height: 180, overflow: 'hidden', flexShrink: 0 }}>
           {contentImage || coverUrl ? (
-          <img
+            <img
               src={contentImage || coverUrl}
-            alt={post?.Title}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.3s ease' }}
-            loading={imageLoading}
-          />
-        ) : (
+              alt={post?.title}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', transition: 'transform 0.3s ease' }}
+              loading={imageLoading}
+            />
+          ) : (
+            <Box
+              style={{
+                height: '100%',
+                background: `url(${fallbackCoverUrl}) center/cover no-repeat`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'relative',
+              }}
+            >
               <Box
                 style={{
-                  height: '100%',
-                  background: `url(${fallbackCoverUrl}) center/cover no-repeat`,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  position: 'relative',
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'rgba(15, 23, 42, 0.14)',
+                  backdropFilter: 'blur(1px)',
                 }}
-              >
-                <Box
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'rgba(15, 23, 42, 0.14)',
-                    backdropFilter: 'blur(1px)',
-                  }}
-                />
-              </Box>
-        )}
-      </CardSection>
-
-      <Stack gap="xs" p="md" style={{ flex: 1 }}>
-        <Group gap="xs">
-          <Badge
-            variant="light"
-            radius="xl"
-            size="xs"
-            style={{ background: markketColors.sections.blog.light, color: markketColors.sections.blog.main }}
-          >
-            Blog
-          </Badge>
-          {showStore && storeTitle && (
-            <Text size="xs" c="dimmed" lineClamp={1}>{storeTitle}</Text>
+              />
+            </Box>
           )}
-        </Group>
+        </CardSection>
 
-        <Text fw={700} size="sm" lineClamp={2} style={{ lineHeight: 1.4, color: markketColors.neutral.charcoal }}>
-          {post.Title}
-        </Text>
+        <Stack gap="xs" p="md" style={{ flex: 1 }}>
+          <Group gap="xs">
+            <Badge
+              variant="light"
+              radius="xl"
+              size="xs"
+              style={{ background: markketColors.sections.blog.light, color: markketColors.sections.blog.main }}
+            >
+              Blog
+            </Badge>
+            {showStore && storeTitle && (
+              <Text size="xs" c="dimmed" lineClamp={1}>{storeTitle}</Text>
+            )}
+          </Group>
 
-        {excerpt && (
-          <Text size="xs" c="dimmed" lineClamp={3} style={{ lineHeight: 1.6, flex: 1 }}>
-            {excerpt}
+          <Text fw={700} size="sm" lineClamp={2} style={{ lineHeight: 1.4, color: markketColors.neutral.charcoal }}>
+            {post.title}
           </Text>
-        )}
 
-        <Group justify="space-between" align="center" mt="auto" pt="xs">
-          <Group gap={4}>
-            <IconCalendar size={12} color={markketColors.neutral.mediumGray} />
-            <Text size="xs" c="dimmed">
+          {excerpt && (
+            <Text size="xs" c="dimmed" lineClamp={3} style={{ lineHeight: 1.6, flex: 1 }}>
+              {excerpt}
+            </Text>
+          )}
+
+          <Group justify="space-between" align="center" mt="auto" pt="xs">
+            <Group gap={4}>
+              <IconCalendar size={12} color={markketColors.neutral.mediumGray} />
+              <Text size="xs" c="dimmed">
                 {publishedDateLabel}
+              </Text>
+            </Group>
+            <Text
+              size="xs"
+              fw={600}
+              style={{ color: markketColors.sections.blog.main, display: 'flex', alignItems: 'center', gap: 2 }}
+            >
+              Read <IconArrowRight size={12} />
             </Text>
           </Group>
-          <Text
-            size="xs"
-            fw={600}
-            style={{ color: markketColors.sections.blog.main, display: 'flex', alignItems: 'center', gap: 2 }}
-          >
-            Read <IconArrowRight size={12} />
-          </Text>
-        </Group>
-      </Stack>
+        </Stack>
       </Card>
     </Anchor>
   );

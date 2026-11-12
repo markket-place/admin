@@ -9,7 +9,7 @@ import StoreSlidesGallery from '@/app/components/ui/store.slides.gallery';
 import { Album } from '@/markket/album';
 import { markketColors } from '@/markket/colors.config';
 import { type Store, type Page } from '@/markket';
-import { extractRichTextImageUrl, richTextToPlainText, stripMarkdown } from '@/markket/richtext.utils';
+import { richTextToPlainText, stripMarkdown } from '@/markket/richtext.utils';
 
 // --- STUBS & UTILITIES FOR ABSTRACTED DATA ---
 // (Adjust these imports or values if they are defined elsewhere in your project)
@@ -192,7 +192,7 @@ const StorefrontHome = (props: StorefrontHomeProps) => {
 
                 <Stack gap="xs">
                   <Title order={1} style={{ fontSize: 'clamp(2.4rem, 7vw, 5.2rem)', lineHeight: 0.95, letterSpacing: '-0.05em', maxWidth: 760 }}>
-                    {store?.title || store?.SEO?.metaTitle}
+                    {store?.title || store?.seo?.metaTitle}
                   </Title>
                   <Text
                     maw={640}
@@ -201,12 +201,12 @@ const StorefrontHome = (props: StorefrontHomeProps) => {
                     c="dimmed"
                     style={{ fontSize: 'clamp(1rem, 2.2vw, 1.16rem)' }}
                   >
-                    {homePage?.SEO?.metaDescription || store?.SEO?.metaDescription || '....φ(︶▽︶)φ....'}
+                    {homePage?.seo?.metaDescription || store?.seo?.metaDescription || '....φ(︶▽︶)φ....'}
                   </Text>
                 </Stack>
 
-                {store?.URLS?.length > 0 && (
-                  <StoreTabs urls={store.URLS} basePath={`/${slug}`} />
+                {store?.urls?.length > 0 && (
+                  <StoreTabs urls={store.urls} basePath={`/${slug}`} />
                 )}
 
               </Stack>
@@ -591,8 +591,8 @@ const StorefrontHome = (props: StorefrontHomeProps) => {
                     >
                       {aboutPages.slice(0, 6).map((page, index) => {
                         const image = imageOrFallback(
-                          mediaImageUrl(page?.SEO?.socialImage as any),
-                          mediaImageUrl(store?.Cover as any),
+                          mediaImageUrl(page?.seo?.socialImage as any),
+                          mediaImageUrl(store?.cover as any),
                           storefrontFallbackImage,
                         );
 

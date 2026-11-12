@@ -24,7 +24,7 @@ const NotificationsSettingsTab =  () => {
   return (
     <div className="p-4">
       <h2 className="font-bold text-lg mb-2 flex items-center gap-2 text-[#a21caf]">
-        <IconHorse size={20} color="#a21caf" /> {page?.Title || 'Notification Settings'}
+        <IconHorse size={20} color="#a21caf" /> {page?.title || 'Notification Settings'}
       </h2>
       <PageContent params={{ page }} />
     </div>

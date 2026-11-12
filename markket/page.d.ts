@@ -7,9 +7,9 @@ export type ContentBlock = StrapiBlock;
 
 export interface Page {
   id: number;
-  Title: string;
-  Content: ContentBlock[];
-  Active: boolean;
+  title: string;
+  content: ContentBlock[];
+  active: boolean;
   slug: string;
   createdAt: string;
   updatedAt: string;
@@ -19,7 +19,7 @@ export interface Page {
   menuOrder: number | null;
   documentId: string;
   store?: Store;
-  SEO?: SEO;
+  seo?: SEO;
   albums?: Album[];
 };
 

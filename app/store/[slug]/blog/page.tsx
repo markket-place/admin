@@ -36,8 +36,8 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   return generateSEOMetadata({
     slug,
     entity: {
-      SEO: page?.SEO,
-      title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
       id: page?.id?.toString(),
       url: `/${slug}/blog`,
     },
@@ -70,31 +70,31 @@ export default async function StoreBlogPage({ params }: BlogPageProps) {
   const posts = postsResponse?.data || [] as Article[];
   const featuredPost = posts[0] as Article | undefined;
   const remainingPosts = posts.slice(1);
-  const featuredContentImage = extractRichTextImageUrl(featuredPost?.Content);
+  const featuredContentImage = extractRichTextImageUrl(featuredPost?.content);
   const featuredImage = featuredPost?.cover?.formats?.large?.url
     || featuredPost?.cover?.formats?.medium?.url
     || featuredPost?.cover?.url
-    || featuredPost?.SEO?.socialImage?.url;
+    || featuredPost?.seo?.socialImage?.url;
   const featuredFallbackImage = createPicsumImageUrl(
-    [featuredPost?.Title, featuredPost?.slug, slug].filter(Boolean).join('-') || featuredPost?.id?.toString() || 'featured-post',
+    [featuredPost?.title, featuredPost?.slug, slug].filter(Boolean).join('-') || featuredPost?.id?.toString() || 'featured-post',
     1200,
     800,
   );
   const featuredExcerpt = featuredPost
-    ? (featuredPost?.SEO?.metaDescription || stripMarkdown(richTextToPlainText(featuredPost?.Content)) || '').slice(0, 240)
+    ? (featuredPost?.seo?.metaDescription || stripMarkdown(richTextToPlainText(featuredPost?.content)) || '').slice(0, 240)
     : '';
 
-  const description = page?.SEO?.metaDescription || `Blog posts for ${store?.title || store?.SEO?.metaTitle}`;
+  const description = page?.seo?.metaDescription || `Blog posts for ${store?.title || store?.seo?.metaTitle}`;
 
   return (
     <Container size="lg" py="xl">
       <Stack gap="xl">
         <StorePageHeader
           icon={<IconArticle size={48} />}
-          title={page?.Title || `${store?.title} Blog`}
+          title={page?.title || `${store?.title} Blog`}
           description={description}
           page={page}
-          backgroundImage={page?.SEO?.socialImage?.url || store?.SEO?.socialImage?.url || store?.Cover?.url}
+          backgroundImage={page?.seo?.socialImage?.url || store?.seo?.socialImage?.url || store?.cover?.url}
           iconColor={markketColors.sections.blog.main}
         />
 
@@ -132,7 +132,7 @@ export default async function StoreBlogPage({ params }: BlogPageProps) {
                     {store.title}
                   </Text>
                   <Title order={2} style={{ color: markketColors.neutral.charcoal, fontSize: 'clamp(1.25rem, 6vw, 1.8rem)' }}>
-                    {featuredPost.Title}
+                    {featuredPost.title}
                   </Title>
                   {featuredExcerpt && (
                     <Text c="dimmed" size="sm" style={{ lineHeight: 1.6 }}>
@@ -190,7 +190,7 @@ export default async function StoreBlogPage({ params }: BlogPageProps) {
                       {store.title}
                     </Text>
                     <Title order={2} style={{ color: markketColors.neutral.charcoal, fontSize: 'clamp(1.35rem, 4vw, 2rem)' }}>
-                      {featuredPost.Title}
+                      {featuredPost.title}
                     </Title>
                     {featuredExcerpt && (
                       <Text c="dimmed" size="sm" style={{ lineHeight: 1.7 }}>

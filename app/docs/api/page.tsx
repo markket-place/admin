@@ -26,8 +26,8 @@ export async function generateMetadata({ }: DocsPageProps): Promise<Metadata> {
     slug: process.env.NEXT_PUBLIC_MARKKET_STORE_SLUG as string,
     entity: {
       url: `/docs/api`,
-      SEO: post?.SEO,
-      title: post?.Title,
+      seo: post?.seo,
+      title: post?.title,
     },
     type: 'article',
   });
@@ -49,23 +49,23 @@ export default async function DocsPage({ params }: DocsPageProps) {
         {post.cover && (
           <Image
             src={post.cover.url}
-            alt={post.Title}
+            alt={post.title}
             radius="md"
             className="w-full"
           />
         )}
 
         <div>
-          <Title order={1}>{post.Title}</Title>
-          {post.Tags && (
+          <Title order={1}>{post.title}</Title>
+          {post.tags && (
             <div className="flex gap-2 mt-2">
-              {post.Tags.map((tag) => (
+              {post.tags.map((tag) => (
                 <Text
                   key={tag.id}
                   size="sm"
-                  c={tag.Color?.toLowerCase() || 'blue'}
+                  c={tag.color?.toLowerCase() || 'blue'}
                 >
-                  #{tag.Label}
+                  #{tag.label}
                 </Text>
               ))}
             </div>

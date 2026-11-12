@@ -2,39 +2,42 @@ import { NextRequest } from 'next/server';
 import { fetchUserStores,  validators,  } from '@/markket/helpers.api';
 
 export const contentTypeConfig = {
+  // -- article -- //
   article: {
     validate: (data: any) => {
-      if (!data?.Title || !data?.Content || !data?.slug) {
-        return { valid: false, error: 'Missing required fields for article' };
+      if (!data?.title || !data?.content || !data?.slug) {
+        return { valid: false, error: 'Missing min required fields for article[title,content,slug]' };
       }
 
       if (!validators.slug(data?.slug)) {
         return { valid: false, error: 'Invalid slug format' };
       }
+
       return { valid: true };
     },
     transform: (data: any, userId: string | number, storeId: string | number) => ({
-      Title: data.Title,
-      Content: data.Content,
+      title: data.title,
+      content: data.content,
       slug: data.slug,
-      Tags: data.Tags,
-      SEO: data.SEO ? {
-        metaTitle: data.SEO?.metaTitle,
-        metaDescription: data.SEO?.metaDescription,
-        metaKeywords: data.SEO?.metaKeywords,
-        socialImage: data.SEO?.socialImage?.id,
+      tags: data.tags,
+      seo: data.seo ? {
+        metaTitle: data.seo?.metaTitle,
+        metaDescription: data.seo?.metaDescription,
+        metaKeywords: data.seo?.metaKeywords,
+        socialImage: data.seo?.socialImage?.id,
       } : undefined,
       store: [storeId],
       cover: data.cover,
-      Slides: data.Slides,
+      slides: data.slides,
     }),
     linkToStore: true,
     propLimit: 50,
   },
+  // -- page -- //
   page: {
     validate: (data: any) => {
-      if (!data?.Title || !data?.Content || !data?.slug) {
-        return { valid: false, error: 'Missing required fields for page' };
+      if (!data?.title || !data?.content || !data?.slug) {
+        return { valid: false, error: 'Missing min required fields for page[title,content,slug]' };
       }
 
       if (!validators.short_slug(data?.slug)) {
@@ -44,24 +47,25 @@ export const contentTypeConfig = {
       return { valid: true };
     },
     transform: (data: any, userId: string | number, storeId: string | number) => ({
-      Title: data.Title,
-      Content: data.Content,
+      title: data.title,
+      content: data.content,
       slug: data.slug,
-      SEO: data.SEO ? {
-        metaTitle: data.SEO?.metaTitle,
-        metaDescription: data.SEO?.metaDescription,
-        metaKeywords: data.SEO?.metaKeywords,
-        socialImage: data.SEO?.socialImage?.id,
+      seo: data.seo ? {
+        metaTitle: data.seo?.metaTitle,
+        metaDescription: data.seo?.metaDescription,
+        metaKeywords: data.seo?.metaKeywords,
+        socialImage: data.seo?.socialImage?.id,
       } : undefined,
       store: [storeId],
     }),
     linkToStore: true,
     propLimit: 50,
   },
+  // -- product -- //
   product: {
     validate: (data: any) => {
-      if (!data?.Name || !data?.Description || !data?.slug) {
-        return { valid: false, error: 'Missing required fields for product' };
+      if (!data?.name || !data?.description || !data?.slug) {
+        return { valid: false, error: 'Missing min required fields for product[name,desc,slug]' };
       }
 
       if (!validators.slug(data?.slug)) {
@@ -71,24 +75,24 @@ export const contentTypeConfig = {
       return { valid: true };
     },
     transform: (data: any, userId: string | number, storeId: string | number) => ({
-      Name: data.Name,
-      Description: data.Description,
+      name: data.name,
+      description: data.description,
       slug: data.slug,
-      SKU: data.SKU,
-      Thumbnail: data.Thumbnail,
-      Slides: data.Slides,
-      PRICES: data.PRICES?.map((p: any) => ({
-        Currency: p.Currency,
-        Description: p.Description,
-        Name: p.Name,
-        Price: p.Price,
-        STRIPE_ID: p.STRIPE_ID,
+      sku: data.sku,
+      thumbnail: data.thumbnail,
+      slides: data.slides,
+      prices: data.prices?.map((p: any) => ({
+        currency: p.currency,
+        description: p.description,
+        name: p.name,
+        price: p.price,
+        stripe_id: p.stripe_id,
       })),
-      SEO: data.SEO ? {
-        metaTitle: data.SEO?.metaTitle,
-        metaDescription: data.SEO?.metaDescription,
-        metaKeywords: data.SEO?.metaKeywords,
-        socialImage: data.SEO?.socialImage?.id,
+      seo: data.seo ? {
+        metaTitle: data.seo?.metaTitle,
+        metaDescription: data.seo?.metaDescription,
+        metaKeywords: data.seo?.metaKeywords,
+        socialImage: data.seo?.socialImage?.id,
       } : undefined,
       stores: [storeId],
       creator: [userId],
@@ -115,11 +119,11 @@ export const contentTypeConfig = {
       slug: data.slug,
       media: data.media,
       urls: data.urls?.map(({ URL, Label }: { URL: string, Label: string }) => ({ URL, Label })),
-      SEO: data.SEO ? {
-        metaTitle: data.SEO?.metaTitle,
-        metaDescription: data.SEO?.metaDescription,
-        metaKeywords: data.SEO?.metaKeywords,
-        socialImage: data.SEO?.socialImage?.id,
+      seo: data.seo ? {
+        metaTitle: data.seo?.metaTitle,
+        metaDescription: data.seo?.metaDescription,
+        metaKeywords: data.seo?.metaKeywords,
+        socialImage: data.seo?.socialImage?.id,
       } : undefined,
       store: storeId,
     }),
@@ -144,7 +148,7 @@ export const contentTypeConfig = {
       content: data.content,
       slug: data.slug,
       cover: data.cover,
-      SEO: data.SEO ? {
+      seo: data.seo ? {
         metaTitle: data.SEO?.metaTitle,
         metaDescription: data.SEO?.metaDescription,
         metaKeywords: data.SEO?.metaKeywords,
@@ -168,27 +172,27 @@ export const contentTypeConfig = {
       return { valid: true };
     },
     transform: (data: any, userId: string | number, storeId: string | number) => ({
-      Name: data.Name,
-      Description: data.Description,
+      name: data.name,
+      description: data.description,
       slug: data.slug,
       startDate: data.startDate,
       endDate: data.endDate,
       // location: data.location,
-      Thumbnail: data.Thumbnail,
-      Slides: data.Slides,
+      thumbnail: data.thumbnail,
+      slides: data.slides,
       creator: [userId],
-      PRICES: data.PRICES?.map((p: any) => ({
-        Currency: p.Currency,
-        Description: p.Description,
-        Name: p.Name,
-        Price: p.Price,
-        STRIPE_ID: p.STRIPE_ID,
+      prices: data.prices?.map((p: any) => ({
+        currency: p.currency,
+        description: p.description,
+        name: p.name,
+        price: p.price,
+        stripe_id: p.stripe_id,
       })),
-      SEO: data.SEO ? {
-        metaTitle: data.SEO?.metaTitle,
-        metaDescription: data.SEO?.metaDescription,
-        metaKeywords: data.SEO?.metaKeywords,
-        socialImage: data.SEO?.socialImage?.id,
+      seo: data.seo ? {
+        metaTitle: data.seo?.metaTitle,
+        metaDescription: data.seo?.metaDescription,
+        metaKeywords: data.seo?.metaKeywords,
+        socialImage: data.seo?.socialImage?.id,
       } : undefined,
       stores: [storeId],
     }),

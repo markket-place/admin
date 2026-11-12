@@ -36,21 +36,21 @@ export default function TagsInput({
   value = [],
   onChange,
   form,
-  field = 'Tags',
+  field = 'tags',
 }: TagsInputProps) {
   const [tags, setTags] = useState<Tag[]>(value || []);
 
   useEffect(() => {
     if (!!value?.length) {
       setTags(value.map(t => ({
-        Label: t.Label,
-        Color: t.Color?.startsWith('#') ? t.Color : getTagColorHex(t.Color as string),
+        label: t.label,
+        color: t.color?.startsWith('#') ? t.color : getTagColorHex(t.color as string),
       } as Tag)));
     }
   }, [value]);
 
   const handleAddTag = () => {
-    const newTags = [...tags, { id: -Date.now(), Label: '', Color: '#0051ba' }];
+    const newTags = [...tags, { id: -Date.now(), label: '', color: '#0051ba' }];
     setTags(newTags);
     onChange(newTags);
     if (form && field) {
@@ -68,7 +68,7 @@ export default function TagsInput({
     }
   };
 
-  const handleChangeTag = (index: number, key: 'Label' | 'Color', value: string) => {
+  const handleChangeTag = (index: number, key: 'label' | 'color', value: string) => {
     const newTags = [...tags];
     newTags[index][key] = value;
     setTags(newTags);
@@ -123,11 +123,11 @@ export default function TagsInput({
                 <TextInput
                   label="Tag Name"
                   placeholder="e.g., Featured"
-                  value={tag.Label}
-                  onChange={(e) => handleChangeTag(index, 'Label', e.target.value)}
+                  value={tag.label}
+                  onChange={(e) => handleChangeTag(index, 'label', e.target.value)}
                   radius="md"
                   size="sm"
-                  leftSection={<IconTag size={14} style={{ color: tag.Color }} />}
+                  leftSection={<IconTag size={14} style={{ color: tag.color }} />}
                 />
 
                 <Box style={{ flex: 0.6 }}>
@@ -135,8 +135,8 @@ export default function TagsInput({
                     label="Color"
                     withPicker={false}
                     placeholder="Choose color"
-                    value={tag.Color || '#0051ba'}
-                    onChange={(value) => handleChangeTag(index, 'Color', value)}
+                    value={tag.color || '#0051ba'}
+                    onChange={(value) => handleChangeTag(index, 'color', value)}
                     radius="md"
                     size="sm"
                     format="hex"
@@ -158,17 +158,17 @@ export default function TagsInput({
               <Group mt="xs">
                 <Text size="xs">Preview:</Text>
                 <Group gap="xs">
-                  <ColorSwatch color={tag.Color || '#0051ba'} size={16} />
+                  <ColorSwatch color={tag.color || '#0051ba'} size={16} />
                   <Text
                     size="sm"
                     fw={500}
                     style={{
-                      color: tag.Color || '#0051ba',
-                      borderBottom: `2px solid ${tag.Color || '#0051ba'}`,
+                      color: tag.color || '#0051ba',
+                      borderBottom: `2px solid ${tag.color || '#0051ba'}`,
                       paddingBottom: 2
                     }}
                   >
-                    {tag.Label || 'Tag Name'}
+                    {tag.label || 'Tag Name'}
                   </Text>
                 </Group>
               </Group>

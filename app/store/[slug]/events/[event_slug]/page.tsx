@@ -13,6 +13,7 @@ import StorePageHeader from '@/app/components/ui/store.page.header';
 import { IconCalendarEvent } from '@tabler/icons-react';
 import { markketColors } from '@/markket/colors.config';
 import { richTextToPlainText, stripMarkdown } from '@/markket/richtext.utils';
+import { Metadata } from "next";
 
 interface EventsPageProps {
   params: Promise<{ slug: string; event_slug: string }>;
@@ -84,7 +85,7 @@ function getLocationParts(event?: Event) {
   };
 }
 
-export async function generateMetadata({ params }: EventsPageProps) {
+export async function generateMetadata({ params }: EventsPageProps): Promise<Metadata> {
   const { slug, event_slug } = await params;
   const response = await strapiClient.getStore(slug);
   const store = response?.data?.[0] as Store;
@@ -92,31 +93,31 @@ export async function generateMetadata({ params }: EventsPageProps) {
   const eventResponse = await strapiClient.getEventBySlug(event_slug, slug);
   const event = eventResponse?.data?.[0] as Event;
 
-  const eventName = event?.Name || 'Event';
+  const eventName = event?.name || 'Event';
   const eventDate = event?.startDate ? formatDateTime(event.startDate, event?.timezone) : '';
   const location = getLocationParts(event).cityLabel;
 
-  const description = event?.SEO?.metaDescription
-    || toExcerpt(event?.Description, 160)
+  const description = event?.seo?.metaDescription
+    || toExcerpt(event?.description, 160)
     || `${eventName}${eventDate ? ' on ' + eventDate : ''}${location ? ' at ' + location : ''}. Join us!`;
 
   return generateSEOMetadata({
     slug,
     entity: {
-      SEO: event?.SEO || store?.SEO,
-      Name: event?.Name || event?.SEO?.metaTitle,
-      Description: description,
+      seo: event?.seo || store?.seo,
+      name: event?.name || event?.seo?.metaTitle,
+      description: description,
       id: event?.id?.toString(),
       url: `/${slug}/events/${event_slug}`,
     },
     type: "article",
-    defaultTitle: event?.SEO?.metaTitle || eventName || 'Event',
+    defaultTitle: event?.seo?.metaTitle || eventName || 'Event',
     keywords: [
       'event',
       'workshop',
       'meetup',
       eventName,
-      ...(event?.Tag?.map(t => t.Label) || []),
+      ...(event?.tag?.map(t => t.label) || []),
     ],
   });
 }
@@ -140,10 +141,10 @@ export default async function StoreEventPage({ params }: EventsPageProps) {
     notFound();
   }
 
-  const hasExternalRsvp = Boolean(event?.SEO?.metaUrl);
+  const hasExternalRsvp = Boolean(event?.seo?.metaUrl);
   const canRsvpInternal = Boolean(event?.documentId || event?.id);
-  const externalHostLabel = getHostLabel(event?.SEO?.metaUrl);
-  const excerpt = event?.SEO?.metaDescription || toExcerpt(event?.Description, 220);
+  const externalHostLabel = getHostLabel(event?.seo?.metaUrl);
+  const excerpt = event?.seo?.metaDescription || toExcerpt(event?.description, 220);
   const locationDetails = getLocationParts(event);
 
   const relatedEvents = ((eventsListResponse?.data || []) as Event[])
@@ -152,7 +153,7 @@ export default async function StoreEventPage({ params }: EventsPageProps) {
     .slice(0, 3)
     .map((item) => ({
       href: `/${slug}/events/${item.slug}`,
-      label: item.Name || item.slug,
+      label: item.name || item.slug,
     }));
 
   return (
@@ -160,9 +161,9 @@ export default async function StoreEventPage({ params }: EventsPageProps) {
       <Stack gap="xl">
         <StorePageHeader
           icon={<IconCalendarEvent size={48} />}
-          title={event?.Name || `${store?.title} Event`}
+          title={event?.name || `${store?.title} Event`}
           description={excerpt || `Event details for ${store?.title || 'this store'}.`}
-          backgroundImage={event?.SEO?.socialImage?.url || event?.Thumbnail?.url || store?.Cover?.url}
+          backgroundImage={event?.seo?.socialImage?.url || event?.thumbnail?.url || store?.cover?.url}
           iconColor={markketColors.sections.events.main}
         />
 
@@ -207,7 +208,7 @@ export default async function StoreEventPage({ params }: EventsPageProps) {
 
             <Paper withBorder radius="lg" p="lg" style={{ borderColor: `${markketColors.sections.events.main}22` }}>
               <div className="prose space-y-6 text-base text-gray-700 dark:prose-invert">
-                <Markdown content={event?.Description || ""} />
+                <Markdown content={event?.description || ""} />
               </div>
             </Paper>
 
@@ -215,7 +216,7 @@ export default async function StoreEventPage({ params }: EventsPageProps) {
               {hasExternalRsvp && (
                 <Button
                   component="a"
-                  href={event.SEO?.metaUrl}
+                  href={event.seo?.metaUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   fullWidth
@@ -230,7 +231,7 @@ export default async function StoreEventPage({ params }: EventsPageProps) {
               {canRsvpInternal && !hasExternalRsvp && (
                 <RSVPModal
                   eventId={event?.documentId || event?.id?.toString()}
-                  eventName={event?.Name}
+                  eventName={event?.name}
                   eventStartDate={event?.startDate}
                   eventEndDate={event?.endDate}
                   eventTimezone={event?.timezone}

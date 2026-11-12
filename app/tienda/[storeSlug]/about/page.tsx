@@ -53,7 +53,7 @@ export default async function TiendaAboutPage({ params }: TiendaAboutPageProps) 
         searchPlaceholder="Search pages"
         items={pages.map((page) => ({
           key: page.documentId || page.slug,
-          title: page.Title || 'Untitled page',
+          title: page.title || 'Untitled page',
           subtitle: `${formatDate(page.createdAt)} · ${page.slug}`,
           href: `/tienda/${storeSlug}/about/${page.documentId || page.slug}`,
           previewHref: isPublished(page) && page.slug ? resolvePagePreviewHref(storeSlug, page.slug || '') : undefined,

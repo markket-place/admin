@@ -23,7 +23,7 @@ const CRMAboutTab =  () => {
   return (
     <div className="p-4">
       <h2 className="font-bold text-lg mb-2 flex items-center gap-2">
-        <IconInfoCircle size={20} /> {page?.Title || 'About CRM'}
+        <IconInfoCircle size={20} /> {page?.title || 'About CRM'}
       </h2>
       <PageContent params={{ page }} />
     </div>

@@ -90,7 +90,7 @@ export default function StoreOverview({
   const isPublished = useMemo(() => isStorePublished(currentStore), [currentStore]);
 
   const formatDate = (value?: string) => (value ? new Date(value).toLocaleDateString() : 'No date');
-  const descriptionText = richTextToPlainText(currentStore.Description);
+  const descriptionText = richTextToPlainText(currentStore.description);
   const latestUpdatedAt = [
     currentStore.updatedAt,
     previewPosts[0]?.updatedAt,
@@ -132,78 +132,78 @@ export default function StoreOverview({
   const mergedContentItems = useMemo(() => {
     const fromArticles = previewPosts.map((post) => ({
       key: `article-${post.documentId || post.slug}`,
-      title: post.Title || 'Untitled article',
+      title: post.title || 'Untitled article',
       subtitle: `${formatDate(post.updatedAt || post.createdAt)} · Article · ${post.slug}`,
       href: `/tienda/${store.slug}/blog/${post.documentId || post.slug}`,
       icon: 'article' as const,
       thumbnailUrl: pickImage(
-        extractRichTextImageUrl(post.Content),
+        extractRichTextImageUrl(post.content),
         post.cover?.formats?.thumbnail?.url,
         post.cover?.formats?.small?.url,
         post.cover?.url,
-        post.SEO?.socialImage?.formats?.thumbnail?.url,
-        post.SEO?.socialImage?.formats?.small?.url,
-        post.SEO?.socialImage?.url,
+        post.seo?.socialImage?.formats?.thumbnail?.url,
+        post.seo?.socialImage?.formats?.small?.url,
+        post.seo?.socialImage?.url,
       ),
-      thumbnailAlt: post.Title || 'Article image',
+      thumbnailAlt: post.title || 'Article image',
       updatedAt: post.updatedAt || post.createdAt || '',
     }));
 
     const fromPages = previewPages.map((page) => ({
       key: `page-${page.documentId || page.slug}`,
-      title: page.Title || 'Untitled page',
+      title: page.title || 'Untitled page',
       subtitle: `${formatDate(page.updatedAt || page.createdAt)} · Page · ${page.slug}`,
       href: `/tienda/${store.slug}/about/${page.documentId || page.slug}`,
       icon: 'page' as const,
       thumbnailUrl: pickImage(
-        extractRichTextImageUrl(page.Content),
-        page.SEO?.socialImage?.formats?.thumbnail?.url,
-        page.SEO?.socialImage?.formats?.small?.url,
-        page.SEO?.socialImage?.url,
+        extractRichTextImageUrl(page.content),
+        page.seo?.socialImage?.formats?.thumbnail?.url,
+        page.seo?.socialImage?.formats?.small?.url,
+        page.seo?.socialImage?.url,
       ),
-      thumbnailAlt: page.Title || 'Page image',
+      thumbnailAlt: page.title || 'Page image',
       updatedAt: page.updatedAt || page.createdAt || '',
     }));
 
     const fromProducts = previewProducts.map((product) => ({
       key: `product-${product.documentId || product.slug}`,
-      title: product.Name || 'Untitled product',
+      title: product.name || 'Untitled product',
       subtitle: `${formatDate(product.updatedAt || product.createdAt)} · Product · ${product.slug}`,
       href: `/tienda/${store.slug}/products/${product.documentId || product.slug}`,
       icon: 'product' as const,
       thumbnailUrl: pickImage(
-        extractRichTextImageUrl(product.Description),
-        product.Thumbnail?.url,
-        product.Slides?.[0]?.formats?.thumbnail?.url,
-        product.Slides?.[0]?.formats?.small?.url,
-        product.Slides?.[0]?.url,
-        product.SEO?.socialImage?.formats?.thumbnail?.url,
-        product.SEO?.socialImage?.formats?.small?.url,
-        product.SEO?.socialImage?.url,
+        extractRichTextImageUrl(product.description),
+        product.thumbnail?.url,
+        product.slides?.[0]?.formats?.thumbnail?.url,
+        product.slides?.[0]?.formats?.small?.url,
+        product.slides?.[0]?.url,
+        product.seo?.socialImage?.formats?.thumbnail?.url,
+        product.seo?.socialImage?.formats?.small?.url,
+        product.seo?.socialImage?.url,
       ),
-      thumbnailAlt: product.Name || 'Product image',
+      thumbnailAlt: product.name || 'Product image',
       updatedAt: product.updatedAt || product.createdAt || '',
     }));
 
     const fromEvents = previewEvents.map((event) => ({
       key: `event-${event.documentId || event.slug}`,
-      title: event.Name || 'Untitled event',
+      title: event.name || 'Untitled event',
       subtitle: `${formatDate(event.updatedAt || event.createdAt)} · Event · ${event.slug}`,
       href: `/tienda/${store.slug}/events/${event.documentId || event.slug}`,
       icon: 'event' as const,
       thumbnailUrl: pickImage(
-        extractRichTextImageUrl(event.Description),
-        event.Thumbnail?.formats?.thumbnail?.url,
-        event.Thumbnail?.formats?.small?.url,
-        event.Thumbnail?.url,
-        event.Slides?.[0]?.formats?.thumbnail?.url,
-        event.Slides?.[0]?.formats?.small?.url,
-        event.Slides?.[0]?.url,
-        event.SEO?.socialImage?.formats?.thumbnail?.url,
-        event.SEO?.socialImage?.formats?.small?.url,
-        event.SEO?.socialImage?.url,
+        extractRichTextImageUrl(event.description),
+        event.thumbnail?.formats?.thumbnail?.url,
+        event.thumbnail?.formats?.small?.url,
+        event.thumbnail?.url,
+        event.slides?.[0]?.formats?.thumbnail?.url,
+        event.slides?.[0]?.formats?.small?.url,
+        event.slides?.[0]?.url,
+        event.seo?.socialImage?.formats?.thumbnail?.url,
+        event.seo?.socialImage?.formats?.small?.url,
+        event.seo?.socialImage?.url,
       ),
-      thumbnailAlt: event.Name || 'Event image',
+      thumbnailAlt: event.name || 'Event image',
       updatedAt: event.updatedAt || event.createdAt || '',
     }));
 
@@ -219,11 +219,11 @@ export default function StoreOverview({
     Payouts: 'gray',
   };
   const allMediaThumbs = [
-    currentStore.Logo?.url && { key: 'logo', src: currentStore.Logo.url, alt: currentStore.Logo.alternativeText || 'Logo', label: 'Logo' },
-    currentStore.Cover?.url && { key: 'cover', src: currentStore.Cover.url, alt: currentStore.Cover.alternativeText || 'Cover', label: 'Cover' },
-    currentStore.Favicon?.url && { key: 'favicon', src: currentStore.Favicon.url, alt: currentStore.Favicon.alternativeText || 'Favicon', label: 'Favicon' },
-    currentStore.SEO?.socialImage?.url && { key: 'social', src: currentStore.SEO.socialImage.url, alt: currentStore.SEO.socialImage.alternativeText || 'Social', label: 'Social' },
-    ...(currentStore.Slides || []).map((slide, i) => ({
+    currentStore.logo?.url && { key: 'logo', src: currentStore.logo.url, alt: currentStore.logo.alternativeText || 'Logo', label: 'Logo' },
+    currentStore.cover?.url && { key: 'cover', src: currentStore.cover.url, alt: currentStore.cover.alternativeText || 'Cover', label: 'Cover' },
+    currentStore.favicon?.url && { key: 'favicon', src: currentStore.favicon.url, alt: currentStore.favicon.alternativeText || 'Favicon', label: 'Favicon' },
+    currentStore.seo?.socialImage?.url && { key: 'social', src: currentStore.seo.socialImage.url, alt: currentStore.seo.socialImage.alternativeText || 'Social', label: 'Social' },
+    ...(currentStore.slides || []).map((slide, i) => ({
       key: `slide-${slide.documentId || slide.id || i}`,
       src: slide.formats?.thumbnail?.url || slide.formats?.small?.url || slide.url,
       alt: slide.alternativeText || slide.caption || `Slide ${i + 1}`,
@@ -511,8 +511,8 @@ export default function StoreOverview({
           ? ((next as any)?.publishedAt || previous.publishedAt || new Date().toISOString())
           : null,
         SEO: {
-          ...previous.SEO,
-          ...(next.SEO || {}),
+          ...previous.seo,
+          ...(next.seo || {}),
         },
       }));
 
@@ -689,16 +689,16 @@ export default function StoreOverview({
           <Stack gap={6}>
             <Group justify="space-between" align="center" wrap="wrap" gap="xs">
               <Text size="xs" c="dimmed" tt="uppercase" fw={700} style={{ letterSpacing: '0.08em' }}>
-                Social Links ({currentStore.URLS?.length || 0})
+                Social Links ({currentStore.urls?.length || 0})
               </Text>
             </Group>
-            {currentStore.URLS?.length > 0 ? (
+            {currentStore.urls?.length > 0 ? (
               <Group gap="xs" wrap="wrap">
-                {currentStore.URLS.map((link) => (
+                {currentStore.urls.map((link) => (
                   <Button
                     key={link.id}
                     component="a"
-                    href={link.URL}
+                    href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
                     variant="light"
@@ -706,7 +706,7 @@ export default function StoreOverview({
                     color="blue"
                     leftSection={<IconExternalLink size={11} />}
                   >
-                    {link.Label || link.URL}
+                    {link.label || link.url}
                   </Button>
                 ))}
               </Group>

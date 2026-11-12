@@ -24,8 +24,8 @@ export async function generateMetadata(): Promise<Metadata> {
     slug: store?.slug || 'markket',
     entity: {
       url: `/store/${store.slug}/about/newsletter`,
-      SEO: page?.SEO,
-      Title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     type: 'article',
     defaultTitle: 'Newsletter',
@@ -37,9 +37,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewsletterPage() {
   const [page] = (await strapiClient.getPage('newsletter'))?.data || [];
   const [store] = (await strapiClient.getStore())?.data || [];
-  const title = page?.Title || `Newsletter for ${store?.SEO?.metaTitle}`;
-  const image = page?.SEO?.socialImage || store?.SEO?.socialImage;
-  const description = page?.SEO?.metaDescription || store?.SEO?.metaDescription || 'Stories, updates, and featured releases from the community.';
+  const title = page?.title || `Newsletter for ${store?.seo?.metaTitle}`;
+  const image = page?.seo?.socialImage || store?.seo?.socialImage;
+  const description = page?.seo?.metaDescription || store?.seo?.metaDescription || 'Stories, updates, and featured releases from the community.';
 
   return (
     <Container size="xl" pt={0} pb={{ base: 'xl', md: 60 }}>
@@ -97,7 +97,7 @@ export default async function NewsletterPage() {
               </Suspense>
             </Paper>
 
-            {page?.Title && (
+            {page?.title && (
               <Paper withBorder radius="lg" p={{ base: 'md', md: 'lg' }} style={{ borderColor: markketColors.neutral.lightGray }}>
                 <PageContent params={{ page }} />
               </Paper>
@@ -107,7 +107,7 @@ export default async function NewsletterPage() {
               <Paper withBorder radius="lg" p="xs" style={{ borderColor: markketColors.neutral.lightGray }}>
                 <img
                   src={image.url}
-                  alt={page?.SEO?.metaTitle || store?.SEO?.metaTitle || 'Newsletter image'}
+                  alt={page?.seo?.metaTitle || store?.seo?.metaTitle || 'Newsletter image'}
                   style={{ width: '100%', height: 'auto', borderRadius: 10, display: 'block' }}
                 />
               </Paper>

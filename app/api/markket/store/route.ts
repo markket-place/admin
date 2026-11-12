@@ -11,7 +11,6 @@ export const fetchCache = 'force-no-store';
 type StorePayload = {
   store: Store & {
     description?: RichTextValue | null;
-    Description?: RichTextValue | null;
     active?: boolean;
   };
 };
@@ -39,7 +38,7 @@ async function findStoreByPublicationStatus(documentId: string | undefined, slug
     filters,
     status,
     paginate: { page: 1, pageSize: 1 },
-    populate: 'Logo,SEO,SEO.socialImage,Favicon,URLS,Cover,Slides',
+    populate: 'logo,seo,seo.socialImage,favicon,urls,cover,slides',
     includeAuth: true,
   });
 
@@ -141,7 +140,6 @@ async function runStorePublicationAction(documentId: string, action: 'publish' |
 
 function getStoreDescription(payloadStore?: StorePayload['store']) {
   if (!payloadStore) return undefined;
-  if (payloadStore.Description !== undefined) return payloadStore.Description;
   if (payloadStore.description !== undefined) return payloadStore.description;
   return undefined;
 }
@@ -201,19 +199,19 @@ export async function POST(request: Request) {
 
     const title = payload?.store?.title;
     const slug = payload?.store?.slug;
-    const Description = getStoreDescription(payload?.store);
-    const URLS = payload?.store?.URLS || [];
-    const SEO = payload?.store?.SEO || {};
+    const description = getStoreDescription(payload?.store);
+    const urls = payload?.store?.urls || [];
+    const seo = payload?.store?.seo || {};
     const data = {
       title,
-      ...(Description !== undefined ? { Description } : {}),
+      ...(description !== undefined ? { description } : {}),
       slug,
-      URLS: URLS?.map(({ URL, Label }) => ({ URL, Label })),
+      urls: urls?.map(({ url, label }) => ({ url, label })),
       SEO: {
-        metaTitle: SEO?.metaTitle,
-        metaDescription: SEO?.metaDescription,
-        metaKeywords: SEO?.metaKeywords,
-        socialImage: SEO?.socialImage?.id,
+        metaTitle: seo?.metaTitle,
+        metaDescription: seo?.metaDescription,
+        metaKeywords: seo?.metaKeywords,
+        socialImage: seo?.socialImage?.id,
       },
       users: [user_id],
       active: false,
@@ -254,7 +252,7 @@ export async function POST(request: Request) {
         },
         status: 'all',
         paginate: { page: 1, pageSize: 1 },
-        populate: 'Logo,SEO,SEO.socialImage,Favicon,URLS,Cover,Slides',
+        populate: 'logo,seo,seo.socialImage,favicon,urls,cover,slides',
         includeAuth: true,
       });
 
@@ -353,30 +351,30 @@ export async function PUT(request: NextRequest) {
 
     const title = payload?.store?.title;
     const slug = payload?.store?.slug;
-    const Description = getStoreDescription(payload?.store);
-    const URLS = payload?.store?.URLS || [];
-    const SEO = payload?.store?.SEO || {};
+    const description = getStoreDescription(payload?.store);
+    const urls = payload?.store?.urls || [];
+    const seo = payload?.store?.seo || {};
     const active = payload?.store?.active;
-    const Favicon = payload?.store?.Favicon;
-    const Cover = payload?.store?.Cover;
-    const Slides = payload?.store?.Slides;
-    const Logo = payload?.store?.Logo;
+    const favicon = payload?.store?.favicon;
+    const cover = payload?.store?.cover;
+    const slides = payload?.store?.slides;
+    const logo = payload?.store?.logo;
     const data = {
       title,
-      ...(Description !== undefined ? { Description } : {}),
+      ...(description !== undefined ? { description } : {}),
       slug,
-      URLS: URLS?.map(({ URL, Label }) => ({ URL, Label })),
+      urls: urls?.map(({ url, label }) => ({ url, label })),
       ...(typeof active === 'boolean' ? { active } : {}),
-      SEO: {
-        metaTitle: SEO?.metaTitle,
-        metaDescription: SEO?.metaDescription,
-        metaKeywords: SEO?.metaKeywords,
-        socialImage: SEO?.socialImage?.id,
+      seo: {
+        metaTitle: seo?.metaTitle,
+        metaDescription: seo?.metaDescription,
+        metaKeywords: seo?.metaKeywords,
+        socialImage: seo?.socialImage?.id,
       },
-      Favicon,
-      Cover,
-      Slides,
-      Logo,
+      favicon,
+      cover,
+      slides,
+      logo,
     };
 
     const response = await strapiClient.update('stores', store.documentId, {

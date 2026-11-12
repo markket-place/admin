@@ -1,6 +1,6 @@
 {
   "name": "markket-next",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "private": false,
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -42,7 +42,7 @@
     "date-fns": "^4.2.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.4.10",
-    "next": "16.3.0",
+    "next": "16.4.5",
     "next-swagger-doc": "^0.4.1",
     "posthog-js": "1.372.1",
     "posthog-node": "5.30.4",

@@ -44,7 +44,7 @@ const AlbumPage = ({ store, album }: AlbumPageProps) => {
       >
         <Box pos="relative" h={{ base: 240, sm: 300 }} mb="xl" style={{ borderRadius: '18px', overflow: 'hidden' }}>
           <Image
-            src={album.cover?.url || album.SEO?.socialImage?.url}
+            src={album.cover?.url || album.seo?.socialImage?.url}
             alt={album.title}
             fallbackSrc="https://placehold.co/1200x450?text=Album"
             height={300}
@@ -79,9 +79,9 @@ const AlbumPage = ({ store, album }: AlbumPageProps) => {
               </Stack>
               {store && (
                 <Group gap="xs">
-                  {(store.Favicon?.url || store.Logo?.url) && (
+                  {(store.favicon?.url || store.logo?.url) && (
                     <Image
-                      src={store.Favicon?.url || store.Logo?.url}
+                      src={store.favicon?.url || store.logo?.url}
                       width={28}
                       height={28}
                       radius="sm"
@@ -143,7 +143,7 @@ const AlbumPage = ({ store, album }: AlbumPageProps) => {
                       }}
                     >
                       <Image
-                        src={track.media?.[0]?.url || track.SEO?.socialImage?.url}
+                        src={track.media?.[0]?.url || track.seo?.socialImage?.url}
                         alt={track.title}
                         fallbackSrc="https://placehold.co/600x400?text=Track"
                         className="album-track-img"

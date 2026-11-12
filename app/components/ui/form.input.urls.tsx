@@ -35,8 +35,8 @@ import { UseFormReturnType } from '@mantine/form';
 
 export interface URLItem {
   id?: number;
-  Label: string;
-  URL: string;
+  label: string;
+  url: string;
 }
 
 interface URLsInputProps {
@@ -100,7 +100,7 @@ export default function URLsInput({
   }, [value]);
 
   const handleAddUrl = () => {
-    const newUrls = [...urls, { Label: '', URL: '', id: -Date.now() }];
+    const newUrls = [...urls, { label: '', url: '', id: -Date.now() }];
     setUrls(newUrls);
     onChange(newUrls);
     if (form && field) {
@@ -118,18 +118,18 @@ export default function URLsInput({
     }
   };
 
-  const handleChangeUrl = (index: number, key: 'Label' | 'URL', val: string) => {
+  const handleChangeUrl = (index: number, key: 'label' | 'url', val: string) => {
     const newUrls = [...urls];
     newUrls[index][key] = val;
 
     // Auto-suggest label when pasting a URL if label is empty
-    if (key === 'URL' && !newUrls[index].Label) {
+    if (key === 'url' && !newUrls[index].label) {
       const profile = detectLinkProfile(val);
       if (profile.suggestedLabel !== 'Website') {
-        newUrls[index].Label = profile.suggestedLabel;
+        newUrls[index].label = profile.suggestedLabel;
       } else {
         const domain = extractDomain(val);
-        if (domain) newUrls[index].Label = domain;
+        if (domain) newUrls[index].label = domain;
       }
     }
 
@@ -176,7 +176,8 @@ export default function URLsInput({
       ) : (
         <Stack gap="xs">
             {urls.map((url, index) => {
-              const profile = detectLinkProfile(url.URL);
+              const profile = detectLinkProfile(url.url);
+
               return (
                 <Paper key={url.id || index} withBorder p="sm" radius="md"
                   style={{ borderLeft: `3px solid ${profile.color}` }}
@@ -195,8 +196,8 @@ export default function URLsInput({
                       </Tooltip>
                       <TextInput
                         placeholder="Label  (e.g. Instagram)"
-                        value={url.Label}
-                        onChange={(e) => handleChangeUrl(index, 'Label', e.target.value)}
+                        value={url.label}
+                        onChange={(e) => handleChangeUrl(index, 'label', e.target.value)}
                         radius="md"
                         size="sm"
                         style={{ flex: 1 }}
@@ -214,8 +215,8 @@ export default function URLsInput({
                     </Group>
                     <TextInput
                       placeholder="https://..."
-                      value={url.URL}
-                      onChange={(e) => handleChangeUrl(index, 'URL', e.target.value)}
+                      value={url.url}
+                      onChange={(e) => handleChangeUrl(index, 'url', e.target.value)}
                       radius="md"
                       size="sm"
                       leftSection={<IconLink size={13} color={profile.color} />}

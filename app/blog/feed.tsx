@@ -49,7 +49,7 @@ export default function BlogFeed({ initialPosts, initialHasMore }: BlogFeedProps
     try {
       const res = await fetch(`/api/blog?page=${page}&pageSize=18`);
       const data = await res.json();
-      const next = (data?.data || []).filter((i: Article) => i?.SEO?.socialImage?.url || i?.cover?.url) as Article[];
+      const next = (data?.data || []).filter((i: Article) => i?.seo?.socialImage?.url || i?.cover?.url) as Article[];
       setPosts((prev) => limitOnePerStorefront([...prev, ...next]));
       setPage((p) => p + 1);
       const total = data?.meta?.pagination?.total ?? 0;
@@ -94,16 +94,16 @@ export default function BlogFeed({ initialPosts, initialHasMore }: BlogFeedProps
             ? `/${storeSlug}/blog/${articleSlug}`
             : `/docs/blog/${articleSlug}`;
           const isFeatured = index === 0;
-          const contentImage = extractRichTextImageUrl(post?.Content);
-          const coverUrl = contentImage || post?.cover?.formats?.medium?.url || post?.cover?.formats?.small?.url || post?.cover?.url || post.SEO?.socialImage?.formats?.small?.url;
+          const contentImage = extractRichTextImageUrl(post?.content);
+          const coverUrl = contentImage || post?.cover?.formats?.medium?.url || post?.cover?.formats?.small?.url || post?.cover?.url || post.seo?.socialImage?.formats?.small?.url;
           const fallbackCoverUrl = createPicsumImageUrl(
-            [post.Title, post.slug, post.documentId, storeSlug].filter(Boolean).join('-') || String(index),
+            [post.title, post.slug, post.documentId, storeSlug].filter(Boolean).join('-') || String(index),
             isFeatured ? 1200 : 900,
             isFeatured ? 800 : 600,
           );
-          const firstChild = post?.Content?.[0]?.children?.[0];
-          const rawExcerpt = post?.SEO?.metaDescription
-            || stripMarkdown(richTextToPlainText(post?.Content))
+          const firstChild = post?.content?.[0]?.children?.[0];
+          const rawExcerpt = post?.seo?.metaDescription
+            || stripMarkdown(richTextToPlainText(post?.content))
             || ('text' in (firstChild || {}) ? (firstChild as { text?: string }).text : undefined)
             || 'Read the full story.';
           const excerpt = rawExcerpt.slice(0, 200).trim() + (rawExcerpt.length > 200 ? '…' : '');
@@ -113,7 +113,7 @@ export default function BlogFeed({ initialPosts, initialHasMore }: BlogFeedProps
             : 'Draft';
           const imageCaption = post?.cover?.caption?.trim()
             || post?.cover?.alternativeText?.trim()
-            || `${post.Title} cover image`;
+            || `${post.title} cover image`;
 
           return (
             <Grid.Col key={post.documentId} span={{ base: 12, }}>
@@ -150,7 +150,7 @@ export default function BlogFeed({ initialPosts, initialHasMore }: BlogFeedProps
                         letterSpacing: '-0.03em',
                       }}
                     >
-                      {post.Title}
+                      {post.title}
                     </Text>
 
                     <Text size="sm" c="dimmed" style={{ lineHeight: 1.7 }} lineClamp={isFeatured ? 4 : 3}>
@@ -252,7 +252,7 @@ export default function BlogFeed({ initialPosts, initialHasMore }: BlogFeedProps
                           letterSpacing: '-0.03em',
                         }}
                       >
-                        {post.Title}
+                        {post.title}
                       </Text>
 
                       <Box

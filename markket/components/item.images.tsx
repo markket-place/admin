@@ -93,7 +93,7 @@ export default function DashboardItemImages({
   let displayName: string = `${name.charAt(0).toUpperCase()}${name.slice(1)}` || 'Image';
 
   if (name == 'SEO.socialImage') {
-    image = (item as any as Product)?.SEO?.socialImage as Media;
+    image = (item as any as Product)?.seo?.socialImage as Media;
     displayName = 'Social Image';
   }
 

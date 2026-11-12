@@ -92,10 +92,10 @@ const sectionLinks = [
 
 export default async function StoreCrosslinks({ slug, store, items = [], currentSection }: StoreCrosslinksProps) {
   const availability = await getCrosslinkAvailability(slug);
-  const heroImage = store?.Logo?.url || store?.SEO?.socialImage?.url || store?.Cover?.url;
+  const heroImage = store?.logo?.url || store?.seo?.socialImage?.url || store?.cover?.url;
   const title = store?.title || slug;
-  const description = store?.SEO?.metaDescription || 'Explore more sections from this storefront.';
-  const showAboutSection = availability.about || Boolean(store?.Description);
+  const description = store?.seo?.metaDescription || 'Explore more sections from this storefront.';
+  const showAboutSection = availability.about || Boolean(store?.description);
 
   return (
     <Box mt="xl" pt="xl" style={{ borderTop: '1px solid rgba(148, 163, 184, 0.25)' }}>

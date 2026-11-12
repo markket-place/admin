@@ -4,12 +4,13 @@ import { generateSEOMetadata } from '@/markket/metadata';
 import TrackPageComponent from '@/app/components/ui/track.page';
 import { Store } from '@/markket/store.d';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 
 interface PageProps {
   params: Promise<{ slug: string, track_slug: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug, track_slug } = await params;
 
   const response = await strapiClient.getTrack(track_slug, slug);
@@ -19,7 +20,7 @@ export async function generateMetadata({ params }: PageProps) {
     slug,
     entity: {
       url: `/${slug}/track/${track_slug}`,
-      SEO: track?.SEO,
+      seo: track?.seo,
     },
     type: 'article',
   });

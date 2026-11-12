@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_MARKKETPLACE_URL || 'https://markket.pl
 
 interface SEOProps {
   url?: string;
-  SEO?: {
+  seo?: {
     metaTitle?: string;
     metaDescription?: string;
     metaKeywords?: string;
@@ -17,13 +17,12 @@ interface SEOProps {
       height?: number;
     };
   };
-  title? : string;
-  Title?: string;
-  Logo?: {
+  title?: string;
+  logo?: {
     url: string;
   };
-  Name?: string;
-  Description?: string;
+  name?: string;
+  description?: string;
   id?: string;
 };
 
@@ -46,37 +45,32 @@ export async function generateSEOMetadata({
   const storeResponse = await strapiClient.getStore(slug);
   const store = storeResponse?.data?.[0];
 
-  const storeName = store?.title || store?.SEO?.metaTitle || 'Store';
+  const storeName = store?.title || store?.seo?.metaTitle || 'Store';
 
   // Build descriptive title with context - filter out empty strings
-  const baseTitle = (entity?.SEO?.metaTitle && entity.SEO.metaTitle.trim()) ||
-    (entity?.title && entity.title.trim()) ||
-    (entity?.Title && entity.Title.trim()) ||
-    (entity?.Name && entity.Name.trim()) ||
-    (defaultTitle && defaultTitle.trim());
+  const baseTitle = (entity?.seo?.metaTitle?.trim()) ||
+    (entity?.title?.trim()) ||
+    (defaultTitle?.trim());
 
-  // Always show "Title | Store" format, unless baseTitle is empty/missing or same as store
   const title = baseTitle && baseTitle !== storeName
     ? `${baseTitle} | ${storeName}`
     : storeName;
 
-  // Build rich description - filter out empty strings
-  const baseDescription = (entity?.SEO?.metaDescription && entity.SEO.metaDescription.trim()) ||
-    (entity?.Description && entity.Description.trim()) ||
+  const baseDescription = (entity?.seo?.metaDescription?.trim()) ||
+    (entity?.description?.trim()) ||
     defaultDescription ||
-    (store?.SEO?.metaDescription && store.SEO.metaDescription.trim()) ||
-    (store?.Description && store.Description.trim());
+    (store?.seo?.metaDescription?.trim()) ||
+    (store?.description?.trim());
 
   const description = baseDescription || `Discover ${storeName} - Open ecommerce ecosystem`;
 
-  const image_url = entity?.SEO?.socialImage?.url ||
-    entity?.Logo?.url ||
-    store?.SEO?.socialImage?.url ||
-    store?.Logo?.url;
+  const image_url = entity?.seo?.socialImage?.url ||
+    entity?.logo?.url ||
+    store?.seo?.socialImage?.url ||
+    store?.logo?.url;
 
-  // Smart keywords generation - filter out empty strings
-  const baseKeywords = (entity?.SEO?.metaKeywords && entity.SEO.metaKeywords.trim()) ||
-    (store?.SEO?.metaKeywords && store.SEO.metaKeywords.trim()) ||
+  const baseKeywords = (entity?.seo?.metaKeywords?.trim()) ||
+    (store?.seo?.metaKeywords?.trim()) ||
     '';
 
   const keywordsList = [
@@ -85,11 +79,12 @@ export async function generateSEOMetadata({
     storeName,
     'shop',
     'ecommerce',
-  ].filter((v, i, a) => a.indexOf(v) === i); // unique
+    'markket.next'
+  ].filter((v, i, a) => a.indexOf(v) === i);
 
   const keywords = keywordsList.join(', ');
 
-  const canonical = entity?.url || entity?.SEO?.metaUrl || `/${slug}`;
+  const canonical = entity?.url || entity?.seo?.metaUrl || `/${slug}`;
 
   return {
     title,
@@ -107,8 +102,8 @@ export async function generateSEOMetadata({
       images: image_url ? [
         {
           url: image_url,
-          width: entity?.SEO?.socialImage?.width || 1200,
-          height: entity?.SEO?.socialImage?.height || 630,
+          width: entity?.seo?.socialImage?.width || 1200,
+          height: entity?.seo?.socialImage?.height || 630,
           alt: `${title} - ${description}`,
         }
       ] : undefined,
@@ -121,8 +116,8 @@ export async function generateSEOMetadata({
       images: image_url ? [image_url] : undefined,
     },
     robots: {
-      index: !entity?.SEO?.excludeFromSearch,
-      follow: !entity?.SEO?.excludeFromSearch,
+      index: !entity?.seo?.excludeFromSearch,
+      follow: !entity?.seo?.excludeFromSearch,
     }
   };
 };

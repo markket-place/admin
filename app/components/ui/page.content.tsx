@@ -24,7 +24,7 @@ interface PageContentProps {
  * @returns { JSX.Element }
  */
 export default function PageContent({ params, }: PageContentProps) {
-  const content = params?.page?.Content || params?.post?.Content || params?.album?.content || params?.track?.content;
+  const content = params?.page?.content || params?.post?.content || params?.album?.content || params?.track?.content;
   const renderedImages = new Set<string>();
 
   if (!content?.length) {

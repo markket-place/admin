@@ -26,7 +26,7 @@ export default function EventsTabs({ storeSlug, upcomingEvents, pastEvents }: Ev
           searchPlaceholder="Search upcoming events"
           items={upcomingEvents.map((event) => ({
             key: event.documentId || event.slug,
-            title: event.Name || 'Untitled event',
+            title: event.name || 'Untitled event',
             subtitle: `${formatDate(event.startDate)} · ${event.slug}`,
             href: `/tienda/${storeSlug}/events/${event.documentId || event.slug}`,
             icon: 'event' as const,
@@ -40,7 +40,7 @@ export default function EventsTabs({ storeSlug, upcomingEvents, pastEvents }: Ev
           searchPlaceholder="Search past events"
           items={pastEvents.map((event) => ({
             key: event.documentId || event.slug,
-            title: event.Name || 'Untitled event',
+            title: event.name || 'Untitled event',
             subtitle: `${formatDate(event.startDate)} · ${event.slug}`,
             href: `/tienda/${storeSlug}/events/${event.documentId || event.slug}`,
             icon: 'event' as const,

@@ -132,6 +132,13 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
+        protocol: 'https',
+        hostname: 'objects.markket.place',
+        port: '',
+        pathname: '/**',
+        search: ''
+      },
+      {
         // DigitalOcean Spaces CDN endpoint — prefer this for cached delivery
         protocol: 'https',
         hostname: 'markketplace.nyc3.cdn.digitaloceanspaces.com',

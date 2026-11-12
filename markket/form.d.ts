@@ -3,10 +3,10 @@ import { Store } from "./store";
 export type Form = {
   documentId: string;
   id: number;
-  Name: string;
-  Message: string;
+  name: string;
+  message: string;
   structure: any;
-  SEO: SEO;
+  seo: SEO;
   store: Store;
   createdAt: string;
   updatedAt: string;

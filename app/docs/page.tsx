@@ -17,8 +17,8 @@ export async function generateMetadata(): Promise<Metadata> {
     slug: 'docs',
     entity: {
       url: '/docs',
-      SEO: page?.SEO,
-      Title: page?.Title,
+      seo: page?.seo,
+      title: page?.title,
     },
     defaultTitle: 'Documentation',
     type: 'website',
@@ -45,17 +45,17 @@ export default async function DocsPage() {
         {/* Hero Section */}
         <div className="text-center">
           <img
-            src={store?.Logo?.url || defaultLogo}
-            alt={store?.SEO?.metaTitle || 'Markket Logo'}
+            src={store?.logo?.url || defaultLogo}
+            alt={store?.seo?.metaTitle || 'Markket Logo'}
             width={200}
             height={200}
             className="mx-auto mb-8"
           />
           <Title className="text-4xl md:text-5xl mb-4">
-            {page?.Title || 'Documentation & Articles'}
+            {page?.title || 'Documentation & Articles'}
           </Title>
           <Text size="xl" c="dimmed" className="mx-auto mb-8">
-            {page?.SEO?.metaDescription || store?.SEO?.metaDescription || 'Knowledge base and articles'}
+            {page?.seo?.metaDescription || store?.seo?.metaDescription || 'Knowledge base and articles'}
           </Text>
         </div>
 

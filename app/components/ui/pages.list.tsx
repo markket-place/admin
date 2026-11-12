@@ -36,13 +36,13 @@ export const PageList = ({ pages, storeSlug }: PageListProps) => {
               className="page-list-card"
             >
               <Group gap={0} wrap="nowrap" align="stretch">
-                {page?.SEO?.socialImage?.url ? (
+                {page?.seo?.socialImage?.url ? (
                   <Box
                     style={{
                       width: 140,
                       minHeight: 120,
                       flexShrink: 0,
-                      background: `url(${page.SEO.socialImage.url}) center/cover no-repeat`,
+                      background: `url(${page.seo.socialImage.url}) center/cover no-repeat`,
                     }}
                   />
                 ) : (
@@ -58,12 +58,12 @@ export const PageList = ({ pages, storeSlug }: PageListProps) => {
 
                 <Stack gap={6} p="md" style={{ flex: 1, minWidth: 0 }}>
                   <Title order={4} fw={600} lineClamp={1} style={{ color: markketColors.neutral.charcoal, letterSpacing: '-0.02em' }}>
-                    {page.Title || 'Untitled Page'}
+                    {page.title || 'Untitled Page'}
                   </Title>
 
-                  {page.SEO?.metaDescription && (
+                  {page.seo?.metaDescription && (
                     <Text size="sm" c="dimmed" lineClamp={2} lh={1.6}>
-                      {page.SEO.metaDescription}
+                      {page.seo.metaDescription}
                     </Text>
                   )}
 

@@ -86,7 +86,7 @@ export default function TiendaPageEditPageClient({ storeSlug, itemId }: TiendaPa
         { label: page.documentId || page.slug || itemId, href: `/tienda/${storeSlug}/pages/${page.documentId || page.slug || itemId}` },
         { label: 'Edit' },
       ]}
-      title={`Edit: ${page.Title || 'Page'}`}
+      title={`Edit: ${page.title || 'Page'}`}
       routePath={`/tienda/${storeSlug}/pages/${page.documentId || page.slug || itemId}/edit`}
     >
       <PagesEditorForm
@@ -94,15 +94,15 @@ export default function TiendaPageEditPageClient({ storeSlug, itemId }: TiendaPa
         mode="edit"
         itemDocumentId={page.documentId || itemId}
         initial={{
-          title: page.Title,
+          title: page.title,
           slug: page.slug,
-          content: page.Content,
-          seoTitle: page.SEO?.metaTitle,
-          seoDescription: page.SEO?.metaDescription,
-          seoSocialImageId: page.SEO?.socialImage?.id,
-          seoSocialImageDocumentId: page.SEO?.socialImage?.documentId,
+          content: page.content,
+          seoTitle: page.seo?.metaTitle,
+          seoDescription: page.seo?.metaDescription,
+          seoSocialImageId: page.seo?.socialImage?.id,
+          seoSocialImageDocumentId: page.seo?.socialImage?.documentId,
           albumDocumentIds: page.albums?.map((a) => a.documentId).filter(Boolean) ?? [],
-          initialSEO: page.SEO as Record<string, unknown> | undefined,
+          initialSEO: page.seo as Record<string, unknown> | undefined,
         }}
       />
     </TiendaDetailShell>

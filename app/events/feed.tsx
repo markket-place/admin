@@ -72,7 +72,7 @@ export default function EventFeed({ initialEvents, initialHasMore, pageSize = 12
           const eventSlug = event?.slug || event?.documentId || '';
           const eventHref = `/${storeSlug}/events/${eventSlug}`;
 
-          const coverUrl = event.Thumbnail?.formats?.small?.url || event.SEO?.socialImage?.formats?.small?.url;
+          const coverUrl = event.thumbnail?.formats?.small?.url || event.seo?.socialImage?.formats?.small?.url;
 
           const dateLabel = (() => {
             if (!event.startDate) return 'TBD';
@@ -218,14 +218,14 @@ export default function EventFeed({ initialEvents, initialHasMore, pageSize = 12
                         color: markketColors.neutral.charcoal,
                       }}
                     >
-                      {event.Name}
+                      {event.name}
                     </Text>
 
                     {/* Short description preview safely wrapped in layout box */}
-                    {event.Description && (
+                    {event.description && (
                       <Box style={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.4 }}>
                         <div className="prose space-y-6 text-xs text-gray-500 dark:prose-invert">
-                          <Markdown content={stripMarkdown(event?.Description || "")} />
+                          <Markdown content={stripMarkdown(event?.description || "")} />
                         </div>
                       </Box>
                     )}

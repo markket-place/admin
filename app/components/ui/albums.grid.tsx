@@ -27,7 +27,7 @@ interface AlbumsProps {
 }
 
 function AlbumCard({ album, store_slug }: AlbumCardProps) {
-  const description = album.description || album?.SEO?.metaDescription;
+  const description = album.description || album?.seo?.metaDescription;
 
   return (
     <Link href={`/store/${store_slug}/${album.slug}`} style={{ textDecoration: 'none' }}>
@@ -48,7 +48,7 @@ function AlbumCard({ album, store_slug }: AlbumCardProps) {
       >
         <AspectRatio ratio={16 / 9} pos="relative" className="album-card-img-wrap" style={{ marginBottom: 0, borderRadius: '12px', overflow: 'hidden' }}>
           <Image
-            src={album.cover?.url || album.SEO?.socialImage?.url}
+            src={album.cover?.url || album.seo?.socialImage?.url}
             alt={album.title}
             fallbackSrc="https://placehold.co/800x450?text=Album"
             style={{ objectFit: 'cover', objectPosition: 'center', width: '100%', height: '100%', display: 'block', transition: 'transform 0.3s ease' }}
