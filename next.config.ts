@@ -89,6 +89,20 @@ const nextConfig = {
   // Excludes: dashboard, api, docs, stores, auth, chisme, newsletter, _next
   async rewrites() {
     return {
+      beforeFiles: [
+        {
+          // Exclude /_next and /api so styles, scripts, and API calls work on subdomains
+          source: '/:path((?!_next|api).*)',
+          has: [
+            {
+              type: 'host',
+              // Captures any subdomain except 'www'
+              value: '(?<slug>[^.]+)\\.markket\\.place'
+            },
+          ],
+          destination: '/store/:slug/:path*',
+        },
+      ],
       afterFiles: [
         {
           source: '/:slug((?!dashboard|tienda|me|api|docs|stores|auth|about|newsletter|_next|\.well-known|apple-app-site-association).*)',
