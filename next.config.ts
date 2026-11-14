@@ -1,6 +1,5 @@
 const path = require('path');
 /** @type {import('next').NextConfig} */
-// const BUILD_MODE = process.env.BUILD_MODE || 'static' || 'api';
 
 const isProd = (process.env.NODE_ENV === 'production') as Boolean;
 
@@ -79,31 +78,78 @@ const nextConfig = {
           },
         ],
       },
-
     ];
 
     return isProd ? [...baseHeaders, ...staticAssetHeaders] : baseHeaders;
   },
-  // Rewrite clean URLs (/:slug) to internal file structure (/store/:slug)
-  // This allows cleaner URLs like /horns instead of /store/horns
-  // Excludes: dashboard, api, docs, stores, auth, chisme, newsletter, _next
+
   async rewrites() {
     return {
+      beforeFiles: [
+        // 1. Subdomain root: tigerlily.markket.place -> /store/tigerlily
+        {
+          source: '/',
+          has: [
+            {
+              type: 'host',
+              value: '(?<slug>[^.]+)\\.markket\\.place',
+            },
+          ],
+          destination: '/store/:slug',
+        },
+        // 2. Subdomain subpaths: tigerlily.markket.place/events -> /store/tigerlily/events
+        {
+          source: '/:path((?!_next|api).*)',
+          has: [
+            {
+              type: 'host',
+              value: '(?<slug>[^.]+)\\.markket\\.place',
+            },
+          ],
+          destination: '/store/:slug/:path*',
+        },
+      ],
       afterFiles: [
         {
-          source: '/:slug((?!dashboard|tienda|me|api|docs|stores|auth|about|newsletter|_next|\.well-known|apple-app-site-association).*)',
+          source: '/:slug((?!dashboard|tienda|me|api|docs|stores|auth|about|newsletter|_next|\\.well-known|apple-app-site-association).*)',
           destination: '/store/:slug',
         },
         {
-          source: '/:slug((?!dashboard|tienda|me|api|docs|stores|auth|about|newsletter|_next|\.well-known|apple-app-site-association).*)/:path*',
+          source: '/:slug((?!dashboard|tienda|me|api|docs|stores|auth|about|newsletter|_next|\\.well-known|apple-app-site-association).*)/:path*',
           destination: '/store/:slug/:path*',
         },
       ],
     };
   },
-  // Redirect old /store/:slug URLs to clean /:slug URLs
+
   async redirects() {
     return [
+      // Strip duplicate /:slug when already on slug.markket.place
+      // e.g. tigerlily.markket.place/tigerlily/events -> tigerlily.markket.place/events
+      {
+        source: '/:slug',
+        has: [
+          {
+            type: 'host',
+            value: '(?<slug>[^.]+)\\.markket\\.place',
+          },
+        ],
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/:slug/:path*',
+        has: [
+          {
+            type: 'host',
+            value: '(?<slug>[^.]+)\\.markket\\.place',
+          },
+        ],
+        destination: '/:path*',
+        permanent: false,
+      },
+
+      // Existing path redirects
       {
         source: '/me/tienda',
         destination: '/tienda',
@@ -126,8 +172,8 @@ const nextConfig = {
       },
     ];
   },
+
   images: {
-    // Cache optimized images for 30 days in Next.js CDN/edge
     minimumCacheTTL: 2592000,
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
@@ -136,10 +182,9 @@ const nextConfig = {
         hostname: 'objects.markket.place',
         port: '',
         pathname: '/**',
-        search: ''
+        search: '',
       },
       {
-        // DigitalOcean Spaces CDN endpoint — prefer this for cached delivery
         protocol: 'https',
         hostname: 'markketplace.nyc3.cdn.digitaloceanspaces.com',
         port: '',
@@ -147,7 +192,6 @@ const nextConfig = {
         search: '',
       },
       {
-        // DigitalOcean Spaces origin endpoint — used by CMS media URLs
         protocol: 'https',
         hostname: 'markketplace.nyc3.digitaloceanspaces.com',
         port: '',
@@ -155,7 +199,6 @@ const nextConfig = {
         search: '',
       },
       {
-        // Railway staging env
         protocol: 'https',
         hostname: 'markket-storage-yz8z7g6wj.t3.storageapi.dev',
         port: '',
@@ -165,7 +208,7 @@ const nextConfig = {
     ],
   },
   turbopack: {
-    root: path.join(__dirname, '../../') // Adjust based on how deep your app is
+    root: path.join(__dirname, '../../'),
   },
 };
 
