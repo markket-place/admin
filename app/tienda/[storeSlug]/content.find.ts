@@ -7,15 +7,15 @@ import type { Event } from '@/markket/event';
 import type { Album } from '@/markket/album';
 
 const DEFAULT_CONTENT_POPULATE: Record<TiendaContentType, string[]> = {
-  article: ['SEO', 'SEO.socialImage', 'Tags', 'cover', 'store', 'store.Logo'],
-  page: ['SEO', 'SEO.socialImage', 'store', 'store.Logo', 'albums', 'albums.cover', 'albums.SEO', 'albums.tracks'],
-  product: ['SEO', 'SEO.socialImage', 'Thumbnail', 'Slides', 'PRICES', 'stores', 'stores.Logo', 'extras'],
-  event: ['SEO', 'SEO.socialImage', 'Tag', 'Thumbnail', 'Slides', 'PRICES', 'stores', 'locations'],
-  album: ['SEO', 'cover', 'tracks', 'tracks.SEO', 'tracks.media', 'store', 'store.Logo'],
-  track: ['SEO', 'media', 'urls', 'store', 'store.Logo'],
-  category: ['SEO'],
-  shortner: ['SEO'],
-  order: ['SEO'],
+  article: ['seo', 'seo.socialImage', 'tags', 'cover', 'store', 'store.logo'],
+  page: ['seo', 'seo.socialImage', 'store', 'store.logo', 'albums', 'albums.cover', 'albums.seo', 'albums.tracks'],
+  product: ['seo', 'seo.socialImage', 'thumbnail', 'slides', 'prices', 'stores', 'stores.logo', 'extras'],
+  event: ['seo', 'seo.socialImage', 'tag', 'thumbnail', 'slides', 'prices', 'stores', 'locations'],
+  album: ['seo', 'cover', 'tracks', 'tracks.seo', 'tracks.media', 'store', 'store.logo'],
+  track: ['seo', 'media', 'urls', 'store', 'store.logo'],
+  category: ['seo'],
+  shortner: ['seo'],
+  order: ['seo'],
 };
 
 export function readTiendaAuthToken() {

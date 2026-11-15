@@ -95,7 +95,7 @@ function buildAttachCandidates(field: string, contentType: string) {
   if (normalizedField === 'slides') {
     return contentTypes.map((candidateType) => ({
       contentType: candidateType,
-      field: 'Slides',
+      field: 'slides',
       mode: 'append' as const,
     }));
   }
@@ -103,7 +103,7 @@ function buildAttachCandidates(field: string, contentType: string) {
   if (normalizedField === 'seo.socialimage') {
     return contentTypes.map((candidateType) => ({
       contentType: candidateType,
-      field: 'SEO.socialImage',
+      field: 'seo.socialImage',
       mode: 'replace' as const,
     }));
   }
