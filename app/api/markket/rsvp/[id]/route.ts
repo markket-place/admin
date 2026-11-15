@@ -15,14 +15,14 @@ export async function GET(
   }
 
   const url = new URL(`api/rsvps/${id}`, STRAPI_URL);
-  url.searchParams.set('populate[event][fields][0]', 'Name');
+  url.searchParams.set('populate[event][fields][0]', 'name');
   url.searchParams.set('populate[event][fields][1]', 'slug');
   url.searchParams.set('populate[event][fields][2]', 'startDate');
   url.searchParams.set('populate[event][fields][3]', 'endDate');
   url.searchParams.set('populate[event][fields][4]', 'documentId');
   url.searchParams.set('populate[event][fields][5]', 'timezone');
   url.searchParams.set('populate[event][populate][Thumbnail][fields][0]', 'url');
-  url.searchParams.set('populate[event][populate][SEO][fields][0]', 'metaDescription');
+  url.searchParams.set('populate[event][populate][seo][fields][0]', 'metaDescription');
   url.searchParams.set('populate[store][fields][0]', 'slug');
   url.searchParams.set('populate[store][fields][1]', 'title');
 

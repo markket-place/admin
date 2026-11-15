@@ -23,9 +23,9 @@ import { Article, Product, Album } from '@/markket';
 import { ContentItem } from "@/app/hooks/common.d";
 
 type HasTags = {
-  Tags: {
-    Label: string;
-    Color: string;
+  tags: {
+    label: string;
+    color: string;
   }[];
 }
 
@@ -88,7 +88,7 @@ export default function ListComponent({ items, actions, plural, singular }: Arti
               <Table.Th className="text-sky-900 font-bold">{singular.charAt(0).toUpperCase()}{singular.slice(1)}</Table.Th>
               <Table.Th className="text-sky-900 font-bold">Status</Table.Th>
               <Table.Th className="text-sky-900 font-bold">Last Updated</Table.Th>
-              {'Tags' in items?.[0] && <Table.Th className="text-sky-900 font-bold">Tags</Table.Th>}
+              {'tags' in items?.[0] && <Table.Th className="text-sky-900 font-bold">Tags</Table.Th>}
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -194,23 +194,23 @@ export default function ListComponent({ items, actions, plural, singular }: Arti
                     {formatDistanceToNow(new Date(item.updatedAt), { addSuffix: true })}
                   </Text>
                 </Table.Td>
-                {'Tags' in items?.[0] && (
+                {'tags' in items?.[0] && (
                   <Table.Td>
                     <Group gap={4}>
-                      {(item as HasTags)?.Tags?.slice(0, 2).map((tag, id) => (
+                      {(item as HasTags)?.tags?.slice(0, 2).map((tag, id) => (
                         <Badge
                           key={id}
                           size="sm"
                           variant="outline"
-                          color={tag.Color}
+                          color={tag.color}
                           className="border-2 border-black font-bold"
                         >
-                          {tag.Label}
+                          {tag.label}
                         </Badge>
                       ))}
-                      {((item as HasTags).Tags?.length || 0) > 2 && (
+                      {((item as HasTags).tags?.length || 0) > 2 && (
                         <Badge size="sm" variant="outline" color="gray" className="border-2 border-black font-bold">
-                          +{(item as HasTags).Tags!.length - 2}
+                          +{(item as HasTags).tags!.length - 2}
                         </Badge>
                       )}
                     </Group>

@@ -135,10 +135,10 @@ export default function BlogEditorForm({ storeSlug, mode, itemDocumentId, initia
     }
 
     const payload: Record<string, unknown> = {
-      Title: form.values.title.trim(),
+      title: form.values.title.trim(),
       slug: nextSlug,
-      Content: tiptapToStrapiBlocks(form.values.content),
-      SEO: {
+      content: tiptapToStrapiBlocks(form.values.content),
+      seo: {
         ...(initial?.initialSEO
           ? Object.fromEntries(Object.entries(initial.initialSEO).filter(([k]) => k !== 'socialImage' && k !== 'id' && k !== 'documentId'))
           : {}),
@@ -151,7 +151,7 @@ export default function BlogEditorForm({ storeSlug, mode, itemDocumentId, initia
     };
 
     if (initial?.tagIds && initial.tagIds.length > 0) {
-      payload.Tags = initial.tagIds.map((id) => ({ id }));
+      payload.tags = initial.tagIds.map((id) => ({ id }));
     }
 
     try {
@@ -161,8 +161,8 @@ export default function BlogEditorForm({ storeSlug, mode, itemDocumentId, initia
         ? await tiendaClient.createContent(storeRef, 'article', payload, { token })
         : await tiendaClient.updateContent(storeRef, 'article', itemDocumentId || '', payload, { token });
 
-      console.log('[blog save] sent SEO.socialImage:', (payload.SEO as Record<string, unknown>)?.socialImage ?? 'omitted (no id)');
-      console.log('[blog save] returned SEO.socialImage:', response?.data?.SEO?.socialImage ?? 'missing in response');
+      console.log('[blog save] sent SEO.socialImage:', (payload.seo as Record<string, unknown>)?.socialImage ?? 'omitted (no id)');
+      console.log('[blog save] returned SEO.socialImage:', response?.data?.seo?.socialImage ?? 'missing in response');
 
       if (!response || (response?.status && response.status >= 400)) {
         throw new Error(response?.message || `Server error: ${response?.status || 'unknown'}`);

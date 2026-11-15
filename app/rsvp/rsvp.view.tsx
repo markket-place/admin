@@ -27,14 +27,14 @@ function formatDate(value?: string) {
 
 type RSVPWithEvent = RSVP & {
   event?: {
-    Name?: string;
+    name?: string;
     slug?: string;
     documentId?: string;
     startDate?: string;
     endDate?: string;
     timezone?: string;
-    SEO?: { metaDescription?: string };
-    Thumbnail?: { url?: string };
+    seo?: { metaDescription?: string };
+    thumbnail?: { url?: string };
   };
   store?: {
     slug?: string;
@@ -119,7 +119,7 @@ export default function RSVPConfirmationView() {
             </Group>
           </Stack>
 
-          {rsvp.event?.Name && (
+          {rsvp.event?.name && (
             <>
               <Divider label="Event" labelPosition="left" />
               <Stack gap="xs">
@@ -127,10 +127,10 @@ export default function RSVPConfirmationView() {
                   <Stack gap={2}>
                     {eventLink ? (
                       <Anchor href={eventLink} fw={600} size="md">
-                        {rsvp.event.Name}
+                        {rsvp.event.name}
                       </Anchor>
                     ) : (
-                      <Text fw={600}>{rsvp.event.Name}</Text>
+                        <Text fw={600}>{rsvp.event.name}</Text>
                     )}
                     {rsvp.store?.title && (
                       <Text size="sm" c="dimmed">by {rsvp.store.title}</Text>
@@ -148,8 +148,8 @@ export default function RSVPConfirmationView() {
                   </Text>
                 )}
 
-                {rsvp.event.SEO?.metaDescription && (
-                  <Text size="sm" c="dimmed">{rsvp.event.SEO.metaDescription}</Text>
+                {rsvp.event.seo?.metaDescription && (
+                  <Text size="sm" c="dimmed">{rsvp.event.seo.metaDescription}</Text>
                 )}
 
                 {eventLink && (
