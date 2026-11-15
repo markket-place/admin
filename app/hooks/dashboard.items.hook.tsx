@@ -7,27 +7,27 @@ import { ContentType, FetchOptions } from './common.d';
 
 const DEFAULT_OPTIONS: Record<ContentType, FetchOptions> = {
   articles: {
-    populate: ['Tags', 'SEO', 'SEO.socialImage'],
+    populate: ['tags', 'seo', 'seo.socialImage'],
     sort: 'updatedAt:desc'
   },
   pages: {
-    populate: ['SEO', 'SEO.socialImage'],
+    populate: ['seo', 'seo.socialImage'],
     sort: 'updatedAt:desc'
   },
   products: {
-    populate: ['SEO', 'SEO.socialImage'],
+    populate: ['seo', 'seo.socialImage'],
     sort: 'updatedAt:desc',
   },
   albums: {
-    populate: ['SEO', 'SEO.socialImage', 'tracks',],
+    populate: ['seo', 'seo.socialImage', 'tracks',],
     sort: 'updatedAt:desc'
   },
   tracks: {
-    populate: ['SEO', 'SEO.socialImage', 'media', 'urls'],
+    populate: ['seo', 'seo.socialImage', 'media', 'urls'],
     sort: 'updatedAt:desc'
   },
   events: {
-    populate: ['SEO', 'SEO.socialImage'],
+    populate: ['seo', 'seo.socialImage'],
     sort: 'updatedAt:desc'
   },
   subscribers: {
@@ -35,7 +35,7 @@ const DEFAULT_OPTIONS: Record<ContentType, FetchOptions> = {
     sort: 'updatedAt:desc'
   },
   orders: {
-    populate: ['Shipping_Address', 'Details', 'Payment_attempts'],
+    populate: ['shipping_Address', 'details', 'payment_attempts'],
     sort: 'createdAt:desc'
   },
   inboxes: {
@@ -43,11 +43,11 @@ const DEFAULT_OPTIONS: Record<ContentType, FetchOptions> = {
     sort: 'updatedAt:desc'
   },
   forms: {
-    populate: ['SEO', 'SEO.socialImage'],
+    populate: ['seo', 'seo.socialImage'],
     sort: 'updatedAt:desc'
   },
   stores: {
-    populate: ['SEO', 'SEO.socialImage', 'URLS', 'Cover'],
+    populate: ['seo', 'seo.socialImage', 'urls', 'cover'],
     sort: 'updatedAt:desc'
   }
 };

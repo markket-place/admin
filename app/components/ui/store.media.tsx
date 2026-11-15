@@ -28,7 +28,7 @@ interface StoreMediaProps {
   onSaveSlides?: (slides: Store['slides']) => Promise<void> | void;
 }
 
-type UploadField = 'Logo' | 'Favicon' | 'SEO.socialImage' | 'Cover' | 'Slides';
+type UploadField = 'logo' | 'favicon' | 'seo.socialImage' | 'cover' | 'slides';
 type LoadingField = 'logo' | 'favicon' | 'social' | 'slides' | null;
 type SlideMedia = Store['slides'][number];
 
@@ -41,35 +41,35 @@ type UploadRule = {
 };
 
 const uploadRules: Record<UploadField, UploadRule> = {
-  Favicon: {
+  favicon: {
     maxWidth: 96,
     maxHeight: 96,
     targetBytes: 48 * 1024,
     maxBytes: 160 * 1024,
     helper: 'Favicon is optimized to around 64-96 px and kept very small.',
   },
-  Logo: {
+  logo: {
     maxWidth: 600,
     maxHeight: 600,
     targetBytes: 260 * 1024,
     maxBytes: 900 * 1024,
     helper: 'Logo is optimized up to 600x600 for crisp UI with lighter payload.',
   },
-  Cover: {
+  cover: {
     maxWidth: 1600,
     maxHeight: 900,
     targetBytes: 650 * 1024,
     maxBytes: 2 * 1024 * 1024,
     helper: 'Cover is optimized for wide layouts and social cards.',
   },
-  'SEO.socialImage': {
+  'seo.socialImage': {
     maxWidth: 1200,
     maxHeight: 630,
     targetBytes: 550 * 1024,
     maxBytes: 1800 * 1024,
     helper: 'Social image targets the standard 1200x630 preview size.',
   },
-  Slides: {
+  slides: {
     maxWidth: 1600,
     maxHeight: 1200,
     targetBytes: 700 * 1024,
@@ -153,18 +153,18 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
   const storeName = (store.title || store.slug || 'store').trim();
 
   const fieldAltLabel = (field: UploadField) => {
-    if (field === 'Logo') return 'logo';
-    if (field === 'Favicon') return 'favicon';
-    if (field === 'Cover') return 'cover image';
-    if (field === 'SEO.socialImage') return 'social image';
+    if (field === 'logo') return 'logo';
+    if (field === 'favicon') return 'favicon';
+    if (field === 'cover') return 'cover image';
+    if (field === 'seo.socialImage') return 'social image';
     return 'slide image';
   };
 
   const slots: MediaSlot[] = [
     {
-      id: 'Logo',
+      id: 'logo',
       label: 'Logo',
-      field: 'Logo',
+      field: 'logo',
       src: store.logo?.url,
       alt: store.logo?.alternativeText || `${storeName} logo`,
       mediaId: store.logo?.id,
@@ -172,7 +172,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
     {
       id: 'Favicon',
       label: 'Favicon',
-      field: 'Favicon',
+      field: 'favicon',
       src: store.favicon?.url,
       alt: store.favicon?.alternativeText || `${storeName} favicon`,
       mediaId: store.favicon?.id,
@@ -180,15 +180,15 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
     {
       id: 'Cover',
       label: 'Cover',
-      field: 'Cover',
+      field: 'cover',
       src: store.cover?.url,
       alt: store.cover?.alternativeText || `${storeName} cover image`,
       mediaId: store.cover?.id,
     },
     {
-      id: 'SEO.socialImage',
+      id: 'seo.socialImage',
       label: 'Social',
-      field: 'SEO.socialImage',
+      field: 'seo.socialImage',
       src: store.seo?.socialImage?.url,
       alt: store.seo?.socialImage?.alternativeText || `${storeName} social image`,
       mediaId: store.seo?.socialImage?.id,
@@ -196,7 +196,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
     ...draftSlides.slice(0, 8).map((slide, index) => ({
       id: getSlideSlotId(slide, index),
       label: `Slide ${index + 1}`,
-      field: 'Slides' as UploadField,
+      field: "slides" as UploadField,
       src: slide.formats?.small?.url || slide.url,
       alt: slide.alternativeText || `${storeName} slide ${index + 1}`,
       isSlide: true,
@@ -205,7 +205,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
     {
       id: 'slide-add',
       label: 'Add Slide',
-      field: 'Slides',
+      field: 'slides',
       alt: 'Add a new slide',
       isSlide: true,
     },
@@ -221,9 +221,9 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
   const hasAltDraftChanges = (altText || '').trim() !== (selectedSlot?.alt || '').trim();
 
   const toLoadingField = (field: UploadField): LoadingField => {
-    if (field === 'Logo') return 'logo';
-    if (field === 'Favicon') return 'favicon';
-    if (field === 'Slides') return 'slides';
+    if (field === 'logo') return 'logo';
+    if (field === 'favicon') return 'favicon';
+    if (field === 'slides') return 'slides';
     return 'social';
   };
 
@@ -265,7 +265,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
 
     ctx.drawImage(image, 0, 0, nextWidth, nextHeight);
 
-    const preferredType = field === 'Favicon'
+    const preferredType = field === 'favicon'
       ? 'image/png'
       : (file.type === 'image/jpeg' ? 'image/jpeg' : 'image/webp');
     let quality = preferredType === 'image/png' ? undefined : 0.9;
@@ -283,7 +283,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
       }
     }
 
-    if (blob.size > rule.maxBytes && preferredType === 'image/png' && field !== 'Favicon') {
+    if (blob.size > rule.maxBytes && preferredType === 'image/png' && field !== 'favicon') {
       let webpQuality = 0.88;
       let webpBlob = await toBlob(canvas, 'image/webp', webpQuality);
 
@@ -337,7 +337,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
         attach: {
           contentType: 'store',
           field,
-          mode: field === 'Slides' ? 'append' : 'replace',
+          mode: field === 'slides' ? 'append' : 'replace',
         },
       });
 
@@ -354,7 +354,7 @@ export default function StoreMedia({ store, onUpdate, onRefresh, onSaveSlides }:
       const uploaded = uploadResult?.data?.[0] as Media | undefined;
       if (uploaded) {
         onUpdate(uploaded, field, store.id);
-        if (field === 'Slides') {
+        if (field === 'slides') {
           setDraftSlides((current) => {
             const exists = current.some((slide) => `${slide.id}` === `${uploaded.id}` || `${slide.documentId}` === `${uploaded.documentId}`);
             return exists ? current : [...current, uploaded as SlideMedia];

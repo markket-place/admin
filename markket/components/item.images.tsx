@@ -16,7 +16,7 @@ import { Media, Product } from '@/markket';
 import { IconMaximize, IconDownload, IconPhoto } from '@tabler/icons-react';
 import { Carousel } from '@mantine/carousel';
 
-type Name = 'Cover' | 'cover' | 'Logo' | 'Favicon' | 'Slides' | 'socialImage' | 'Thumbnail' | 'image' | 'images' | 'photo' | 'photos' | 'picture' | 'pictures' | 'media' | 'SEO.socialImage';
+type Name = 'cover' | 'logo' | 'favicon' | 'slides' | 'socialImage' | 'thumbnail' | 'image' | 'images' | 'photo' | 'photos' | 'picture' | 'pictures' | 'media' | 'seo.socialImage';
 
 
 interface ImageCardProps {
@@ -92,7 +92,7 @@ export default function DashboardItemImages({
   let images: Media[] = [];
   let displayName: string = `${name.charAt(0).toUpperCase()}${name.slice(1)}` || 'Image';
 
-  if (name == 'SEO.socialImage') {
+  if (name == 'seo.socialImage') {
     image = (item as any as Product)?.seo?.socialImage as Media;
     displayName = 'Social Image';
   }

@@ -8,7 +8,7 @@ type fetchOptions = {
   signal?: AbortSignal;
 };
 
-export type _validImageRef = 'common.SEO' | 'api::store.store' | 'api::page.page' | 'api::album.album' | 'api::album.track' | 'api::event.event' | 'api::product.product' | 'api::article.article';
+export type _validImageRef = 'common.seo' | 'api::store.store' | 'api::page.page' | 'api::album.album' | 'api::album.track' | 'api::event.event' | 'api::product.product' | 'api::article.article';
 
 /**
  * Utitilities to easily communitcate with our routes in /api/markket

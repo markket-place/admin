@@ -74,7 +74,7 @@ const ImageManager = ({ store, singular, item, refresh }: ImageManagerProps) => 
                   >
                     <IconCameraPlus size={18} color={`#db2777`} />
                   </Button>
-                  <Text className="text-left">{key.replace('SEO.socialImage', 'Socials')}</Text>
+                  <Text className="text-left">{key.replace('seo.socialImage', 'Socials')}</Text>
                 </Group>
                 <Tooltip label={key}>
                   <img

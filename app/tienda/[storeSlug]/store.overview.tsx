@@ -510,7 +510,7 @@ export default function StoreOverview({
         publishedAt: nextAction === 'publish'
           ? ((next as any)?.publishedAt || previous.publishedAt || new Date().toISOString())
           : null,
-        SEO: {
+        seo: {
           ...previous.seo,
           ...(next.seo || {}),
         },

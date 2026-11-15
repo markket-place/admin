@@ -7,15 +7,15 @@ export const fetchCache = 'force-no-store';
 const ALLOWED_CONTENT_TYPES = new Set<string>(tiendaContentTypes as readonly string[]);
 const AUTO_PUBLISH_CONTENT_TYPES = new Set<string>(['article', 'page', 'product', 'event', 'album', 'track']);
 
-const DEFAULT_STORE_POPULATE = ['Logo', 'SEO', 'SEO.socialImage', 'Favicon', 'URLS', 'Cover', 'Slides'];
+const DEFAULT_STORE_POPULATE = ['logo', 'seo', 'seo.socialImage', 'favicon', 'urls', 'cover', 'slides'];
 
 const DEFAULT_CONTENT_POPULATE: Record<string, string[]> = {
-  article: ['SEO', 'SEO.socialImage', 'Tags', 'cover', 'store', 'store.Logo'],
-  page: ['SEO', 'SEO.socialImage', 'store', 'store.Logo', 'albums', 'albums.cover', 'albums.SEO', 'albums.tracks'],
-  product: ['SEO', 'SEO.socialImage', 'Thumbnail', 'Slides', 'PRICES', 'stores', 'stores.Logo', 'extras'],
-  event: ['SEO', 'SEO.socialImage', 'Tag', 'Thumbnail', 'Slides', 'stores', 'stores.Logo', 'locations'],
-  album: ['SEO', 'cover', 'tracks', 'tracks.SEO', 'tracks.media', 'store', 'store.Logo'],
-  track: ['SEO', 'media', 'urls', 'store', 'store.Logo'],
+  article: ['seo', 'seo.socialImage', 'tags', 'cover', 'store', 'store.logo'],
+  page: ['seo', 'seo.socialImage', 'store', 'store.logo', 'albums', 'albums.cover', 'albums.seo', 'albums.tracks'],
+  product: ['seo', 'seo.socialImage', 'thumbnail', 'slides', 'prices', 'stores', 'stores.logo', 'extras'],
+  event: ['seo', 'seo.socialImage', 'tag', 'thumbnail', 'slides', 'stores', 'stores.logo', 'locations'],
+  album: ['seo', 'cover', 'tracks', 'tracks.seo', 'tracks.media', 'store', 'store.logo'],
+  track: ['seo', 'media', 'urls', 'store', 'store.logo'],
 };
 
 const SEO_TEXT_DB_MAX = 255;
@@ -34,7 +34,7 @@ function sanitizeSeoComponent(data: Record<string, any>) {
     return;
   }
 
-  const seo = data.SEO;
+  const seo = data.seo;
   if (!seo || typeof seo !== 'object') {
     return;
   }

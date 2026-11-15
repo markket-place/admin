@@ -110,8 +110,8 @@ const { data: store } = await strapiClient.getStore('your-store-slug');
 
 // Access nested attributes safely
 const storeTitle = store?.title;
-const logoUrl = store?.Logo?.url;
-const socialImage = store?.SEO?.socialImage?.url;
+const logoUrl = store?.logo?.url;
+const socialImage = store?.seo?.socialImage?.url;
 ```
 
 ### Working with Products
