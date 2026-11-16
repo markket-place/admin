@@ -54,8 +54,8 @@ export async function GET() {
         path: '/api/tienda/stores/STORE_DOCUMENT_ID/content/article',
         body: {
           data: {
-            Title: 'My Article',
-            Content: [],
+            title: 'My Article',
+            content: [],
             slug: 'my-article',
           },
         },
@@ -67,7 +67,7 @@ export async function GET() {
           attach: {
             contentType: 'product',
             itemId: 'PRODUCT_DOCUMENT_ID',
-            field: 'Slides',
+            field: 'slides',
             mode: 'replace',
           },
         },

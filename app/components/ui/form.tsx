@@ -207,9 +207,8 @@ const FormItem = ({
       );
     }
 
-    if (field.groupName == 'SEO') {
+    if (field.groupName == 'seo') {
       if (field.name === 'metaTitle') {
-
         return (
           <TextInput
             key={field.name}
@@ -219,10 +218,10 @@ const FormItem = ({
             required={field.required}
             {...inputProps}
             onBlur={() => {
-              const title = form?.values?.title || form?.values?.Title || form?.values?.Name;
+              const title = form?.values?.title || form?.values?.Title || form?.values?.name;
 
-              if (!form.values.SEO?.metaTitle && title) {
-                form.setFieldValue('SEO.metaTitle', title);
+              if (!form.values.seo?.metaTitle && title) {
+                form.setFieldValue('seo.metaTitle', title);
               }
             }}
           />
@@ -242,8 +241,8 @@ const FormItem = ({
             onBlur={() => {
               const title = form?.values?.title || form?.values?.Title || form?.values?.Name;
 
-              if (!form.values.SEO?.metaKeywords && title) {
-                form.setFieldValue('SEO.metaKeywords', title.replace(/ /g, ', '))
+              if (!form.values.seo?.metaKeywords && title) {
+                form.setFieldValue('seo.metaKeywords', title.replace(/ /g, ', '))
               }
             }}
           />
@@ -422,7 +421,7 @@ const FormItem = ({
                   variant="light"
                   onClick={() => {
                     const newPrices = [...prices, { Name: '', Description: '', Price: 1, Currency: 'USD' }];
-                    form.setFieldValue('PRICES', newPrices);
+                    form.setFieldValue('prices', newPrices);
                   }}
                 >
                   + Add Price
@@ -447,7 +446,7 @@ const FormItem = ({
                           onChange={e => {
                             const newPrices = [...prices];
                             newPrices[i].Name = e.target.value;
-                            form.setFieldValue('PRICES', newPrices);
+                            form.setFieldValue('prices', newPrices);
                           }}
                         />
                       </td>
@@ -457,7 +456,7 @@ const FormItem = ({
                           onChange={e => {
                             const newPrices = [...prices];
                             newPrices[i].Description = e.target.value;
-                            form.setFieldValue('PRICES', newPrices);
+                            form.setFieldValue('prices', newPrices);
                           }}
                         />
                       </td>
@@ -468,7 +467,7 @@ const FormItem = ({
                           onChange={val => {
                             const newPrices = [...prices];
                             newPrices[i].Price = val as number;
-                            form.setFieldValue('PRICES', newPrices);
+                            form.setFieldValue('prices', newPrices);
                           }}
                         />
                       </td>
@@ -482,7 +481,7 @@ const FormItem = ({
                           variant="subtle"
                           onClick={() => {
                             const newPrices = prices.filter((_: any, idx: number) => idx !== i);
-                            form.setFieldValue('PRICES', newPrices);
+                            form.setFieldValue('prices', newPrices);
                           }}
                         >
                           <IconPencilX size={18} />
@@ -546,7 +545,7 @@ const FormItem = ({
         </form>
       </Paper>
       <Paper pt="sm">
-        <SEOPreview SEO={form.values?.SEO} previewUrl={`/${form.values.slug}`} />
+        <SEOPreview SEO={form.values?.seo} previewUrl={`/${form.values.slug}`} />
       </Paper>
     </Container>
   );

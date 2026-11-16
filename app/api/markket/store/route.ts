@@ -207,7 +207,7 @@ export async function POST(request: Request) {
       ...(description !== undefined ? { description } : {}),
       slug,
       urls: urls?.map(({ url, label }) => ({ url, label })),
-      SEO: {
+      seo: {
         metaTitle: seo?.metaTitle,
         metaDescription: seo?.metaDescription,
         metaKeywords: seo?.metaKeywords,
