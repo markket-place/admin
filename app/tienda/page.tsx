@@ -65,20 +65,6 @@ export default function MeStoresPage() {
       .finally(() => setIsStoresHydrating(false));
   }, [confirmed, fetchStores, isLoading, router, stores.length]);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV !== 'development') return;
-
-    if (sortedStores.length > 0) {
-      console.table(
-        sortedStores.map((store) => ({
-          slug: store.slug,
-          title: store.title,
-          updatedAt: store.updatedAt,
-        })),
-      );
-    }
-  }, [sortedStores]);
-
   if (!isLoading && !confirmed()) {
     return null;
   }

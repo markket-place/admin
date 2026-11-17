@@ -15,6 +15,7 @@
 ## Nov 2026
 
 - [ ] tienda dashboard: validate forms for price/date fields and show clear error states
+- [ ] access store [slug].markket.place
 - [ ] tienda: item form, display error when save create (store.slug)
 - [ ] auth: magic form & verify better errors
 - [ ] edit order status [crm dashboard]

@@ -21,7 +21,7 @@ export async function GET(
   url.searchParams.set('populate[event][fields][3]', 'endDate');
   url.searchParams.set('populate[event][fields][4]', 'documentId');
   url.searchParams.set('populate[event][fields][5]', 'timezone');
-  url.searchParams.set('populate[event][populate][Thumbnail][fields][0]', 'url');
+  url.searchParams.set('populate[event][populate][thumbnail][fields][0]', 'url');
   url.searchParams.set('populate[event][populate][seo][fields][0]', 'metaDescription');
   url.searchParams.set('populate[store][fields][0]', 'slug');
   url.searchParams.set('populate[store][fields][1]', 'title');

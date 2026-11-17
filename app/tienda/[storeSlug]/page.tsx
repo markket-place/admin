@@ -48,6 +48,7 @@ export default async function TiendaStorePage({ params }: TiendaStorePageProps) 
 
   try {
     // Get server auth token if available (optional for initial render, client will refresh with user token)
+    // @TODO: use the appropiate endpoint /visibility
     const overviewResponse = await tiendaClient.listOverviewContent(storeSlug, {
       token: process.env.TIENDA_API_TOKEN || 'server-fetch',
       queries: {

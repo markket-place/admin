@@ -156,7 +156,7 @@ export default function TiendaProductItemPageClient({ storeSlug, itemId }: Tiend
           slots={[
             {
               label: 'Thumbnail',
-              field: 'Thumbnail',
+              field: 'thumbnail',
               src: product.thumbnail?.url,
               alt: product.thumbnail?.alternativeText || product.name,
             },

@@ -331,18 +331,18 @@ export default function StoreEditorClientPage({ storeSlug }: StoreEditorClientPa
         store: {
           ...store,
           title,
-          Description: draftDescription,
+          description: draftDescription,
           slug: nextSlug,
-          URLS: normalizedUrls,
-          SEO: {
+          urls: normalizedUrls,
+          seo: {
             ...store.seo,
             metaTitle: (draftSeoTitle.trim() || title).slice(0, 60),
             metaDescription: draftSeoDescription.trim().slice(0, 160),
           },
-          Favicon: store.favicon,
-          Cover: store.cover,
-          Slides: store.slides,
-          Logo: store.logo,
+          favicon: store.favicon,
+          cover: store.cover,
+          slides: store.slides,
+          logo: store.logo,
         },
       };
 
