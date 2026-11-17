@@ -401,9 +401,9 @@ const StorefrontHome = (props: StorefrontHomeProps) => {
                     >
                       {publishedProducts.slice(0, 6).map((product, index) => {
                         const image = imageOrFallback(
-                          mediaImageUrl(product?.Thumbnail as any),
-                          mediaImageUrl(product?.Slides?.[0] as any),
-                          mediaImageUrl(product?.SEO?.socialImage as any),
+                          mediaImageUrl(product?.thumbnail as any),
+                          mediaImageUrl(product?.slides?.[0] as any),
+                          mediaImageUrl(product?.seo?.socialImage as any),
                           storefrontFallbackImage,
                         );
 
@@ -522,9 +522,9 @@ const StorefrontHome = (props: StorefrontHomeProps) => {
                     >
                       {eventsToDisplay.slice(0, 6).map((event, index) => {
                         const image = imageOrFallback(
-                          mediaImageUrl(event?.Thumbnail as any),
-                          mediaImageUrl(event?.Slides?.[0] as any),
-                          mediaImageUrl(event?.SEO?.socialImage as any),
+                          mediaImageUrl(event?.thumbnail as any),
+                          mediaImageUrl(event?.slides?.[0] as any),
+                          mediaImageUrl(event?.seo?.socialImage as any),
                           storefrontFallbackImage,
                         );
 

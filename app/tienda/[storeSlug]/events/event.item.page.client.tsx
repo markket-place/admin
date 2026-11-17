@@ -201,20 +201,20 @@ export default function TiendaEventItemPageClient({ storeSlug, itemId }: TiendaE
             slots={[
               {
                 label: 'Thumbnail',
-                field: 'Thumbnail',
+                field: 'thumbnail',
                 src: event.thumbnail?.url,
                 alt: event.thumbnail?.alternativeText || event.name,
               },
               {
                 label: 'Cover / Social',
-                field: 'SEO.socialImage',
+                field: 'seo.socialImage',
                 src: event.seo?.socialImage?.url,
                 alt: event.seo?.socialImage?.alternativeText || event.name,
               },
               ...slideSlots,
               {
                 label: 'Add Slide',
-                field: 'Slides',
+                field: 'slides',
                 alt: `${event.name || 'Event'} slide`,
               },
             ]}
